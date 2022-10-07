@@ -6,11 +6,13 @@ extern Soul::Application* Soul::CreateApplication();
 
 int main(int argc, char** argv)
 {
-	printf("Welcome to Soul Engine");
+	Soul::Log::Init();
+	SL_CORE_WARN("Initialized Log!");
+	int a = 5;
+	SL_INFO("Hello! Var={0}", a);
 
 	auto app = Soul::CreateApplication();
 	app->Run();
-
 	delete app;
 }
 

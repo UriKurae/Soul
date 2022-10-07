@@ -2,8 +2,8 @@
 
 // Only for Soul application use
 
-#include <stdio.h>
 #include "Soul/Application.h"
+#include "Soul/Log.h"
 
 // Entry point
 #include "Soul/EntryPoint.h"
