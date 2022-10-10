@@ -4,6 +4,9 @@
     <Filter Include="Soul">
       <UniqueIdentifier>{A87A8C7C-94B1-8D0D-3D9E-731029B4090F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Soul\Events">
+      <UniqueIdentifier>{8C99289D-F84E-A192-8143-9B69EDF79796}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Soul.h" />
@@ -15,6 +18,18 @@
     </ClInclude>
     <ClInclude Include="src\Soul\EntryPoint.h">
       <Filter>Soul</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Events\ApplicationEvent.h">
+      <Filter>Soul\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Events\Event.h">
+      <Filter>Soul\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Events\KeyEvent.h">
+      <Filter>Soul\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Events\MouseEvent.h">
+      <Filter>Soul\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Soul\Log.h">
       <Filter>Soul</Filter>

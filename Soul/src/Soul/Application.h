@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core.h"
+#include "Soul/Events/Event.h"
 
 namespace Soul
 {

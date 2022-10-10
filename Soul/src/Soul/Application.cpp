@@ -1,5 +1,9 @@
 #include "Application.h"
 
+
+#include "Soul/Events/ApplicationEvent.h"
+#include "Soul/Log.h"
+
 namespace Soul
 {
 	Application::Application()
@@ -12,6 +16,9 @@ namespace Soul
 
 	void Application::Run()
 	{
+		WindowResizeEvent e(1280, 720);
+		SL_TRACE(e);
+
 		while (true);
 	}
 }
