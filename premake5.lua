@@ -18,6 +18,9 @@ workspace "Soul"
         targetdir ("bin/" .. outputdir .. "/%{prj.name}")
         objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+        pchheader "slpch.h"
+        pchsource "Soul/src/slpch.cpp"
+
         files
         {
             "%{prj.name}/src/**.h",

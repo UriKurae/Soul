@@ -1,9 +1,7 @@
 #pragma once
 
+#include "slpch.h"
 #include "Soul/Core.h"
-
-#include "string"
-#include <functional>
 
 namespace Soul
 {
