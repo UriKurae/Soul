@@ -10,6 +10,12 @@ workspace "Soul"
 
     outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+    -- Include directiories relative to root foler (In this case, solution directory)
+    IncludeDir = {}
+    IncludeDir["GLFW"] = "Soul/vendor/GLFW/include"
+
+    include "Soul/vendor/GLFW"
+
     project "Soul"
         location "Soul"
         kind "SharedLib"
@@ -30,7 +36,14 @@ workspace "Soul"
         includedirs
         {
             "%{prj.name}/src",
-            "%{prj.name}/vendor/spdlog/include"
+            "%{prj.name}/vendor/spdlog/include",
+            "%{IncludeDir.GLFW}"
+        }
+
+        links
+        {
+            "GLFW",
+            "opengl32.lib"
         }
 
         filter "system:windows"

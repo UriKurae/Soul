@@ -7,6 +7,9 @@
     <Filter Include="Soul\Events">
       <UniqueIdentifier>{8C99289D-F84E-A192-8143-9B69EDF79796}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{f0a12570-e45f-4781-9e8f-4b0f72d3b6d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Soul.h" />
@@ -35,6 +38,11 @@
       <Filter>Soul</Filter>
     </ClInclude>
     <ClInclude Include="src\slpch.h" />
+    <ClInclude Include="Window.h">
+      <Filter>Soul</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\WindowsWindow.h" />
+    <ClInclude Include="src\Soul\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Soul\Application.cpp">
@@ -44,5 +52,6 @@
       <Filter>Soul</Filter>
     </ClCompile>
     <ClCompile Include="src\slpch.cpp" />
+    <ClCompile Include="src\Platform\WindowsWindow.cpp" />
   </ItemGroup>
 </Project>

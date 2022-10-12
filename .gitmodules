@@ -1,3 +1,6 @@
 [submodule "Soul/vendor/spdlog"]
 	path = Soul/vendor/spdlog
 	url = https://github.com/gabime/spdlog
+[submodule "Soul/vendor/GLFW"]
+	path = Soul/vendor/GLFW
+	url = https://github.com/TheCherno/glfw
