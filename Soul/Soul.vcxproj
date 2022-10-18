@@ -84,6 +84,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -110,6 +111,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -137,6 +139,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -161,14 +164,17 @@
     <ClInclude Include="src\Soul\Events\Event.h" />
     <ClInclude Include="src\Soul\Events\KeyEvent.h" />
     <ClInclude Include="src\Soul\Events\MouseEvent.h" />
+    <ClInclude Include="src\Soul\Layer.h" />
+    <ClInclude Include="src\Soul\LayerStack.h" />
     <ClInclude Include="src\Soul\Log.h" />
-    <ClInclude Include="src\slpch.h" />
     <ClInclude Include="src\Soul\Window.h" />
-    <ClInclude Include="Window.h" />
+    <ClInclude Include="src\slpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\WindowsWindow.cpp" />
     <ClCompile Include="src\Soul\Application.cpp" />
+    <ClCompile Include="src\Soul\Layer.cpp" />
+    <ClCompile Include="src\Soul\LayerStack.cpp" />
     <ClCompile Include="src\Soul\Log.cpp" />
     <ClCompile Include="src\slpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

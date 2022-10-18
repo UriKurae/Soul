@@ -35,6 +35,8 @@ namespace Soul
 	{
 		friend class EventDispatcher;
 	public:
+		bool handled = false;
+
 		virtual EventType GetEventType() const = 0;
 		virtual const char* GetName() const = 0;
 		virtual int GetCategoryFlags() const = 0;
@@ -44,8 +46,6 @@ namespace Soul
 		{
 			return GetCategoryFlags() & category;
 		}
-	protected:
-		bool m_Handled = false;
 	};
 
 	class EventDispatcher
