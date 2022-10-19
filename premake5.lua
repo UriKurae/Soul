@@ -13,8 +13,10 @@ workspace "Soul"
     -- Include directiories relative to root foler (In this case, solution directory)
     IncludeDir = {}
     IncludeDir["GLFW"] = "Soul/vendor/GLFW/include"
+    IncludeDir["Glad"] = "Soul/vendor/Glad/include"
 
     include "Soul/vendor/GLFW"
+    include "Soul/vendor/Glad"
 
     project "Soul"
         location "Soul"
@@ -37,12 +39,14 @@ workspace "Soul"
         {
             "%{prj.name}/src",
             "%{prj.name}/vendor/spdlog/include",
-            "%{IncludeDir.GLFW}"
+            "%{IncludeDir.GLFW}",
+            "%{IncludeDir.Glad}"
         }
 
         links
         {
             "GLFW",
+            "Glad",
             "opengl32.lib"
         }
 
@@ -54,7 +58,8 @@ workspace "Soul"
             defines
             {
                 "SL_PLATFORM_WINDOWS",
-                "SL_BUILD_DLL"
+                "SL_BUILD_DLL",
+                "GLFW_INCLUDE_NONE"
             }
 
             postbuildcommands

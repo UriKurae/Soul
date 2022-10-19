@@ -63,7 +63,7 @@ namespace Soul
 		{
 			if (m_Event.GetEventType() == T::GetStaticType())
 			{
-				m_Event.m_Handled = func(*(T*)&m_Event);
+				m_Event.handled = func(*(T*)&m_Event);
 				return true;
 			}
 			return false;
