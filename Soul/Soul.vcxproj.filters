@@ -4,16 +4,28 @@
     <Filter Include="Platform">
       <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Platform\OpenGL">
+      <UniqueIdentifier>{1E7D2C1D-8A08-9AE1-9319-1DD6FF23F6E1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows">
+      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Soul">
       <UniqueIdentifier>{A87A8C7C-94B1-8D0D-3D9E-731029B4090F}</UniqueIdentifier>
     </Filter>
     <Filter Include="Soul\Events">
       <UniqueIdentifier>{8C99289D-F84E-A192-8143-9B69EDF79796}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Soul\ImGui">
+      <UniqueIdentifier>{D24DC0ED-BE05-023B-270D-DB9613E49C2B}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Platform\WindowsWindow.h">
-      <Filter>Platform</Filter>
+    <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
+      <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Soul.h" />
     <ClInclude Include="src\Soul\Application.h">
@@ -37,6 +49,9 @@
     <ClInclude Include="src\Soul\Events\MouseEvent.h">
       <Filter>Soul\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Soul\ImGui\ImGuiLayer.h">
+      <Filter>Soul\ImGui</Filter>
+    </ClInclude>
     <ClInclude Include="src\Soul\Layer.h">
       <Filter>Soul</Filter>
     </ClInclude>
@@ -52,11 +67,17 @@
     <ClInclude Include="src\slpch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Platform\WindowsWindow.cpp">
-      <Filter>Platform</Filter>
+    <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
+      <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Soul\Application.cpp">
       <Filter>Soul</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Soul\ImGui\ImGuiLayer.cpp">
+      <Filter>Soul\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Soul\Layer.cpp">
       <Filter>Soul</Filter>

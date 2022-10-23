@@ -3,8 +3,7 @@
 #include "slpch.h"
 #include "Soul/Core.h"
 
-namespace Soul
-{
+namespace Soul {
 
 	enum class EventType
 	{
@@ -18,11 +17,11 @@ namespace Soul
 	enum EventCategory
 	{
 		None = 0,
-		EventCategoryApplication	= BIT(0),
-		EventCategoryInput			= BIT(1),
-		EventCategoryKeyboard		= BIT(2),
-		EventCategoryMouse			= BIT(3),
-		EventCategoryMouseButton	= BIT(4)
+		EventCategoryApplication = BIT(0),
+		EventCategoryInput = BIT(1),
+		EventCategoryKeyboard = BIT(2),
+		EventCategoryMouse = BIT(3),
+		EventCategoryMouseButton = BIT(4)
 	};
 
 #define EVENT_CLASS_TYPE(type) static EventType GetStaticType() { return EventType::##type; }\
@@ -33,7 +32,6 @@ namespace Soul
 
 	class SOUL_API Event
 	{
-		friend class EventDispatcher;
 	public:
 		bool handled = false;
 
