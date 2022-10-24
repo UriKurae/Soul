@@ -1,5 +1,6 @@
 workspace "Soul"
     architecture "x64"
+    startproject "Sandbox"
 
     configurations
     {
@@ -16,9 +17,12 @@ workspace "Soul"
     IncludeDir["Glad"] = "Soul/vendor/Glad/include"
     IncludeDir["Imgui"] = "Soul/vendor/ImGui"
 
-    include "Soul/vendor/GLFW"
-    include "Soul/vendor/Glad"
-    include "Soul/vendor/ImGui"
+    group "Dependencies"
+        include "Soul/vendor/GLFW"
+        include "Soul/vendor/Glad"
+        include "Soul/vendor/ImGui"
+
+    group ""
 
     project "Soul"
         location "Soul"
