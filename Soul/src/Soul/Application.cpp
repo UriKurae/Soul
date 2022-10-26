@@ -1,8 +1,11 @@
 #include "slpch.h"
 #include "Application.h"
 
+#include "Soul/Log.h"
 
 #include <glad/glad.h>
+
+#include "Input.h"
 
 namespace Soul
 {
