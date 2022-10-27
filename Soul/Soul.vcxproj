@@ -152,6 +152,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Soul\KeyCodes.h" />
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
@@ -168,6 +169,7 @@
     <ClInclude Include="src\Soul\Layer.h" />
     <ClInclude Include="src\Soul\LayerStack.h" />
     <ClInclude Include="src\Soul\Log.h" />
+    <ClInclude Include="src\Soul\MouseButtonCodes.h" />
     <ClInclude Include="src\Soul\Window.h" />
     <ClInclude Include="src\slpch.h" />
   </ItemGroup>

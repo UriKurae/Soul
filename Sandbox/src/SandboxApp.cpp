@@ -10,7 +10,10 @@ public:
 
 	void OnUpdate() override
 	{
-		SL_INFO("ExampleLayer::Update");
+		if (Soul::Input::IsKeyPressed(SL_KEY_TAB))
+		{
+			SL_INFO("Tab pressed");
+		}
 	}
 
 	void OnEvent(Soul::Event& event) override
