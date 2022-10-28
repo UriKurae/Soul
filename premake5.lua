@@ -16,6 +16,7 @@ workspace "Soul"
     IncludeDir["GLFW"] = "Soul/vendor/GLFW/include"
     IncludeDir["Glad"] = "Soul/vendor/Glad/include"
     IncludeDir["Imgui"] = "Soul/vendor/ImGui"
+    IncludeDir["glm"] = "Soul/vendor/glm"
 
     group "Dependencies"
         include "Soul/vendor/GLFW"
@@ -40,6 +41,8 @@ workspace "Soul"
         {
             "%{prj.name}/src/**.h",
             "%{prj.name}/src/**.cpp",
+            "%{prj.name}/vendor/glm/glm/**.hpp",
+            "%{prj.name}/vendor/glm/glm/**.inl"
         }
 
         includedirs
@@ -48,7 +51,8 @@ workspace "Soul"
             "%{prj.name}/vendor/spdlog/include",
             "%{IncludeDir.GLFW}",
             "%{IncludeDir.Glad}",
-            "%{IncludeDir.Imgui}"
+            "%{IncludeDir.Imgui}",
+            "%{IncludeDir.glm}"
         }
 
         links
@@ -108,7 +112,8 @@ project "Sandbox"
         includedirs 
         {
             "Soul/vendor/spdlog/include",
-            "Soul/src"
+            "Soul/src",
+            "%{IncludeDir.glm}"
         }
 
         links
