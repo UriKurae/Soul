@@ -113,6 +113,7 @@ project "Sandbox"
         {
             "Soul/vendor/spdlog/include",
             "Soul/src",
+            "Soul/vendor",
             "%{IncludeDir.glm}"
         }
 

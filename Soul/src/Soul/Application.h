@@ -7,7 +7,7 @@
 #include "Soul/Events/Event.h"
 #include "Soul/Events/ApplicationEvent.h"
 
-
+#include "Soul/ImGui/ImGuiLayer.h"
 
 namespace Soul
 {
@@ -30,6 +30,7 @@ namespace Soul
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 	private:
