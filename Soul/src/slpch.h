@@ -14,6 +14,6 @@
 
 #include "Soul/Log.h"
 
-#ifdef HZ_PLATFORM_WINDOWS
+#ifdef SL_PLATFORM_WINDOWS
 	#include <Windows.h>
 #endif

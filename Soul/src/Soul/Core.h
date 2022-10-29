@@ -2,11 +2,15 @@
 
 
 #ifdef SL_PLATFORM_WINDOWS
+#if SL_DYNAMIC_LINK
 	#ifdef SL_BUILD_DLL
 		#define SOUL_API __declspec(dllexport)
 	#else
 		#define SOUL_API __declspec(dllimport)
 	#endif
+#else
+	#define SOUL_API
+#endif
 #else
 	#error Soul only support Windows
 #endif
