@@ -1,8 +1,10 @@
 #pragma once
 
 #include "Soul/Window.h"
+#include "Soul/Renderer/GraphicsContext.h"
 
 #include <GLFW/glfw3.h>
+
 
 namespace Soul {
 	class WindowsWindow : public Window
@@ -28,6 +30,7 @@ namespace Soul {
 		virtual void ShutDown();
 	private:
 		GLFWwindow* m_Window;
+		GraphicsContext* m_Context;
 
 		struct WindowData
 		{
