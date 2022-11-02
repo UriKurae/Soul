@@ -16,6 +16,11 @@ namespace Soul
 		glfwMakeContextCurrent(m_WindowHandle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		SL_CORE_ASSERT(status, "Failed to initialize Glad");
+
+		SL_CORE_INFO("OpenGL Info:");
+		SL_CORE_INFO("  Vendor: {0}", glGetString(GL_VENDOR));
+		SL_CORE_INFO("  Renderer: {0}", glGetString(GL_RENDERER));
+		SL_CORE_INFO("  Version: {0}", glGetString(GL_VERSION));
 	}
 
 	void OpenGLContext::SwapBuffers()

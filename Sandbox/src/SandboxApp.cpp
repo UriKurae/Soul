@@ -27,7 +27,6 @@ public:
 
 	void OnEvent(Soul::Event& event) override
 	{
-		SL_TRACE("{0}", event);
 	}
 
 
