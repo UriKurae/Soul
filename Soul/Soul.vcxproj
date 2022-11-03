@@ -162,6 +162,7 @@
     <ClInclude Include="src\Soul\Log.h" />
     <ClInclude Include="src\Soul\MouseButtonCodes.h" />
     <ClInclude Include="src\Soul\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Soul\Renderer\Shader.h" />
     <ClInclude Include="src\Soul\Window.h" />
     <ClInclude Include="src\slpch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -586,6 +587,7 @@
     <ClCompile Include="src\slpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Soul\Renderer\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">
