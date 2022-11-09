@@ -1331,6 +1331,9 @@
     <ClInclude Include="src\Soul\Renderer\Renderer.h" />
     <ClInclude Include="src\Soul\Renderer\VertexArray.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
+    <ClInclude Include="src\Soul\Renderer\RendererAPI.h" />
+    <ClInclude Include="src\Soul\Renderer\RenderCommand.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
@@ -1367,5 +1370,8 @@
     <ClCompile Include="src\Soul\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Soul\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
+    <ClCompile Include="src\Soul\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="src\Soul\Renderer\RenderCommand.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
   </ItemGroup>
 </Project>
