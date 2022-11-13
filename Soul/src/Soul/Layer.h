@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Soul/Core.h"
+#include "Soul/Core/Timestep.h"
 #include "Soul/Events/Event.h"
 
 namespace Soul
@@ -13,7 +14,7 @@ namespace Soul
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(Timestep ts) {}
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& event) {}
 

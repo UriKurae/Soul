@@ -152,6 +152,7 @@
     <ClInclude Include="src\Soul.h" />
     <ClInclude Include="src\Soul\Application.h" />
     <ClInclude Include="src\Soul\Core.h" />
+    <ClInclude Include="src\Soul\Core\Timestep.h" />
     <ClInclude Include="src\Soul\EntryPoint.h" />
     <ClInclude Include="src\Soul\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Soul\Events\Event.h" />

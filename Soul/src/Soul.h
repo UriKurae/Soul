@@ -6,6 +6,7 @@
 #include "Soul/Layer.h"
 #include "Soul/Log.h"
 
+#include "Soul/Core/Timestep.h"
 #include "Soul/Input.h"
 #include "Soul/KeyCodes.h"
 #include "Soul/MouseButtonCodes.h"

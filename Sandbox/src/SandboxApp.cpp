@@ -122,7 +122,7 @@ public:
 		m_BlueShader.reset(new Soul::Shader(blueShaderVertexSrc, blueShaderfragmentSrc));
 	}
 
-	void OnUpdate() override
+	void OnUpdate(Soul::Timestep ts) override
 	{
 		// Input Example for Soul
 		/*if (Soul::Input::IsKeyPressed(SL_KEY_UP))
