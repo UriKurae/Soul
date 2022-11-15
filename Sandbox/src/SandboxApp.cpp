@@ -135,11 +135,8 @@ public:
 
 		Soul::Renderer::BeginScene();
 
-		m_BlueShader->Bind();
-		Soul::Renderer::Submit(m_SquareVA);
-
-		m_Shader->Bind();
-		Soul::Renderer::Submit(m_VertexArray);
+		Soul::Renderer::Submit(m_BlueShader, m_SquareVA);
+		Soul::Renderer::Submit(m_Shader, m_VertexArray);
 
 		Soul::Renderer::EndScene();
 	}
