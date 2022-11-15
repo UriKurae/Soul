@@ -91,7 +91,7 @@ public:
 
 		m_Shader.reset(new Soul::Shader(vertexSrc, fragmentSrc));
 
-		std::string blueShaderVertexSrc = R"(
+		std::string flatColorShaderVertexSrc = R"(
 			#version 330 core
 
 			layout(location = 0) in vec3 a_Position;
@@ -106,20 +106,22 @@ public:
 
 		)";
 
-		std::string blueShaderfragmentSrc = R"(
+		std::string flatColorShaderFragmentSrc = R"(
 			#version 330 core
 
 			layout(location = 0) out vec4 color;
 
 			in vec3 v_Position;
-
+			
+			uniform vec4 u_Color;	
+	
 			void main()
 			{
-				color = vec4(0.2, 0.3, 0.8, 1.0);
+				color = u_Color;
 			}
 		)";
 
-		m_BlueShader.reset(new Soul::Shader(blueShaderVertexSrc, blueShaderfragmentSrc));
+		m_FlatColorShader.reset(new Soul::Shader(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
 	}
 
 	void OnUpdate(Soul::Timestep ts) override
@@ -134,8 +136,13 @@ public:
 		Soul::RenderCommand::Clear();
 
 		Soul::Renderer::BeginScene();
+		
+		glm::vec4 redColor(0.8f, 0.2f, 0.3f, 1.0f);
+		glm::vec4 blueColor(0.2f, 0.3f, 0.8f, 1.0f);
+		// TODO: Carefull, to upload uniform first you have to bind
+		m_FlatColorShader->UploadUniformFloat4("u_Color", blueColor);
 
-		Soul::Renderer::Submit(m_BlueShader, m_SquareVA);
+		Soul::Renderer::Submit(m_FlatColorShader, m_SquareVA);
 		Soul::Renderer::Submit(m_Shader, m_VertexArray);
 
 		Soul::Renderer::EndScene();
@@ -160,7 +167,7 @@ private:
 	std::shared_ptr<Soul::Shader> m_Shader;
 	std::shared_ptr<Soul::VertexArray> m_VertexArray;
 
-	std::shared_ptr<Soul::Shader> m_BlueShader;
+	std::shared_ptr<Soul::Shader> m_FlatColorShader;
 	std::shared_ptr<Soul::VertexArray> m_SquareVA;
 };
 
