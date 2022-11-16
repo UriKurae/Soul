@@ -1,6 +1,8 @@
 #include "slpch.h"
 #include "Renderer.h"
 
+#include "Platform/OpenGL/OpenGLShader.h"
+
 namespace Soul
 {
 	void Renderer::BeginScene()
@@ -15,7 +17,6 @@ namespace Soul
 
 	void Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray)
 	{
-		shader->Bind();
 		vertexArray->Bind();
 		RenderCommand::DrawIndexed(vertexArray);
 	}
