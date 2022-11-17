@@ -22,7 +22,7 @@ public:
 			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f,
 		};
 
-		std::shared_ptr<Soul::VertexBuffer> vertexBuffer;
+		Soul::Ref<Soul::VertexBuffer> vertexBuffer;
 		vertexBuffer.reset(Soul::VertexBuffer::Create(vertices, sizeof(vertices)));
 		Soul::BufferLayout layout = {
 			{Soul::ShaderDataType::Float3, "a_Position"},
@@ -33,7 +33,7 @@ public:
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
 		uint32_t indices[3] = { 0, 1, 2 };
-		std::shared_ptr<Soul::IndexBuffer> indexBuffer;
+		Soul::Ref<Soul::IndexBuffer> indexBuffer;
 		indexBuffer.reset(Soul::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
@@ -46,7 +46,7 @@ public:
 			-0.75f,  0.75f, 0.0f
 		};
 
-		std::shared_ptr<Soul::VertexBuffer> squareVB;
+		Soul::Ref<Soul::VertexBuffer> squareVB;
 		squareVB.reset(Soul::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
 		Soul::BufferLayout squareVBLayout = {
 
@@ -57,7 +57,7 @@ public:
 		m_SquareVA->AddVertexBuffer(squareVB);
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		std::shared_ptr<Soul::IndexBuffer> squareIB;
+		Soul::Ref<Soul::IndexBuffer> squareIB;
 		squareIB.reset((Soul::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t))));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
@@ -165,21 +165,14 @@ public:
 
 	void OnEvent(Soul::Event& event) override
 	{
-		Soul::EventDispatcher dispatcher(event);
-		dispatcher.Dispatch<Soul::KeyPressedEvent>(SL_BIND_EVENT_FN(ExampleLayer::OnKeyPressedEvent));
 	}
 
-	bool OnKeyPressedEvent(Soul::KeyPressedEvent& event)
-	{
-
-		return false;
-	}
 private:
-	std::shared_ptr<Soul::Shader> m_Shader;
-	std::shared_ptr<Soul::VertexArray> m_VertexArray;
+	Soul::Ref<Soul::Shader> m_Shader;
+	Soul::Ref<Soul::VertexArray> m_VertexArray;
 
-	std::shared_ptr<Soul::Shader> m_FlatColorShader;
-	std::shared_ptr<Soul::VertexArray> m_SquareVA;
+	Soul::Ref<Soul::Shader> m_FlatColorShader;
+	Soul::Ref<Soul::VertexArray> m_SquareVA;
 
 	glm::vec3 m_SquareColor = { 0.2f, 0.3f, -0.8f };
 };
