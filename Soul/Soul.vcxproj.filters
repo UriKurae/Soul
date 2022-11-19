@@ -7,17 +7,26 @@
     <Filter Include="src\Platform">
       <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Platform\OpenGL">
+      <UniqueIdentifier>{35A49437-A105-7245-2A73-B8F796D3A804}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Platform\Windows">
       <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Soul">
       <UniqueIdentifier>{1F9A25CF-0B67-80DA-3480-6E8220ACB568}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Soul\Core">
+      <UniqueIdentifier>{D7E97E94-43AA-FACA-0CE5-434878643FA7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Soul\Events">
       <UniqueIdentifier>{23CD02B5-8F58-7079-9869-F36D0474CC79}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Soul\ImGui">
       <UniqueIdentifier>{89EAC624-75B8-BA2A-5E4C-2B514AB9968F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Soul\Renderer">
+      <UniqueIdentifier>{A5B0E5F7-11C7-E38D-5A3E-6FAFC693B415}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
@@ -40,8 +49,29 @@
     <Filter Include="vendor\glm\glm\gtx">
       <UniqueIdentifier>{B3A6A76B-9F8A-68C1-08EB-6214F4ED5243}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vendor\stb_image">
+      <UniqueIdentifier>{0DA0BA59-F998-D9AB-22CB-BE300E23B9B7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
       <Filter>src\Platform\Windows</Filter>
     </ClInclude>
@@ -56,6 +86,9 @@
     </ClInclude>
     <ClInclude Include="src\Soul\Core.h">
       <Filter>src\Soul</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Core\Timestep.h">
+      <Filter>src\Soul\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Soul\EntryPoint.h">
       <Filter>src\Soul</Filter>
@@ -92,6 +125,30 @@
     </ClInclude>
     <ClInclude Include="src\Soul\MouseButtonCodes.h">
       <Filter>src\Soul</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Renderer\Buffer.h">
+      <Filter>src\Soul\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Renderer\GraphicsContext.h">
+      <Filter>src\Soul\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Renderer\RenderCommand.h">
+      <Filter>src\Soul\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Renderer\Renderer.h">
+      <Filter>src\Soul\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Renderer\RendererAPI.h">
+      <Filter>src\Soul\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Renderer\Shader.h">
+      <Filter>src\Soul\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Renderer\Texture.h">
+      <Filter>src\Soul\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Renderer\VertexArray.h">
+      <Filter>src\Soul\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Soul\Window.h">
       <Filter>src\Soul</Filter>
@@ -1323,21 +1380,29 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Soul\Renderer\GraphicsContext.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
-    <ClInclude Include="src\Soul\Renderer\Shader.h" />
-    <ClInclude Include="src\Soul\Renderer\Buffer.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
-    <ClInclude Include="src\Soul\Renderer\Renderer.h" />
-    <ClInclude Include="src\Soul\Renderer\VertexArray.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
-    <ClInclude Include="src\Soul\Renderer\RendererAPI.h" />
-    <ClInclude Include="src\Soul\Renderer\RenderCommand.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
-    <ClInclude Include="src\Soul\Core\Timestep.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="vendor\stb_image\stb_image.h">
+      <Filter>vendor\stb_image</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
@@ -1362,19 +1427,32 @@
     <ClCompile Include="src\Soul\Log.cpp">
       <Filter>src\Soul</Filter>
     </ClCompile>
+    <ClCompile Include="src\Soul\Renderer\Buffer.cpp">
+      <Filter>src\Soul\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Soul\Renderer\RenderCommand.cpp">
+      <Filter>src\Soul\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Soul\Renderer\Renderer.cpp">
+      <Filter>src\Soul\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Soul\Renderer\RendererAPI.cpp">
+      <Filter>src\Soul\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Soul\Renderer\Shader.cpp">
+      <Filter>src\Soul\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Soul\Renderer\Texture.cpp">
+      <Filter>src\Soul\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Soul\Renderer\VertexArray.cpp">
+      <Filter>src\Soul\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\slpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
-    <ClCompile Include="src\Soul\Renderer\Shader.cpp" />
-    <ClCompile Include="src\Soul\Renderer\Buffer.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
-    <ClCompile Include="src\Soul\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\Soul\Renderer\VertexArray.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
-    <ClCompile Include="src\Soul\Renderer\RendererAPI.cpp" />
-    <ClCompile Include="src\Soul\Renderer\RenderCommand.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="vendor\stb_image\stb_image.cpp">
+      <Filter>vendor\stb_image</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

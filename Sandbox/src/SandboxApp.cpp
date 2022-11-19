@@ -13,7 +13,7 @@ public:
 	ExampleLayer()
 		: Layer("Example")
 	{		
-		m_VertexArray.reset(Soul::VertexArray::Create());
+		m_VertexArray = Soul::VertexArray::Create();
 
 		float vertices[3 * 7] =
 		{
@@ -37,22 +37,20 @@ public:
 		indexBuffer.reset(Soul::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
-		m_SquareVA.reset(Soul::VertexArray::Create());
-		float squareVertices[3 * 4] =
+		m_SquareVA = Soul::VertexArray::Create();
+		float squareVertices[5 * 4] =
 		{
-			-0.75f, -0.75f, 0.0f,
-			 0.75f, -0.75f, 0.0f,
-			 0.75f,  0.75f, 0.0f,
-			-0.75f,  0.75f, 0.0f
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
 		Soul::Ref<Soul::VertexBuffer> squareVB;
 		squareVB.reset(Soul::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
-		Soul::BufferLayout squareVBLayout = {
-
-		};
 		squareVB->SetLayout({
-			{ Soul::ShaderDataType::Float3, "a_Position" }
+			{ Soul::ShaderDataType::Float3, "a_Position" },
+			{ Soul::ShaderDataType::Float2, "a_TexCoord" }
 			});
 		m_SquareVA->AddVertexBuffer(squareVB);
 
@@ -127,6 +125,44 @@ public:
 		)";
 
 		m_FlatColorShader.reset(Soul::Shader::Create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
+
+		std::string textureShaderVertexSrc = R"(
+			#version 330 core
+
+			layout(location = 0) in vec3 a_Position;	
+			layout(location = 1) in vec2 a_TexCoord;	
+
+			out vec2 v_TexCoord;
+	
+			void main()
+			{
+				v_TexCoord = a_TexCoord;
+				gl_Position = vec4(a_Position, 1.0);
+			}
+
+		)";
+
+		std::string textureShaderFragmentSrc = R"(
+			#version 330 core
+
+			layout(location = 0) out vec4 color;
+
+			in vec2 v_TexCoord;
+			
+			uniform sampler2D u_Texture;	
+	
+			void main()
+			{
+				color = texture(u_Texture, v_TexCoord);
+			}
+		)";
+
+		m_TextureShader.reset(Soul::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
+
+		m_Texture = Soul::Texture2D::Create("assets/textures/dog.jpg");
+
+		std::dynamic_pointer_cast<Soul::OpenGLShader>(m_TextureShader)->Bind();
+		std::dynamic_pointer_cast<Soul::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
 	}
 
 	void OnUpdate(Soul::Timestep ts) override
@@ -146,12 +182,15 @@ public:
 		glm::vec4 blueColor(0.2f, 0.3f, 0.8f, 1.0f);
 
 		// TODO: Carefull, to upload uniform first you have to bind
-		std::dynamic_pointer_cast<Soul::OpenGLShader>(m_FlatColorShader)->Bind();
-		std::dynamic_pointer_cast<Soul::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
-		Soul::Renderer::Submit(m_FlatColorShader, m_SquareVA);
+		//std::dynamic_pointer_cast<Soul::OpenGLShader>(m_FlatColorShader)->Bind();
+		//std::dynamic_pointer_cast<Soul::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
+		std::dynamic_pointer_cast<Soul::OpenGLShader>(m_TextureShader)->Bind();
+		m_Texture->Bind();
+		Soul::Renderer::Submit(m_TextureShader, m_SquareVA);
 
-		std::dynamic_pointer_cast<Soul::OpenGLShader>(m_Shader)->Bind();
-		Soul::Renderer::Submit(m_Shader, m_VertexArray);
+
+		//std::dynamic_pointer_cast<Soul::OpenGLShader>(m_Shader)->Bind();
+		//Soul::Renderer::Submit(m_Shader, m_VertexArray);
 
 		Soul::Renderer::EndScene();
 	}
@@ -171,8 +210,10 @@ private:
 	Soul::Ref<Soul::Shader> m_Shader;
 	Soul::Ref<Soul::VertexArray> m_VertexArray;
 
-	Soul::Ref<Soul::Shader> m_FlatColorShader;
+	Soul::Ref<Soul::Shader> m_FlatColorShader, m_TextureShader;
 	Soul::Ref<Soul::VertexArray> m_SquareVA;
+
+	Soul::Ref<Soul::Texture2D> m_Texture;
 
 	glm::vec3 m_SquareColor = { 0.2f, 0.3f, -0.8f };
 };

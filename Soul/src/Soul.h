@@ -18,6 +18,7 @@
 
 #include "Soul/Renderer/Shader.h"
 #include "Soul/Renderer/Buffer.h"
+#include "Soul/Renderer/Texture.h"
 #include "Soul/Renderer/VertexArray.h"
 
 // Entry point
