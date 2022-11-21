@@ -160,6 +160,7 @@ public:
 		m_TextureShader.reset(Soul::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
 
 		m_Texture = Soul::Texture2D::Create("assets/textures/dog.jpg");
+		m_ZoroTexture = Soul::Texture2D::Create("assets/textures/zoro.png");
 
 		std::dynamic_pointer_cast<Soul::OpenGLShader>(m_TextureShader)->Bind();
 		std::dynamic_pointer_cast<Soul::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
@@ -184,8 +185,12 @@ public:
 		// TODO: Carefull, to upload uniform first you have to bind
 		//std::dynamic_pointer_cast<Soul::OpenGLShader>(m_FlatColorShader)->Bind();
 		//std::dynamic_pointer_cast<Soul::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
-		std::dynamic_pointer_cast<Soul::OpenGLShader>(m_TextureShader)->Bind();
+		//std::dynamic_pointer_cast<Soul::OpenGLShader>(m_TextureShader)->Bind();
+
 		m_Texture->Bind();
+		Soul::Renderer::Submit(m_TextureShader, m_SquareVA);
+
+		m_ZoroTexture->Bind();
 		Soul::Renderer::Submit(m_TextureShader, m_SquareVA);
 
 
@@ -213,7 +218,7 @@ private:
 	Soul::Ref<Soul::Shader> m_FlatColorShader, m_TextureShader;
 	Soul::Ref<Soul::VertexArray> m_SquareVA;
 
-	Soul::Ref<Soul::Texture2D> m_Texture;
+	Soul::Ref<Soul::Texture2D> m_Texture, m_ZoroTexture;
 
 	glm::vec3 m_SquareColor = { 0.2f, 0.3f, -0.8f };
 };

@@ -5,6 +5,11 @@
 
 namespace Soul
 {
+	void Renderer::Init()
+	{
+		RenderCommand::Init();
+	}
+
 	void Renderer::BeginScene()
 	{
 
