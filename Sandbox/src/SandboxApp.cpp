@@ -92,7 +92,7 @@ public:
 			}
 		)";
 
-		m_Shader.reset(Soul::Shader::Create(vertexSrc, fragmentSrc));
+		m_Shader = Soul::Shader::Create("VertexPosColor", vertexSrc, fragmentSrc);
 
 		std::string flatColorShaderVertexSrc = R"(
 			#version 330 core
@@ -124,15 +124,15 @@ public:
 			}
 		)";
 
-		m_FlatColorShader.reset(Soul::Shader::Create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
+		m_FlatColorShader = Soul::Shader::Create("FlatColor", flatColorShaderVertexSrc, flatColorShaderFragmentSrc);
 
-		m_TextureShader.reset(Soul::Shader::Create("assets/shaders/Texture.glsl"));
+		auto textureShader = m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
 
 		m_Texture = Soul::Texture2D::Create("assets/textures/dog.jpg");
 		m_ZoroTexture = Soul::Texture2D::Create("assets/textures/zoro.png");
 
-		std::dynamic_pointer_cast<Soul::OpenGLShader>(m_TextureShader)->Bind();
-		std::dynamic_pointer_cast<Soul::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+		std::dynamic_pointer_cast<Soul::OpenGLShader>(textureShader)->Bind();
+		std::dynamic_pointer_cast<Soul::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 	}
 
 	void OnUpdate(Soul::Timestep ts) override
@@ -156,11 +156,13 @@ public:
 		//std::dynamic_pointer_cast<Soul::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
 		//std::dynamic_pointer_cast<Soul::OpenGLShader>(m_TextureShader)->Bind();
 
+		auto textureShader = m_ShaderLibrary.Get("Texture");
+
 		m_Texture->Bind();
-		Soul::Renderer::Submit(m_TextureShader, m_SquareVA);
+		Soul::Renderer::Submit(textureShader, m_SquareVA);
 
 		m_ZoroTexture->Bind();
-		Soul::Renderer::Submit(m_TextureShader, m_SquareVA);
+		Soul::Renderer::Submit(textureShader, m_SquareVA);
 
 
 		//std::dynamic_pointer_cast<Soul::OpenGLShader>(m_Shader)->Bind();
@@ -181,10 +183,11 @@ public:
 	}
 
 private:
+	Soul::ShaderLibrary m_ShaderLibrary;
 	Soul::Ref<Soul::Shader> m_Shader;
 	Soul::Ref<Soul::VertexArray> m_VertexArray;
 
-	Soul::Ref<Soul::Shader> m_FlatColorShader, m_TextureShader;
+	Soul::Ref<Soul::Shader> m_FlatColorShader;
 	Soul::Ref<Soul::VertexArray> m_SquareVA;
 
 	Soul::Ref<Soul::Texture2D> m_Texture, m_ZoroTexture;
