@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Soul/Window.h"
+#include "Soul/Core/Window.h"
 #include "Soul/Renderer/GraphicsContext.h"
 
 #include <GLFW/glfw3.h>

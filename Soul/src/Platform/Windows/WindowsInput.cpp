@@ -2,7 +2,7 @@
 #include "WindowsInput.h"
 
 #include <GLFW/glfw3.h>
-#include "Soul/Application.h"
+#include "Soul/Core/Application.h"
 
 namespace Soul
 {

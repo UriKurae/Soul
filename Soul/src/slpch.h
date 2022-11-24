@@ -13,7 +13,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "Soul/Log.h"
+#include "Soul/Core/Log.h"
 
 #ifdef SL_PLATFORM_WINDOWS
 	#include <Windows.h>

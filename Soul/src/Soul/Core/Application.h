@@ -3,7 +3,7 @@
 #include "Core.h"
 
 #include "Window.h"
-#include "Soul/LayerStack.h"
+#include "Soul/Core/LayerStack.h"
 #include "Soul/Events/Event.h"
 #include "Soul/Events/ApplicationEvent.h"
 

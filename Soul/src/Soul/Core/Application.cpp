@@ -1,7 +1,7 @@
 #include "slpch.h"
 #include "Application.h"
 
-#include "Soul/Log.h"
+#include "Soul/Core/Log.h"
 
 #include "Soul/Renderer/Renderer.h"
 

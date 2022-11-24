@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Soul/Input.h"
+#include "Soul/Core/Input.h"
 
 namespace Soul
 {

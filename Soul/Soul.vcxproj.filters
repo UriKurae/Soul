@@ -81,17 +81,38 @@
     <ClInclude Include="src\Soul.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Soul\Application.h">
-      <Filter>src\Soul</Filter>
+    <ClInclude Include="src\Soul\Core\Application.h">
+      <Filter>src\Soul\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Soul\Core.h">
-      <Filter>src\Soul</Filter>
+    <ClInclude Include="src\Soul\Core\Core.h">
+      <Filter>src\Soul\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Core\EntryPoint.h">
+      <Filter>src\Soul\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Core\Input.h">
+      <Filter>src\Soul\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Core\KeyCodes.h">
+      <Filter>src\Soul\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Core\Layer.h">
+      <Filter>src\Soul\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Core\LayerStack.h">
+      <Filter>src\Soul\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Core\Log.h">
+      <Filter>src\Soul\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Core\MouseButtonCodes.h">
+      <Filter>src\Soul\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Soul\Core\Timestep.h">
       <Filter>src\Soul\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Soul\EntryPoint.h">
-      <Filter>src\Soul</Filter>
+    <ClInclude Include="src\Soul\Core\Window.h">
+      <Filter>src\Soul\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Soul\Events\ApplicationEvent.h">
       <Filter>src\Soul\Events</Filter>
@@ -107,24 +128,6 @@
     </ClInclude>
     <ClInclude Include="src\Soul\ImGui\ImGuiLayer.h">
       <Filter>src\Soul\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Soul\Input.h">
-      <Filter>src\Soul</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Soul\KeyCodes.h">
-      <Filter>src\Soul</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Soul\Layer.h">
-      <Filter>src\Soul</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Soul\LayerStack.h">
-      <Filter>src\Soul</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Soul\Log.h">
-      <Filter>src\Soul</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Soul\MouseButtonCodes.h">
-      <Filter>src\Soul</Filter>
     </ClInclude>
     <ClInclude Include="src\Soul\Renderer\Buffer.h">
       <Filter>src\Soul\Renderer</Filter>
@@ -149,9 +152,6 @@
     </ClInclude>
     <ClInclude Include="src\Soul\Renderer\VertexArray.h">
       <Filter>src\Soul\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Soul\Window.h">
-      <Filter>src\Soul</Filter>
     </ClInclude>
     <ClInclude Include="src\slpch.h">
       <Filter>src</Filter>
@@ -1409,23 +1409,23 @@
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\Soul\Application.cpp">
-      <Filter>src\Soul</Filter>
+    <ClCompile Include="src\Soul\Core\Application.cpp">
+      <Filter>src\Soul\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Soul\Core\Layer.cpp">
+      <Filter>src\Soul\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Soul\Core\LayerStack.cpp">
+      <Filter>src\Soul\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Soul\Core\Log.cpp">
+      <Filter>src\Soul\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Soul\ImGui\ImGuiBuild.cpp">
       <Filter>src\Soul\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Soul\ImGui\ImGuiLayer.cpp">
       <Filter>src\Soul\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Soul\Layer.cpp">
-      <Filter>src\Soul</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Soul\LayerStack.cpp">
-      <Filter>src\Soul</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Soul\Log.cpp">
-      <Filter>src\Soul</Filter>
     </ClCompile>
     <ClCompile Include="src\Soul\Renderer\Buffer.cpp">
       <Filter>src\Soul\Renderer</Filter>
