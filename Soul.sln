@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImGui", "Soul\vendor\ImGui\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Soul", "Soul\Soul.vcxproj", "{A87A8C7C-94B1-8D0D-3D9E-731029B4090F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SoulEditor", "SoulEditor\SoulEditor.vcxproj", "{6FEEF822-5BA6-3A70-C4AD-13CCB084D560}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -50,6 +52,12 @@ Global
 		{A87A8C7C-94B1-8D0D-3D9E-731029B4090F}.Dist|x64.Build.0 = Dist|x64
 		{A87A8C7C-94B1-8D0D-3D9E-731029B4090F}.Release|x64.ActiveCfg = Release|x64
 		{A87A8C7C-94B1-8D0D-3D9E-731029B4090F}.Release|x64.Build.0 = Release|x64
+		{6FEEF822-5BA6-3A70-C4AD-13CCB084D560}.Debug|x64.ActiveCfg = Debug|x64
+		{6FEEF822-5BA6-3A70-C4AD-13CCB084D560}.Debug|x64.Build.0 = Debug|x64
+		{6FEEF822-5BA6-3A70-C4AD-13CCB084D560}.Dist|x64.ActiveCfg = Dist|x64
+		{6FEEF822-5BA6-3A70-C4AD-13CCB084D560}.Dist|x64.Build.0 = Dist|x64
+		{6FEEF822-5BA6-3A70-C4AD-13CCB084D560}.Release|x64.ActiveCfg = Release|x64
+		{6FEEF822-5BA6-3A70-C4AD-13CCB084D560}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

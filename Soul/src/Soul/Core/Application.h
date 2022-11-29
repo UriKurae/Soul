@@ -16,7 +16,7 @@ namespace Soul
 	class Application
 	{
 	public:
-		Application();
+		Application(const std::string& name = "Soul App");
 		virtual ~Application();
 
 		void Run();
