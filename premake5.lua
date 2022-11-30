@@ -1,6 +1,6 @@
 workspace "Soul"
     architecture "x64"
-    startproject "Sandbox"
+    startproject "SoulEditor"
 
     configurations
     {
