@@ -23,6 +23,16 @@ namespace Soul
 
 	}
 
+	void ImGuiLayer::OnEvent(Event& e)
+	{
+		if (m_BlockEvents)
+		{
+			ImGuiIO& io = ImGui::GetIO();
+			e.handled |= e.IsInCategory(EventCategoryMouse) & io.WantCaptureMouse;
+			e.handled |= e.IsInCategory(EventCategoryKeyboard) & io.WantCaptureKeyboard;
+		}
+	}
+
 	void ImGuiLayer::OnAttach()
 	{
 		// Setup Dear ImGui context

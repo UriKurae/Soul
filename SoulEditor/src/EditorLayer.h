@@ -28,6 +28,8 @@ namespace Soul
 
 		Ref<Texture2D> m_Texture, m_ZoroTexture;
 
+		bool m_ViewportFocused = false;
+		bool m_ViewportHovered = false;
 		glm::vec2 m_ViewportSize = { 0,0 };
 
 		glm::vec3 m_SquareColor = { 0.2f, 0.3f, -0.8f };

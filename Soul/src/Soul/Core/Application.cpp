@@ -52,11 +52,11 @@ namespace Soul
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
 		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(OnWindowResize));
 
-		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
+		for (auto it = m_LayerStack.begin(); it != m_LayerStack.end(); ++it)
 		{
-			(*--it)->OnEvent(e);
 			if (e.handled)
 				break;
+			(*it)->OnEvent(e);
 		}
 	}
 
