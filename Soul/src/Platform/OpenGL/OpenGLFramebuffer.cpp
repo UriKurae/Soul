@@ -5,6 +5,8 @@
 
 namespace Soul
 {
+	static const uint32_t s_MaxFrameBufferSize = 8192;
+
 	OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpecification& spec) : m_Specification(spec)
 	{
 		Invalidate();
@@ -59,6 +61,11 @@ namespace Soul
 	}
 	void OpenGLFramebuffer::Resize(uint32_t width, uint32_t height)
 	{
+		if (width == 0 || height == 0 || width > s_MaxFrameBufferSize || height > s_MaxFrameBufferSize)
+		{
+			SL_CORE_WARN("Attempted to resize framebuffer {0}, {1}", width, height);
+			return;
+		}
 		m_Specification.width = width;
 		m_Specification.height = height;
 

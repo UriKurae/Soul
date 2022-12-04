@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#ifdef SL_PLATFORM_WINDOWS
+#ifdef  SL_PLATFORM_WINDOWS
 #if SL_DYNAMIC_LINK
 	#ifdef SL_BUILD_DLL
 		#define SOUL_API __declspec(dllexport)
