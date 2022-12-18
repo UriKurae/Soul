@@ -18,6 +18,7 @@ workspace "Soul"
     IncludeDir["Imgui"] = "Soul/vendor/ImGui"
     IncludeDir["glm"] = "Soul/vendor/glm"
     IncludeDir["stb_image"] = "Soul/vendor/stb_image"
+    IncludeDir["entt"] = "Soul/vendor/entt/include"
 
     group "Dependencies"
         include "Soul/vendor/GLFW"
@@ -62,7 +63,8 @@ workspace "Soul"
             "%{IncludeDir.Glad}",
             "%{IncludeDir.Imgui}",
             "%{IncludeDir.glm}",
-            "%{IncludeDir.stb_image}"
+            "%{IncludeDir.stb_image}",
+            "%{IncludeDir.entt}"
         }
 
         links
@@ -119,7 +121,8 @@ project "Sandbox"
             "Soul/vendor/spdlog/include",
             "Soul/src",
             "Soul/vendor",
-            "%{IncludeDir.glm}"
+            "%{IncludeDir.glm}",
+            "%{IncludeDir.entt}"
         }
 
         links
@@ -171,7 +174,8 @@ project "SoulEditor"
             "Soul/vendor/spdlog/include",
             "Soul/src",
             "Soul/vendor",
-            "%{IncludeDir.glm}"
+            "%{IncludeDir.glm}",
+            "%{IncludeDir.entt}"
         }
 
         links
