@@ -28,6 +28,8 @@ namespace Soul
 
 		Ref<Texture2D> m_Texture, m_ZoroTexture;
 
+		Ref<Scene> m_ActiveScene;
+
 		bool m_ViewportFocused = false;
 		bool m_ViewportHovered = false;
 		glm::vec2 m_ViewportSize = { 0,0 };

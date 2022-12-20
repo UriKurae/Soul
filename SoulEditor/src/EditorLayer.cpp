@@ -49,6 +49,11 @@ namespace Soul
 			fbSpec.width = 1280;
 			fbSpec.height = 720;
 			m_Framebuffer = Framebuffer::Create(fbSpec);
+
+			m_ActiveScene = std::make_shared<Scene>();
+			
+			auto square = m_ActiveScene->CreateEntity();
+			m_ActiveScene->Reg().emplace<TransformComponent>(square);
 		}
 
 		void EditorLayer::OnDetach()
@@ -61,8 +66,11 @@ namespace Soul
 			m_Framebuffer->Bind();
 			Soul::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 			Soul::RenderCommand::Clear();
-
+		
 			Soul::Renderer::BeginScene();
+
+			// Update Scene
+			m_ActiveScene->OnUpdate(ts);
 
 			auto textureShader = m_ShaderLibrary.Get("Texture");
 

@@ -178,6 +178,7 @@
     <ClInclude Include="src\Soul\Renderer\Texture.h" />
     <ClInclude Include="src\Soul\Renderer\VertexArray.h" />
     <ClInclude Include="src\slpch.h" />
+    <ClInclude Include="src\Soul\Scene\Components.h" />
     <ClInclude Include="src\Soul\Scene\Scene.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
