@@ -178,6 +178,7 @@
     <ClInclude Include="src\Soul\Renderer\Texture.h" />
     <ClInclude Include="src\Soul\Renderer\VertexArray.h" />
     <ClInclude Include="src\Soul\Scene\Components.h" />
+    <ClInclude Include="src\Soul\Scene\Entity.h" />
     <ClInclude Include="src\Soul\Scene\Scene.h" />
     <ClInclude Include="src\slpch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -614,6 +615,7 @@
     <ClCompile Include="src\Soul\Renderer\Shader.cpp" />
     <ClCompile Include="src\Soul\Renderer\Texture.cpp" />
     <ClCompile Include="src\Soul\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Soul\Scene\Entity.cpp" />
     <ClCompile Include="src\Soul\Scene\Scene.cpp" />
     <ClCompile Include="src\slpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

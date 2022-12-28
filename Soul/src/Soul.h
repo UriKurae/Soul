@@ -17,6 +17,7 @@
 #include "Soul/ImGui/ImGuiLayer.h"
 
 #include "Soul/Scene/Scene.h"
+#include "Soul/Scene/Entity.h"
 #include "Soul/Scene/Components.h"
 
 #include "Soul/Renderer/Renderer.h"

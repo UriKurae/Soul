@@ -52,8 +52,8 @@ namespace Soul
 
 			m_ActiveScene = std::make_shared<Scene>();
 			
-			auto square = m_ActiveScene->CreateEntity();
-			m_ActiveScene->Reg().emplace<TransformComponent>(square);
+			auto square = m_ActiveScene->CreateEntity("Square");
+			square.GetComponent<TagComponent>().tag;
 		}
 
 		void EditorLayer::OnDetach()
