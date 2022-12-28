@@ -28,6 +28,9 @@
     <Filter Include="src\Soul\Renderer">
       <UniqueIdentifier>{A5B0E5F7-11C7-E38D-5A3E-6FAFC693B415}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Soul\Scene">
+      <UniqueIdentifier>{7CE27625-68B0-6A2B-5144-DB513DB14690}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
     </Filter>
@@ -155,6 +158,12 @@
     </ClInclude>
     <ClInclude Include="src\Soul\Renderer\VertexArray.h">
       <Filter>src\Soul\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Scene\Components.h">
+      <Filter>src\Soul\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Scene\Scene.h">
+      <Filter>src\Soul\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\slpch.h">
       <Filter>src</Filter>
@@ -1386,8 +1395,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Soul\Scene\Scene.h" />
-    <ClInclude Include="src\Soul\Scene\Components.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1459,12 +1466,14 @@
     <ClCompile Include="src\Soul\Renderer\VertexArray.cpp">
       <Filter>src\Soul\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Soul\Scene\Scene.cpp">
+      <Filter>src\Soul\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\slpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Soul\Scene\Scene.cpp" />
   </ItemGroup>
 </Project>
