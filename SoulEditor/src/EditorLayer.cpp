@@ -54,6 +54,10 @@ namespace Soul
 			
 			auto square = m_ActiveScene->CreateEntity("Square");
 			square.GetComponent<TagComponent>().tag;
+
+			m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
+			m_CameraEntity.AddComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+
 		}
 
 		void EditorLayer::OnDetach()
@@ -66,9 +70,7 @@ namespace Soul
 			m_Framebuffer->Bind();
 			Soul::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 			Soul::RenderCommand::Clear();
-		
-			Soul::Renderer::BeginScene();
-
+	
 			// Update Scene
 			m_ActiveScene->OnUpdate(ts);
 
@@ -80,7 +82,6 @@ namespace Soul
 			m_ZoroTexture->Bind();
 			Soul::Renderer::Submit(textureShader, m_SquareVA);
 
-			Soul::Renderer::EndScene();
 			m_Framebuffer->Unbind();
 		}
 

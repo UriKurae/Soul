@@ -2,6 +2,8 @@
 
 #include <glm/glm.hpp>
 
+#include "Soul/Renderer/Camera.h"
+
 namespace Soul
 {
 	struct TagComponent
@@ -27,4 +29,14 @@ namespace Soul
 		operator const glm::mat4& () const { return transform; }
 	};
 
+	struct CameraComponent
+	{
+		Soul::Camera camera;
+		bool primary = true;
+
+		CameraComponent() = default;
+		CameraComponent(const CameraComponent&) = default;
+		CameraComponent(const glm::mat4& projection)
+			: camera(projection) {}
+	};
 }

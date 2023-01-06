@@ -30,6 +30,7 @@ namespace Soul
 		Ref<Texture2D> m_Texture, m_ZoroTexture;
 
 		Ref<Scene> m_ActiveScene;
+		Entity m_CameraEntity;
 
 		bool m_ViewportFocused = false;
 		bool m_ViewportHovered = false;

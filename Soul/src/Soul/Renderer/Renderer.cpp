@@ -15,9 +15,11 @@ namespace Soul
 		RenderCommand::SetViewport(0, 0, width, height);
 	}
 
-	void Renderer::BeginScene()
+	void Renderer::BeginScene(const Camera& camera, const glm::mat4& transform)
 	{
+		glm::mat4 viewProj = camera.GetProjection() * glm::inverse(transform);
 
+		// TODO: Set uniforms for camera perspective
 	}
 
 	void Renderer::EndScene()

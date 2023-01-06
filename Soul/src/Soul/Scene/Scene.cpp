@@ -2,6 +2,7 @@
 #include "Scene.h"
 
 #include "Components.h"
+#include "Soul/Renderer/Renderer.h"
 
 #include <glm/glm.hpp>
 
@@ -49,10 +50,35 @@ namespace Soul
 
 	void Scene::OnUpdate(Timestep ts)
 	{
-		auto view = m_Registry.view<TransformComponent>();
-		for (auto entity : view)
+		Camera* mainCamera = nullptr;
+		glm::mat4* cameraTransform = nullptr;
 		{
-			TransformComponent& transform = view.get<TransformComponent>(entity);
+			auto group = m_Registry.view<TransformComponent, CameraComponent>();
+			for (auto entity : group)
+			{
+				auto& [transform, camera] = group.get<TransformComponent, CameraComponent>(entity);
+
+				if (camera.primary)
+				{
+					mainCamera = &camera.camera;
+					cameraTransform = &transform.transform;
+					break;
+				}
+			}
+		}
+
+		if (mainCamera)
+		{
+			// TODO: Render things
+			Renderer::BeginScene(mainCamera->GetProjection(), *cameraTransform);
+
+			auto view = m_Registry.view<TransformComponent>();
+			for (auto entity : view)
+			{
+				TransformComponent& transform = view.get<TransformComponent>(entity);
+			}
+
+			Renderer::EndScene();
 		}
 	}
 }
