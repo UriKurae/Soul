@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Soul.h"
+#include "Panels/SceneHierarchyPanel.h"
 
 namespace Soul
 {
@@ -38,5 +39,7 @@ namespace Soul
 
 		glm::vec3 m_SquareColor = { 0.2f, 0.3f, -0.8f };
 
+		// Panels
+		SceneHierarchyPanel m_SceneHierarchyPanel;
 	};
 }

@@ -58,6 +58,8 @@ namespace Soul
 			m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
 			m_CameraEntity.AddComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
 
+			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+
 		}
 
 		void EditorLayer::OnDetach()
@@ -136,6 +138,8 @@ namespace Soul
 
 				ImGui::EndMenuBar();
 			}
+
+			m_SceneHierarchyPanel.OnImGuiRender();
 
 			ImGui::Begin("Settings");
 			
