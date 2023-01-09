@@ -143,7 +143,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Soul\Renderer\Camera.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h" />
@@ -170,6 +169,7 @@
     <ClInclude Include="src\Soul\Events\MouseEvent.h" />
     <ClInclude Include="src\Soul\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Soul\Renderer\Buffer.h" />
+    <ClInclude Include="src\Soul\Renderer\Camera.h" />
     <ClInclude Include="src\Soul\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Soul\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Soul\Renderer\RenderCommand.h" />

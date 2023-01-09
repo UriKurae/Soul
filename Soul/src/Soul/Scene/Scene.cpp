@@ -51,7 +51,7 @@ namespace Soul
 	void Scene::OnUpdate(Timestep ts)
 	{
 		Camera* mainCamera = nullptr;
-		glm::mat4* cameraTransform = nullptr;
+		glm::mat4 cameraTransform;
 		{
 			auto group = m_Registry.view<TransformComponent, CameraComponent>();
 			for (auto entity : group)
@@ -61,7 +61,7 @@ namespace Soul
 				if (camera.primary)
 				{
 					mainCamera = &camera.camera;
-					cameraTransform = &transform.transform;
+					cameraTransform = transform.GetTransform();
 					break;
 				}
 			}
@@ -70,7 +70,7 @@ namespace Soul
 		if (mainCamera)
 		{
 			// TODO: Render things
-			Renderer::BeginScene(mainCamera->GetProjection(), *cameraTransform);
+			Renderer::BeginScene(mainCamera->GetProjection(), cameraTransform);
 
 			auto view = m_Registry.view<TransformComponent>();
 			for (auto entity : view)

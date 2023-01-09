@@ -135,6 +135,9 @@
     <ClInclude Include="src\Soul\Renderer\Buffer.h">
       <Filter>src\Soul\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Soul\Renderer\Camera.h">
+      <Filter>src\Soul\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Soul\Renderer\Framebuffer.h">
       <Filter>src\Soul\Renderer</Filter>
     </ClInclude>
@@ -160,6 +163,9 @@
       <Filter>src\Soul\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Soul\Scene\Components.h">
+      <Filter>src\Soul\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Soul\Scene\Entity.h">
       <Filter>src\Soul\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Soul\Scene\Scene.h">
@@ -1395,12 +1401,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Soul\Scene\Entity.h">
-      <Filter>src\Soul\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Soul\Renderer\Camera.h">
-      <Filter>src\Soul\Renderer</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1472,6 +1472,9 @@
     <ClCompile Include="src\Soul\Renderer\VertexArray.cpp">
       <Filter>src\Soul\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Soul\Scene\Entity.cpp">
+      <Filter>src\Soul\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\Soul\Scene\Scene.cpp">
       <Filter>src\Soul\Scene</Filter>
     </ClCompile>
@@ -1480,9 +1483,6 @@
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Soul\Scene\Entity.cpp">
-      <Filter>src\Soul\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
