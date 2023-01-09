@@ -48,6 +48,11 @@ namespace Soul
 		return entity;
 	}
 
+	void Scene::DestroyEntity(Entity entity)
+	{
+		m_Registry.destroy(entity);
+	}
+
 	void Scene::OnUpdate(Timestep ts)
 	{
 		Camera* mainCamera = nullptr;
@@ -80,5 +85,30 @@ namespace Soul
 
 			Renderer::EndScene();
 		}
+	}
+
+	// Must have one for each component, if there's nothing to do, put it but leave it blank
+	template<typename T>
+	void Scene::OnComponentAdded(Entity entity, T& component)
+	{
+		static_assert(false);
+	}
+
+	template<>
+	void Scene::OnComponentAdded<TransformComponent>(Entity entity, TransformComponent& component)
+	{
+
+	}
+
+	template<>
+	void Scene::OnComponentAdded<CameraComponent>(Entity entity, CameraComponent& component)
+	{
+
+	}
+
+	template<>
+	void Scene::OnComponentAdded<TagComponent>(Entity entity, TagComponent& component)
+	{
+
 	}
 }

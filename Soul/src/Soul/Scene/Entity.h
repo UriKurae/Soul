@@ -17,7 +17,9 @@ namespace Soul
 		T& AddComponent(Args&&...  args)
 		{
 			SL_CORE_ASSERT(!HasComponent<T>(), "Entity already has Component!");
-			return m_Scene->m_Registry.emplace<T>(m_EntityHandle, std::forward<Args>(args)...);
+			T& component = m_Scene->m_Registry.emplace<T>(m_EntityHandle, std::forward<Args>(args)...);
+			m_Scene->OnComponentAdded<T>(*this, component);
+			return component;
 		}
 
 		template<typename T>
@@ -46,6 +48,8 @@ namespace Soul
 		bool operator ==(const Entity& other) const { return m_EntityHandle == other.m_EntityHandle && m_Scene == other.m_Scene; }
 		
 		bool operator !=(const Entity& other) const { return !(*this == other); }
+
+		operator entt::entity() const { return m_EntityHandle; }
 
 	private:
 		entt::entity m_EntityHandle{ entt::null };
