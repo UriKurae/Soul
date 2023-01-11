@@ -6,6 +6,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Soul/Scene/SceneSerializer.h"
+
 namespace Soul
 {
 	EditorLayer::EditorLayer()
@@ -59,7 +61,6 @@ namespace Soul
 			m_CameraEntity.AddComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
 
 			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
-
 		}
 
 		void EditorLayer::OnDetach()
@@ -136,6 +137,18 @@ namespace Soul
 			{
 				if (ImGui::BeginMenu("File"))
 				{
+					if (ImGui::MenuItem("Save"))
+					{
+						SceneSerializer serializer(m_ActiveScene);
+						serializer.Serialize("assets/scenes/Example.soul");
+					}
+
+					if (ImGui::MenuItem("Load"))
+					{
+						SceneSerializer serializer(m_ActiveScene);
+						serializer.Deserialize("assets/scenes/Example.soul");
+					}
+
 					if (ImGui::MenuItem("Exit")) Soul::Application::Get().Close();
 					ImGui::EndMenu();
 				}
