@@ -8,6 +8,8 @@
 
 #include "Soul/Scene/SceneSerializer.h"
 
+#include "Soul/Utils/PlatformUtils.h"
+
 namespace Soul
 {
 	EditorLayer::EditorLayer()
@@ -137,17 +139,14 @@ namespace Soul
 			{
 				if (ImGui::BeginMenu("File"))
 				{
-					if (ImGui::MenuItem("Save"))
-					{
-						SceneSerializer serializer(m_ActiveScene);
-						serializer.Serialize("assets/scenes/Example.soul");
-					}
+					if (ImGui::MenuItem("New", "Ctrl+N"))
+						NewScene();
 
-					if (ImGui::MenuItem("Load"))
-					{
-						SceneSerializer serializer(m_ActiveScene);
-						serializer.Deserialize("assets/scenes/Example.soul");
-					}
+					if (ImGui::MenuItem("Open...", "Ctrl+O"))
+						OpenScene();
+
+					if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
+						SaveSceneAs();
 
 					if (ImGui::MenuItem("Exit")) Soul::Application::Get().Close();
 					ImGui::EndMenu();
@@ -188,6 +187,73 @@ namespace Soul
 
 		void EditorLayer::OnEvent(Event& event)
 		{
+			EventDispatcher dispatcher(event);
+			dispatcher.Dispatch<KeyPressedEvent>(SL_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
+		}
 
+		bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
+		{
+			if (e.GetRepeatCount() > 0)
+				return false;
+
+			bool control = Input::IsKeyPressed(Key::LeftControl) || Input::IsKeyPressed(Key::RightControl);
+			bool shift = Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift);
+
+			switch (e.GetKeyCode())
+			{
+			case Key::N:
+			{
+				if (control)
+					NewScene();
+
+				break;
+			}
+			case Key::O:
+			{
+				if (control)
+					OpenScene();
+
+				break;
+			}
+			case Key::S:
+			{
+				if (control && shift)
+					SaveSceneAs();
+
+				break;
+			}
+
+			}
+			return true;
+		}
+		void EditorLayer::NewScene()
+		{
+			m_ActiveScene = std::make_shared<Scene>();
+			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+		}
+
+		void EditorLayer::OpenScene()
+		{
+			std::string filePath = FileDialogs::OpenFile("Soul Scene (*.soul)\0*.soul\0");
+			if (!filePath.empty())
+			{
+				m_ActiveScene = std::make_shared<Scene>();
+				m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+
+
+				SceneSerializer serializer(m_ActiveScene);
+				serializer.Deserialize(filePath);
+			}
+		}
+
+		void EditorLayer::SaveSceneAs()
+		{
+			std::string filepath = FileDialogs::SaveFile("Soul Scene (*.soul)\0*.soul\0");
+
+			if (!filepath.empty())
+			{
+				SceneSerializer serializer(m_ActiveScene);
+				serializer.Serialize(filepath);
+			}
 		}
 }

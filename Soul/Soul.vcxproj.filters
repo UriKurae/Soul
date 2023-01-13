@@ -1404,6 +1404,7 @@
     <ClInclude Include="src\Soul\Scene\SceneSerializer.h">
       <Filter>src\Soul\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Soul\Utils\PlatformUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1490,5 +1491,6 @@
     <ClCompile Include="src\Soul\Scene\SceneSerializer.cpp">
       <Filter>src\Soul\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp" />
   </ItemGroup>
 </Project>
