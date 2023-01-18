@@ -22,6 +22,13 @@ namespace Soul
 		// TODO: Set uniforms for camera perspective
 	}
 
+	void Renderer::BeginScene(const EditorCamera& camera)
+	{
+		glm::mat4 viewProj = camera.GetViewProjection();
+
+		// TODO: Pass uniform for the camera.
+	}
+
 	void Renderer::EndScene()
 	{
 

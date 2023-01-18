@@ -63,6 +63,8 @@ namespace Soul
 			m_CameraEntity.AddComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
 
 			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+
+			m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
 		}
 
 		void EditorLayer::OnDetach()
@@ -72,12 +74,23 @@ namespace Soul
 
 		void EditorLayer::OnUpdate(Soul::Timestep ts)
 		{
+			if (FramebufferSpecification spec = m_Framebuffer->GetSpecification();
+				m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized framebuffer is invalid
+				(spec.width != m_ViewportSize.x || spec.height != m_ViewportSize.y))
+			{
+				m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+				m_EditorCamera.SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
+			}
+
 			m_Framebuffer->Bind();
 			Soul::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 			Soul::RenderCommand::Clear();
 	
 			// Update Scene
-			m_ActiveScene->OnUpdate(ts);
+		
+			m_EditorCamera.OnUpdate(ts);
+
+			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
 			auto textureShader = m_ShaderLibrary.Get("Texture");
 
@@ -187,6 +200,8 @@ namespace Soul
 
 		void EditorLayer::OnEvent(Event& event)
 		{
+			m_EditorCamera.OnEvent(event);
+
 			EventDispatcher dispatcher(event);
 			dispatcher.Dispatch<KeyPressedEvent>(SL_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
 		}

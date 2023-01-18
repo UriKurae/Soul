@@ -1405,6 +1405,7 @@
       <Filter>src\Soul\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Soul\Utils\PlatformUtils.h" />
+    <ClInclude Include="src\Soul\Renderer\EditorCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1492,5 +1493,6 @@
       <Filter>src\Soul\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp" />
+    <ClCompile Include="src\Soul\Renderer\EditorCamera.cpp" />
   </ItemGroup>
 </Project>

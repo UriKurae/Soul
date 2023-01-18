@@ -53,7 +53,22 @@ namespace Soul
 		m_Registry.destroy(entity);
 	}
 
-	void Scene::OnUpdate(Timestep ts)
+	void Scene::OnUpdateEditor(Timestep ts, EditorCamera& camera)
+	{
+		// TODO: Render things
+		Renderer::BeginScene(camera);
+
+		auto view = m_Registry.view<TransformComponent>();
+		for (auto entity : view)
+		{
+			TransformComponent& transform = view.get<TransformComponent>(entity);
+			
+		}
+
+		Renderer::EndScene();
+	}
+
+	void Scene::OnUpdateRuntime(Timestep ts)
 	{
 		Camera* mainCamera = nullptr;
 		glm::mat4 cameraTransform;

@@ -3,6 +3,8 @@
 #include "Soul.h"
 #include "Panels/SceneHierarchyPanel.h"
 
+#include "Soul/Renderer/EditorCamera.h"
+
 namespace Soul
 {
 	class EditorLayer : public Layer
@@ -36,6 +38,9 @@ namespace Soul
 		Ref<Texture2D> m_Texture, m_ZoroTexture;
 
 		Ref<Scene> m_ActiveScene;
+		
+		EditorCamera m_EditorCamera;
+		
 		Entity m_CameraEntity;
 
 		bool m_ViewportFocused = false;

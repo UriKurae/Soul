@@ -1,8 +1,9 @@
 #pragma once
 
-#include "entt.hpp"
-
 #include "Soul/Core/Timestep.h"
+#include "Soul/Renderer/EditorCamera.h"
+
+#include "entt.hpp"
 
 namespace Soul
 {
@@ -17,7 +18,8 @@ namespace Soul
 		Entity CreateEntity(const std::string& name = std::string());
 		void DestroyEntity(Entity entity);
 
-		void OnUpdate(Timestep ts);
+		void OnUpdateEditor(Timestep ts, EditorCamera& camera);
+		void OnUpdateRuntime(Timestep ts);
 	private:
 		template<typename T>
 		void OnComponentAdded(Entity entity, T& component);
