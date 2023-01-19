@@ -2,7 +2,7 @@
 #include "Scene.h"
 
 #include "Components.h"
-#include "Soul/Renderer/Renderer.h"
+
 
 #include <glm/glm.hpp>
 
@@ -12,24 +12,35 @@ namespace Soul
 {
 	Scene::Scene()
 	{
-#if EXAMPLE_CODE
-		entt::entity entity = m_Registry.create();
-		m_Registry.emplace<TransformComponent>(entity, glm::mat4(1.0f));
+		vao = VertexArray::Create();
+		vao->Bind();
 
-		TransformComponent& transform = m_Registry.get<TransformComponent>(entity);
-
-		auto view = m_Registry.view<TransformComponent>();
-		for (auto entity : view)
+		float squareVertices[5 * 4] =
 		{
-			TransformComponent& trans = view.get<TransformComponent>(entity);
-		}
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
+		};
 
-		auto group = m_Registry.group<TransformComponent>(entt::get<MeshComponent>);
-		for (auto entity : group)
-		{
-			auto& [tran, mesh] = group.get<TransformComponent, MeshComponent>(entity);
-		}
-#endif // EXAMPLE_CODE
+		vbo = VertexBuffer::Create(squareVertices, sizeof(squareVertices));
+		vbo->SetLayout({
+			   { Soul::ShaderDataType::Float3, "a_Position" },
+			   { Soul::ShaderDataType::Float2, "a_TexCoord" }			   
+			});
+		vao->AddVertexBuffer(vbo);
+
+		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
+		ebo = IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
+		vao->SetIndexBuffer(ebo);
+
+
+		shaderExample = shaderLib.Load("assets/shaders/Texture.glsl");
+
+		shaderExample->Bind();
+		shaderExample->UploadUniformInt("u_Texture", 0);
+		texture = Texture2D::Create("assets/textures/dog.jpg");
+
 
 	}
 
@@ -63,6 +74,9 @@ namespace Soul
 		{
 			TransformComponent& transform = view.get<TransformComponent>(entity);
 			
+			
+			texture->Bind();
+			Renderer::Submit(shaderExample, vao, transform.GetTransform());
 		}
 
 		Renderer::EndScene();

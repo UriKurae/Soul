@@ -17,8 +17,13 @@ namespace Soul
 		static void BeginScene(const EditorCamera& camera);
 		static void EndScene();
 
-		static void Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray);
+		static void Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform);
 
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
+		
+		struct SceneData
+		{
+			glm::mat4 viewProjectionMatrix;
+		};
 	};
 }

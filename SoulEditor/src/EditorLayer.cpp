@@ -15,39 +15,12 @@ namespace Soul
 	EditorLayer::EditorLayer()
 			: Layer("Editor")
 	{
-			m_SquareVA = Soul::VertexArray::Create();
-			float squareVertices[5 * 4] =
-			{
-				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-				 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-				 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-				-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
-			};
-
-			Soul::Ref<Soul::VertexBuffer> squareVB;
-			squareVB = Soul::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
-			squareVB->SetLayout({
-				{ Soul::ShaderDataType::Float3, "a_Position" },
-				{ Soul::ShaderDataType::Float2, "a_TexCoord" }
-				});
-			m_SquareVA->AddVertexBuffer(squareVB);
-
-			uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-			Soul::Ref<Soul::IndexBuffer> squareIB;
-			squareIB = Soul::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
-			m_SquareVA->SetIndexBuffer(squareIB);
-
-			auto textureShader = m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
-
-
-			std::dynamic_pointer_cast<Soul::OpenGLShader>(textureShader)->Bind();
-			std::dynamic_pointer_cast<Soul::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 	}
 
 		void EditorLayer::OnAttach()
 		{
-			m_Texture = Soul::Texture2D::Create("assets/textures/dog.jpg");
-			m_ZoroTexture = Soul::Texture2D::Create("assets/textures/zoro.png");
+			//m_Texture = Soul::Texture2D::Create("assets/textures/dog.jpg");
+			//m_ZoroTexture = Soul::Texture2D::Create("assets/textures/zoro.png");
 
 			Soul::FramebufferSpecification fbSpec;
 			fbSpec.width = 1280;
@@ -56,15 +29,17 @@ namespace Soul
 
 			m_ActiveScene = std::make_shared<Scene>();
 			
-			auto square = m_ActiveScene->CreateEntity("Square");
+			// TODO: May need it later
+			/*auto square = m_ActiveScene->CreateEntity("Square");
 			square.GetComponent<TagComponent>().tag;
-
+			
 			m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
-			m_CameraEntity.AddComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+			m_CameraEntity.AddComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));*/
+			
 
 			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 
-			m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
+			m_EditorCamera = EditorCamera(45.0f, 1.778f, 0.1f, 1000.0f);
 		}
 
 		void EditorLayer::OnDetach()
@@ -92,13 +67,14 @@ namespace Soul
 
 			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
-			auto textureShader = m_ShaderLibrary.Get("Texture");
-
-			m_Texture->Bind();
-			Soul::Renderer::Submit(textureShader, m_SquareVA);
-
-			m_ZoroTexture->Bind();
-			Soul::Renderer::Submit(textureShader, m_SquareVA);
+			// TODO: May need it later
+			//auto textureShader = m_ShaderLibrary.Get("Texture");
+			
+			//m_Texture->Bind();
+			//Soul::Renderer::Submit(textureShader, m_SquareVA, glm::mat4(1.0f));
+			//
+			//m_ZoroTexture->Bind();
+			//Soul::Renderer::Submit(textureShader, m_SquareVA, glm::mat4(1.0f));
 
 			m_Framebuffer->Unbind();
 		}

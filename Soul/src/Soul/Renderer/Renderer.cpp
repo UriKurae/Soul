@@ -2,12 +2,17 @@
 #include "Renderer.h"
 
 #include "Platform/OpenGL/OpenGLShader.h"
+#include <Platform/OpenGL/OpenGLTexture.h>
 
 namespace Soul
 {
+	
+	std::unique_ptr<Renderer::SceneData> sceneData = std::make_unique<Renderer::SceneData>();
+
 	void Renderer::Init()
 	{
 		RenderCommand::Init();
+
 	}
 
 	void Renderer::OnWindowResize(uint32_t width, uint32_t height)
@@ -19,14 +24,11 @@ namespace Soul
 	{
 		glm::mat4 viewProj = camera.GetProjection() * glm::inverse(transform);
 
-		// TODO: Set uniforms for camera perspective
 	}
 
 	void Renderer::BeginScene(const EditorCamera& camera)
 	{
-		glm::mat4 viewProj = camera.GetViewProjection();
-
-		// TODO: Pass uniform for the camera.
+		sceneData->viewProjectionMatrix = camera.GetViewProjection();
 	}
 
 	void Renderer::EndScene()
@@ -34,8 +36,12 @@ namespace Soul
 
 	}
 
-	void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray)
+	void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform)
 	{
+		shader->Bind();
+		shader->UploadUniformMat4("u_ViewProjection", sceneData->viewProjectionMatrix);
+		shader->UploadUniformMat4("u_Transform", transform);
+
 		vertexArray->Bind();
 		RenderCommand::DrawIndexed(vertexArray);
 	}
