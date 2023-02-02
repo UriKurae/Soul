@@ -2,9 +2,8 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
-
 #include "Soul/Renderer/Camera.h"
+#include "Soul/Utils/Model.h"
 
 namespace Soul
 {
@@ -51,5 +50,13 @@ namespace Soul
 		CameraComponent(const CameraComponent&) = default;
 		CameraComponent(const glm::mat4& projection)
 			: camera(projection) {}
+	};
+
+	struct MeshComponent
+	{
+		MeshComponent() = default;
+		MeshComponent(const MeshComponent&) = default;
+	
+		std::shared_ptr<Model> model;
 	};
 }

@@ -225,9 +225,9 @@ namespace Soul
 
 		if (ImGui::BeginPopup("AddComponent"))
 		{
-			if (ImGui::MenuItem("Camera"))
+			if (ImGui::MenuItem("MeshComponent"))
 			{
-				//m_SelectionContext.AddComponent<CameraComponent>();
+				m_SelectionContext.AddComponent<MeshComponent>();
 				ImGui::CloseCurrentPopup();
 			}
 

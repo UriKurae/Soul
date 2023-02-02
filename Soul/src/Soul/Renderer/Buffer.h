@@ -1,5 +1,7 @@
 #pragma once
 
+#include <glm/glm.hpp>
+
 namespace Soul
 {
 	enum class ShaderDataType
@@ -31,6 +33,13 @@ namespace Soul
 		SL_CORE_ASSERT(false, "Unknown ShaderDataType");
 		return 0;
 	}
+
+	struct Vertex
+	{
+		glm::vec3 positions;
+		glm::vec3 normals;
+		glm::vec2 texCoords;
+	};
 
 	struct BufferElement
 	{
@@ -115,6 +124,7 @@ namespace Soul
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 
 		static Ref<VertexBuffer> Create(float* vertices, uint32_t size);
+		static Ref<VertexBuffer> Create(std::vector<Vertex>& vertices, uint32_t size);
 	};
 
 	class IndexBuffer

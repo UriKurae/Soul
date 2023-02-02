@@ -72,13 +72,13 @@ public:
 
 		auto textureShader = m_ShaderLibrary.Get("Texture");
 
-		m_Texture->Bind();
-		Soul::Renderer::Submit(textureShader, m_SquareVA);
-
-		m_ZoroTexture->Bind();
-		Soul::Renderer::Submit(textureShader, m_SquareVA);
-
-		Soul::Renderer::EndScene();
+		//m_Texture->Bind();
+		//Soul::Renderer::Submit(textureShader, m_SquareVA);
+		//
+		//m_ZoroTexture->Bind();
+		//Soul::Renderer::Submit(textureShader, m_SquareVA);
+		//
+		//Soul::Renderer::EndScene();
 		m_Framebuffer->Unbind();
 	}
 

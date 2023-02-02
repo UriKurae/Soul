@@ -20,12 +20,14 @@ workspace "Soul"
     IncludeDir["stb_image"] = "Soul/vendor/stb_image"
     IncludeDir["entt"] = "Soul/vendor/entt/include"
     IncludeDir["yaml_cpp"] = "Soul/vendor/yaml-cpp/include"
+    IncludeDir["Assimp"] = "Soul/vendor/Assimp/include"
 
     group "Dependencies"
         include "Soul/vendor/GLFW"
         include "Soul/vendor/Glad"
         include "Soul/vendor/ImGui"
         include "Soul/vendor/yaml-cpp"
+        include "Soul/vendor/Assimp"
 
     group ""
 
@@ -67,7 +69,8 @@ workspace "Soul"
             "%{IncludeDir.glm}",
             "%{IncludeDir.stb_image}",
             "%{IncludeDir.entt}",
-            "%{IncludeDir.yaml_cpp}"
+            "%{IncludeDir.yaml_cpp}",
+            "%{IncludeDir.Assimp}"
         }
 
         links
@@ -76,7 +79,8 @@ workspace "Soul"
             "Glad",
             "ImGui",
             "yaml-cpp",
-            "opengl32.lib"
+            "opengl32.lib",
+            "Assimp"
         }
 
         filter "system:windows"

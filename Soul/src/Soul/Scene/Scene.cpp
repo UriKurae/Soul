@@ -3,7 +3,6 @@
 
 #include "Components.h"
 
-
 #include <glm/glm.hpp>
 
 #include "Entity.h"
@@ -12,7 +11,7 @@ namespace Soul
 {
 	Scene::Scene()
 	{
-		vao = VertexArray::Create();
+		/*vao = VertexArray::Create();
 		vao->Bind();
 
 		float squareVertices[5 * 4] =
@@ -32,8 +31,7 @@ namespace Soul
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
 		ebo = IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
-		vao->SetIndexBuffer(ebo);
-
+		vao->SetIndexBuffer(ebo);*/
 
 		shaderExample = shaderLib.Load("assets/shaders/Texture.glsl");
 
@@ -41,7 +39,10 @@ namespace Soul
 		shaderExample->UploadUniformInt("u_Texture", 0);
 		texture = Texture2D::Create("assets/textures/dog.jpg");
 
-
+		testModel = std::make_shared<Model>("assets/Models/backpack/backpack.obj");
+	
+		int a = 0;
+		a++;
 	}
 
 	Scene::~Scene()
@@ -56,6 +57,9 @@ namespace Soul
 		auto& tag = entity.AddComponent<TagComponent>();
 		tag.tag = name.empty() ? "Entity" : name;
 
+		auto& mesh = entity.AddComponent<MeshComponent>();
+		mesh.model = testModel;
+
 		return entity;
 	}
 
@@ -69,14 +73,13 @@ namespace Soul
 		// TODO: Render things
 		Renderer::BeginScene(camera);
 
-		auto view = m_Registry.view<TransformComponent>();
+		auto view = m_Registry.view<MeshComponent>();
 		for (auto entity : view)
 		{
-			TransformComponent& transform = view.get<TransformComponent>(entity);
-			
-			
+			MeshComponent& mesh = view.get<MeshComponent>(entity);
+			TransformComponent& transform = m_Registry.get<TransformComponent>(entity);
 			texture->Bind();
-			Renderer::Submit(shaderExample, vao, transform.GetTransform());
+			mesh.model->Draw(shaderExample, transform.GetTransform());
 		}
 
 		Renderer::EndScene();
@@ -125,6 +128,12 @@ namespace Soul
 
 	template<>
 	void Scene::OnComponentAdded<TransformComponent>(Entity entity, TransformComponent& component)
+	{
+
+	}
+
+	template<>
+	void Scene::OnComponentAdded<MeshComponent>(Entity entity, MeshComponent& component)
 	{
 
 	}

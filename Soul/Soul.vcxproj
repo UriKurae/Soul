@@ -77,7 +77,7 @@
       <PrecompiledHeaderFile>slpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SL_PLATFORM_WINDOWS;SL_BUILD_DLL;GLFW_INCLUDE_NONE;SL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\ImGui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\ImGui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;vendor\Assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -98,7 +98,7 @@
       <PrecompiledHeaderFile>slpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SL_PLATFORM_WINDOWS;SL_BUILD_DLL;GLFW_INCLUDE_NONE;SL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\ImGui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\ImGui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;vendor\Assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -123,7 +123,7 @@
       <PrecompiledHeaderFile>slpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SL_PLATFORM_WINDOWS;SL_BUILD_DLL;GLFW_INCLUDE_NONE;SL_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\ImGui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\ImGui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;vendor\Assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -143,8 +143,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Soul\Renderer\EditorCamera.h" />
-    <ClInclude Include="src\Soul\Scene\SceneSerializer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h" />
@@ -172,6 +170,7 @@
     <ClInclude Include="src\Soul\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Soul\Renderer\Buffer.h" />
     <ClInclude Include="src\Soul\Renderer\Camera.h" />
+    <ClInclude Include="src\Soul\Renderer\EditorCamera.h" />
     <ClInclude Include="src\Soul\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Soul\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Soul\Renderer\RenderCommand.h" />
@@ -183,8 +182,11 @@
     <ClInclude Include="src\Soul\Scene\Components.h" />
     <ClInclude Include="src\Soul\Scene\Entity.h" />
     <ClInclude Include="src\Soul\Scene\Scene.h" />
-    <ClInclude Include="src\slpch.h" />
+    <ClInclude Include="src\Soul\Scene\SceneSerializer.h" />
+    <ClInclude Include="src\Soul\Utils\Mesh.h" />
+    <ClInclude Include="src\Soul\Utils\Model.h" />
     <ClInclude Include="src\Soul\Utils\PlatformUtils.h" />
+    <ClInclude Include="src\slpch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_fixes.hpp" />
@@ -596,9 +598,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp" />
-    <ClCompile Include="src\Soul\Renderer\EditorCamera.cpp" />
-    <ClCompile Include="src\Soul\Scene\SceneSerializer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp" />
@@ -607,6 +606,7 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Soul\Core\Application.cpp" />
     <ClCompile Include="src\Soul\Core\Layer.cpp" />
@@ -615,6 +615,7 @@
     <ClCompile Include="src\Soul\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Soul\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Soul\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Soul\Renderer\EditorCamera.cpp" />
     <ClCompile Include="src\Soul\Renderer\Framebuffer.cpp" />
     <ClCompile Include="src\Soul\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Soul\Renderer\Renderer.cpp" />
@@ -624,6 +625,9 @@
     <ClCompile Include="src\Soul\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Soul\Scene\Entity.cpp" />
     <ClCompile Include="src\Soul\Scene\Scene.cpp" />
+    <ClCompile Include="src\Soul\Scene\SceneSerializer.cpp" />
+    <ClCompile Include="src\Soul\Utils\Mesh.cpp" />
+    <ClCompile Include="src\Soul\Utils\Model.cpp" />
     <ClCompile Include="src\slpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -641,6 +645,9 @@
     </ProjectReference>
     <ProjectReference Include="vendor\yaml-cpp\yaml-cpp.vcxproj">
       <Project>{88F1A057-74BE-FB62-9DD7-E90A890331F1}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\Assimp\Assimp.vcxproj">
+      <Project>{5234E0A7-3ED6-0A7E-2791-1ED213D291CE}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

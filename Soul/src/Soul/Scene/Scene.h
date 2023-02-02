@@ -7,10 +7,11 @@
 #include "Soul/Renderer/Texture.h"
 #include "entt.hpp"
 
-class VertexBuffer;
 
 namespace Soul
 {
+	class VertexBuffer;
+	class Model;
 	class Entity;
 
 	class Scene
@@ -36,6 +37,8 @@ namespace Soul
 		Ref<VertexBuffer> vbo;
 		Ref<IndexBuffer> ebo;
 		Ref<Texture2D> texture;
+
+		std::shared_ptr<Model> testModel;
 
 
 		entt::registry m_Registry;
