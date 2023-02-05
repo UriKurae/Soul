@@ -163,7 +163,10 @@ namespace Soul
 			bool skip = false;
 			for (unsigned int j = 0; j < loadedTextures.size(); ++j)
 			{
-				if (std::strcmp(loadedTextures[j]->GetPath().c_str(), texturePath.c_str()))
+				std::string a = loadedTextures[j]->GetPath().c_str();
+				std::string b = texturePath.c_str();
+				
+				if (std::strcmp(a.c_str(), b.c_str()) == 0)
 				{
 					textures.push_back(loadedTextures[j]);
 					skip = true;

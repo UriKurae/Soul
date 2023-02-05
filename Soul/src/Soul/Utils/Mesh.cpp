@@ -20,7 +20,7 @@ namespace Soul
 	{
 		for (int i = 0; i < textures.size(); ++i)
 		{
-			textures[i]->Bind();
+			textures[i]->Bind(i);
 		}
 	}
 
