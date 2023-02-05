@@ -34,15 +34,15 @@ namespace Soul
 		vao->SetIndexBuffer(ebo);*/
 
 		shaderExample = shaderLib.Load("assets/shaders/Texture.glsl");
-
+		//
 		shaderExample->Bind();
 		shaderExample->UploadUniformInt("u_Texture", 0);
-		texture = Texture2D::Create("assets/textures/dog.jpg");
-
+		//texture = Texture2D::Create("assets/textures/dog.jpg");
+		//
 		testModel = std::make_shared<Model>("assets/Models/backpack/backpack.obj");
-	
-		int a = 0;
-		a++;
+		//
+		//int a = 0;
+		//a++;
 	}
 
 	Scene::~Scene()
@@ -57,6 +57,7 @@ namespace Soul
 		auto& tag = entity.AddComponent<TagComponent>();
 		tag.tag = name.empty() ? "Entity" : name;
 
+		// TODO: Delete this add component, to do it in a better way.
 		auto& mesh = entity.AddComponent<MeshComponent>();
 		mesh.model = testModel;
 
@@ -78,7 +79,7 @@ namespace Soul
 		{
 			MeshComponent& mesh = view.get<MeshComponent>(entity);
 			TransformComponent& transform = m_Registry.get<TransformComponent>(entity);
-			texture->Bind();
+			
 			mesh.model->Draw(shaderExample, transform.GetTransform());
 		}
 

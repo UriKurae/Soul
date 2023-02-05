@@ -3,10 +3,11 @@
 
 namespace Soul
 {
-	Mesh::Mesh(std::vector<Vertex>& vert, std::vector<uint32_t>& ind)
+	Mesh::Mesh(std::vector<Vertex>& vert, std::vector<uint32_t>& ind, std::vector<Ref<Texture2D>>& texts)
 	{
 		vertices = vert;
 		indices = ind;
+		textures = texts;
 		setupMesh();
 	}
 
@@ -15,9 +16,20 @@ namespace Soul
 
 	}
 
+	void Mesh::BindTextures()
+	{
+		for (int i = 0; i < textures.size(); ++i)
+		{
+			textures[i]->Bind();
+		}
+	}
+
 
 	void Mesh::setupMesh()
 	{
+		shaderLib.Load("assets/shaders/Texture.glsl");
+
+
 		vao = VertexArray::Create();
 		vao->Bind();
 

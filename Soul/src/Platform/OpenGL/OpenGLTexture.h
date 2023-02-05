@@ -13,11 +13,13 @@ namespace Soul
 		virtual uint32_t GetWidth() const override { return m_Width; }
 		virtual uint32_t GetHeight() const override { return m_Height; }
 		virtual uint32_t GetRendererID() const override { return m_RendererID; }
+		virtual std::string GetPath() const override { return m_Path; }
 
 		virtual void Bind(uint32_t slot = 0) const override;
 	private:
 		std::string m_Path;
 		uint32_t m_Width, m_Height;
+		std::string type;
 		uint32_t m_RendererID;
 	};
 }

@@ -225,7 +225,7 @@ namespace Soul
 
 		if (ImGui::BeginPopup("AddComponent"))
 		{
-			if (ImGui::MenuItem("MeshComponent"))
+			if (ImGui::MenuItem("Mesh Component") && !m_SelectionContext.HasComponent<MeshComponent>())
 			{
 				m_SelectionContext.AddComponent<MeshComponent>();
 				ImGui::CloseCurrentPopup();
@@ -234,8 +234,7 @@ namespace Soul
 			ImGui::EndPopup();
 		}
 		ImGui::PopItemWidth();
-
-
+	
 		DrawComponent<TransformComponent>("Transform", entity, [](auto& component)
 			{
 				DrawVec3Control("Position", component.translation);
@@ -245,6 +244,15 @@ namespace Soul
 				DrawVec3Control("Scale", component.scale, 1.0f);
 			});
 
+		if (entity.HasComponent<MeshComponent>())
+		{
+			DrawComponent<MeshComponent>("Mesh Component", entity, [](auto& component)
+				{
+
+				});
+			
+
+		}
 		
 	}
 }
