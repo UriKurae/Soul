@@ -25,6 +25,7 @@ namespace Soul
 		void NewScene();
 		void OpenScene();
 		void SaveSceneAs();
+		void ImportModel();
 	private:
 		ShaderLibrary m_ShaderLibrary;
 		

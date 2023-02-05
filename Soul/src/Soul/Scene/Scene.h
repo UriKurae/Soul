@@ -21,6 +21,7 @@ namespace Soul
 		~Scene();
 
 		Entity CreateEntity(const std::string& name = std::string());
+		Entity ImportModel(const std::string& nam);
 		void DestroyEntity(Entity entity);
 
 		void OnUpdateEditor(Timestep ts, EditorCamera& camera);
@@ -38,7 +39,7 @@ namespace Soul
 		Ref<IndexBuffer> ebo;
 		Ref<Texture2D> texture;
 
-		std::shared_ptr<Model> testModel;
+		std::shared_ptr<Model> currentModel;
 
 
 		entt::registry m_Registry;

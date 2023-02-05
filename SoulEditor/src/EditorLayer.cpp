@@ -134,6 +134,9 @@ namespace Soul
 					if (ImGui::MenuItem("Open...", "Ctrl+O"))
 						OpenScene();
 
+					if (ImGui::MenuItem("Import Model...", "Ctrl+M"))
+						ImportModel();
+
 					if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
 						SaveSceneAs();
 
@@ -143,14 +146,14 @@ namespace Soul
 
 				ImGui::EndMenuBar();
 			}
-
-			m_SceneHierarchyPanel.OnImGuiRender();
-
-			ImGui::Begin("Settings");
 			
+			ImGui::Begin("Settings");
+
 			ImGui::Text("Renderer");
 
 			ImGui::End();
+
+			m_SceneHierarchyPanel.OnImGuiRender();
 
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0,0 });
 			ImGui::Begin("Viewport");
@@ -245,6 +248,16 @@ namespace Soul
 			{
 				SceneSerializer serializer(m_ActiveScene);
 				serializer.Serialize(filepath);
+			}
+		}
+
+		void EditorLayer::ImportModel()
+		{
+			std::string filePath = FileDialogs::OpenFile("Supported Files(*.fbx, *obj)\0*.fbx;*.obj;\0");
+			if (!filePath.empty())
+			{
+				std::replace(filePath.begin(), filePath.end(), '\\', '/');
+				m_ActiveScene->ImportModel(filePath);
 			}
 		}
 }

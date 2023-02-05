@@ -39,7 +39,7 @@ namespace Soul
 		shaderExample->UploadUniformInt("u_Texture", 0);
 		//texture = Texture2D::Create("assets/textures/dog.jpg");
 		//
-		testModel = std::make_shared<Model>("assets/Models/backpack/backpack.obj");
+		
 		//
 		//int a = 0;
 		//a++;
@@ -57,9 +57,21 @@ namespace Soul
 		auto& tag = entity.AddComponent<TagComponent>();
 		tag.tag = name.empty() ? "Entity" : name;
 
-		// TODO: Delete this add component, to do it in a better way.
+		return entity;
+	}
+
+	Entity Scene::ImportModel(const std::string& path)
+	{
+		currentModel = std::make_shared<Model>(path);
+
+		Entity entity = { m_Registry.create(), this };
+		entity.AddComponent<TransformComponent>();
+		auto& tag = entity.AddComponent<TagComponent>();
+		int index = path.find_last_of('/');
+		tag.tag = path.substr(index+1, path.find_last_of('.') - (index + 1));
+
 		auto& mesh = entity.AddComponent<MeshComponent>();
-		mesh.model = testModel;
+		mesh.model = currentModel;
 
 		return entity;
 	}

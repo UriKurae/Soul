@@ -35,10 +35,11 @@ namespace Soul
 
 		if (ImGui::BeginPopupContextWindow(0, 1, false))
 		{
-			if (ImGui::MenuItem("Create empty Entity"))
-			{
-				m_Context->CreateEntity("Empty Entity");
-			}
+			// TODO: For now, since it's not a game engine itself, we will import models from the file tab.
+			//if (ImGui::MenuItem("Create empty Entity"))
+			//{
+			//	m_Context->CreateEntity("Empty Entity");
+			//}
 			
 			ImGui::EndPopup();
 		}
