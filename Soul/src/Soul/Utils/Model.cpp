@@ -2,6 +2,8 @@
 #include "Model.h"
 #include "Soul/Renderer/Renderer.h"
 
+#include <stack>
+
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -22,10 +24,9 @@ namespace Soul
 			break;
 		default:
 			return aiTextureType_UNKNOWN;
-
 		}
-			
 	}
+
 	Model::Model(std::string path)
 	{
 		LoadModel(path);
@@ -38,7 +39,6 @@ namespace Soul
 
 		for (unsigned int i = 0; i < meshes.size(); ++i)
 		{
-			
 			meshes[i].BindTextures();
 			Renderer::Submit(shader, meshes[i].GetVertexArrayObject(), transform);
 		}
@@ -63,7 +63,33 @@ namespace Soul
 
 	void Model::ProcessNode(aiNode* node, const aiScene* scene)
 	{
-		for (unsigned int i = 0; i < node->mNumMeshes; ++i)
+		std::stack<aiNode*> nodes;
+
+		for (unsigned int i = 0; i < node->mNumChildren; ++i)
+		{
+			nodes.push(node->mChildren[i]);
+		}
+
+		while (!nodes.empty())
+		{
+			aiNode *node = nodes.top();
+			nodes.pop();
+
+			for (unsigned int i = 0; i < node->mNumMeshes; ++i)
+			{
+				aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
+				meshes.push_back(processMesh(mesh, scene));
+			}
+
+			for (int i = 0; i < node->mNumChildren; i++)
+			{
+				nodes.push(node->mChildren[i]);
+			}
+		}
+
+
+		// TODO: This is the old way, recursive, not deleting yet just in case.
+		/*for (unsigned int i = 0; i < node->mNumMeshes; ++i)
 		{
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 			meshes.push_back(processMesh(mesh, scene));
@@ -72,7 +98,7 @@ namespace Soul
 		for (unsigned int i = 0; i < node->mNumChildren; ++i)
 		{
 			ProcessNode(node->mChildren[i], scene);
-		}
+		}*/
 	}
 
 	Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
@@ -123,6 +149,7 @@ namespace Soul
 
 		return Mesh(vertices, indices, texts);
 	}
+
 	std::vector<Ref<Texture2D>> Model::LoadMaterialTextures(aiMaterial* mat, TextureType type, std::string typeName)
 	{
 		std::vector<Ref<Texture2D>> textures;
