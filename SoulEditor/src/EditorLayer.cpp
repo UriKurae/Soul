@@ -67,15 +67,6 @@ namespace Soul
 
 			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
-			// TODO: May need it later
-			//auto textureShader = m_ShaderLibrary.Get("Texture");
-			
-			//m_Texture->Bind();
-			//Soul::Renderer::Submit(textureShader, m_SquareVA, glm::mat4(1.0f));
-			//
-			//m_ZoroTexture->Bind();
-			//Soul::Renderer::Submit(textureShader, m_SquareVA, glm::mat4(1.0f));
-
 			m_Framebuffer->Unbind();
 		}
 
@@ -147,11 +138,6 @@ namespace Soul
 				ImGui::EndMenuBar();
 			}
 			
-			ImGui::Begin("Settings");
-
-			ImGui::Text("Renderer");
-
-			ImGui::End();
 
 			m_SceneHierarchyPanel.OnImGuiRender();
 

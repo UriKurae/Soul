@@ -1419,6 +1419,9 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="src\Soul\Scene\Lights\Light.h" />
+    <ClInclude Include="src\Soul\Scene\Lights\DirectionalLight.h" />
+    <ClInclude Include="src\Soul\Scene\Lights\Point.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1517,5 +1520,7 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
+    <ClCompile Include="src\Soul\Scene\Lights\DirectionalLight.cpp" />
+    <ClCompile Include="src\Soul\Scene\Lights\Point.cpp" />
   </ItemGroup>
 </Project>

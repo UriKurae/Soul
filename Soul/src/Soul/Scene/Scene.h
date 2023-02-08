@@ -13,6 +13,7 @@ namespace Soul
 	class VertexBuffer;
 	class Model;
 	class Entity;
+	enum class LightType;
 
 	class Scene
 	{
@@ -21,8 +22,12 @@ namespace Soul
 		~Scene();
 
 		Entity CreateEntity(const std::string& name = std::string());
+		Entity CreateLight(LightType lightType);
 		Entity ImportModel(const std::string& nam);
 		void DestroyEntity(Entity entity);
+
+		void UploadLightUniforms(Ref<Shader> desiredShader);
+		int RetieveTotalLights(LightType type);
 
 		void OnUpdateEditor(Timestep ts, EditorCamera& camera);
 		void OnUpdateRuntime(Timestep ts);
@@ -41,6 +46,8 @@ namespace Soul
 
 		std::shared_ptr<Model> currentModel;
 
+		
+		Ref<Shader> lightShader;
 
 		entt::registry m_Registry;
 

@@ -35,11 +35,20 @@ namespace Soul
 
 		if (ImGui::BeginPopupContextWindow(0, 1, false))
 		{
-			// TODO: For now, since it's not a game engine itself, we will import models from the file tab.
-			//if (ImGui::MenuItem("Create empty Entity"))
-			//{
-			//	m_Context->CreateEntity("Empty Entity");
-			//}
+			if (ImGui::TreeNode("Create Light"))
+			{
+				if (ImGui::Selectable("Directional Light"))
+				{
+					m_Context->CreateLight(LightType::DIRECTIONAL_LIGHT);
+				}
+
+				if (ImGui::Selectable("Point Light"))
+				{
+					m_Context->CreateLight(LightType::POINT_LIGHT);
+				}
+				
+				ImGui::TreePop();
+			}
 			
 			ImGui::EndPopup();
 		}
@@ -251,9 +260,15 @@ namespace Soul
 				{
 
 				});
-			
-
 		}
-		
+
+
+		if (entity.HasComponent<LightComponent>())
+		{
+			DrawComponent<LightComponent>("Light", entity, [](auto& component)
+				{
+					
+				});
+		}	
 	}
 }

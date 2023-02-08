@@ -181,6 +181,9 @@
     <ClInclude Include="src\Soul\Renderer\VertexArray.h" />
     <ClInclude Include="src\Soul\Scene\Components.h" />
     <ClInclude Include="src\Soul\Scene\Entity.h" />
+    <ClInclude Include="src\Soul\Scene\Lights\DirectionalLight.h" />
+    <ClInclude Include="src\Soul\Scene\Lights\Light.h" />
+    <ClInclude Include="src\Soul\Scene\Lights\Point.h" />
     <ClInclude Include="src\Soul\Scene\Scene.h" />
     <ClInclude Include="src\Soul\Scene\SceneSerializer.h" />
     <ClInclude Include="src\Soul\Utils\Mesh.h" />
@@ -624,6 +627,8 @@
     <ClCompile Include="src\Soul\Renderer\Texture.cpp" />
     <ClCompile Include="src\Soul\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Soul\Scene\Entity.cpp" />
+    <ClCompile Include="src\Soul\Scene\Lights\DirectionalLight.cpp" />
+    <ClCompile Include="src\Soul\Scene\Lights\Point.cpp" />
     <ClCompile Include="src\Soul\Scene\Scene.cpp" />
     <ClCompile Include="src\Soul\Scene\SceneSerializer.cpp" />
     <ClCompile Include="src\Soul\Utils\Mesh.cpp" />
