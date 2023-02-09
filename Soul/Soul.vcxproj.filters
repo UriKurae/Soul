@@ -1422,6 +1422,7 @@
     <ClInclude Include="src\Soul\Scene\Lights\Light.h" />
     <ClInclude Include="src\Soul\Scene\Lights\DirectionalLight.h" />
     <ClInclude Include="src\Soul\Scene\Lights\Point.h" />
+    <ClInclude Include="src\Soul\Renderer\Material.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1522,5 +1523,6 @@
     </ClCompile>
     <ClCompile Include="src\Soul\Scene\Lights\DirectionalLight.cpp" />
     <ClCompile Include="src\Soul\Scene\Lights\Point.cpp" />
+    <ClCompile Include="src\Soul\Renderer\Material.cpp" />
   </ItemGroup>
 </Project>

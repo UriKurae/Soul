@@ -173,6 +173,7 @@
     <ClInclude Include="src\Soul\Renderer\EditorCamera.h" />
     <ClInclude Include="src\Soul\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Soul\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Soul\Renderer\Material.h" />
     <ClInclude Include="src\Soul\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Soul\Renderer\Renderer.h" />
     <ClInclude Include="src\Soul\Renderer\RendererAPI.h" />
@@ -620,6 +621,7 @@
     <ClCompile Include="src\Soul\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Soul\Renderer\EditorCamera.cpp" />
     <ClCompile Include="src\Soul\Renderer\Framebuffer.cpp" />
+    <ClCompile Include="src\Soul\Renderer\Material.cpp" />
     <ClCompile Include="src\Soul\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Soul\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Soul\Renderer\RendererAPI.cpp" />
