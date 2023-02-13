@@ -13,7 +13,7 @@ namespace Soul
 {
 	Scene::Scene()
 	{
-		
+		skyBox = std::make_shared<CubeMap>();
 
 		shaderExample = shaderLib.Load("assets/shaders/Texture.glsl");
 		// Setup shader uniforms
@@ -22,6 +22,8 @@ namespace Soul
 		shaderExample->UploadUniformInt("material.specular", 1);
 	
 		shaderExample->Unbind();
+
+
 
 		//texture = Texture2D::Create("assets/textures/dog.jpg");
 		//
@@ -96,6 +98,7 @@ namespace Soul
 	{
 		// TODO: Render things
 		Renderer::BeginScene(camera);
+		skyBox->Draw();
 
 		auto view = m_Registry.view<MeshComponent>();
 		for (auto entity : view)

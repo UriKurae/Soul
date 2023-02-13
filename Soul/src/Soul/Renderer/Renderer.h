@@ -18,6 +18,7 @@ namespace Soul
 		static void EndScene();
 
 		static void Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform);
+		static void SubmitArrays(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, unsigned int indices);
 
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 		

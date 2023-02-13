@@ -5,6 +5,7 @@
 #include "Platform/OpenGL/OpenGLShader.h"
 #include "Soul/Renderer/Renderer.h" // TODO: Move this to cpp
 #include "Soul/Renderer/Texture.h"
+#include <Soul/Renderer/CubeMap.h>
 #include "entt.hpp"
 
 
@@ -43,6 +44,8 @@ namespace Soul
 		Ref<VertexBuffer> vbo;
 		Ref<IndexBuffer> ebo;
 		Ref<Texture2D> texture;
+
+		std::shared_ptr<CubeMap> skyBox;
 
 		std::shared_ptr<Model> currentModel;
 

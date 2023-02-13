@@ -45,4 +45,13 @@ namespace Soul
 		vertexArray->Bind();
 		RenderCommand::DrawIndexed(vertexArray);
 	}
+
+	void Renderer::SubmitArrays(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, unsigned int indices)
+	{
+		shader->Bind();
+		shader->UploadUniformMat4("u_ViewProjection", sceneData->viewProjectionMatrix);
+
+		vertexArray->Bind();
+		RenderCommand::DrawWithArray(vertexArray, indices);
+	}
 }

@@ -31,4 +31,10 @@ namespace Soul
 	{
 		glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 	}
+
+	void OpenGLRendererAPI::DrawArrays(const Ref<VertexArray>& vertexArray, unsigned int indices)
+	{
+		vertexArray->Bind();
+		glDrawArrays(GL_TRIANGLES, 0, indices);
+	}
 }

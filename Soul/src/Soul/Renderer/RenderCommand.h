@@ -30,6 +30,12 @@ namespace Soul
 		{
 			s_RendererAPI->DrawIndexed(vertexArray);
 		}
+
+		inline static void DrawWithArray(const Ref<VertexArray>& vertexArray, unsigned int indices)
+		{
+			s_RendererAPI->DrawArrays(vertexArray, indices);
+		}
+
 	private:
 		static RendererAPI* s_RendererAPI;
 	};
