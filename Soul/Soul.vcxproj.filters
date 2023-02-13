@@ -144,6 +144,9 @@
     <ClInclude Include="src\Soul\Renderer\Camera.h">
       <Filter>src\Soul\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Soul\Renderer\CubeMap.h">
+      <Filter>src\Soul\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Soul\Renderer\EditorCamera.h">
       <Filter>src\Soul\Renderer</Filter>
     </ClInclude>
@@ -1434,9 +1437,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Soul\Renderer\CubeMap.h">
-      <Filter>src\Soul\Renderer</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1488,6 +1488,9 @@
       <Filter>src\Soul\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Soul\Renderer\Buffer.cpp">
+      <Filter>src\Soul\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Soul\Renderer\CubeMap.cpp">
       <Filter>src\Soul\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Soul\Renderer\EditorCamera.cpp">
@@ -1543,9 +1546,6 @@
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Soul\Renderer\CubeMap.cpp">
-      <Filter>src\Soul\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

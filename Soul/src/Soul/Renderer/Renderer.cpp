@@ -29,6 +29,8 @@ namespace Soul
 	void Renderer::BeginScene(const EditorCamera& camera)
 	{
 		sceneData->viewProjectionMatrix = camera.GetViewProjection();
+		sceneData->viewMatrix = camera.GetViewMatrix();
+		sceneData->projectionMatrix = camera.GetProjection();
 	}
 
 	void Renderer::EndScene()
@@ -49,7 +51,8 @@ namespace Soul
 	void Renderer::SubmitArrays(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, unsigned int indices)
 	{
 		shader->Bind();
-		shader->UploadUniformMat4("u_ViewProjection", sceneData->viewProjectionMatrix);
+		shader->UploadUniformMat4("u_View", glm::mat4(glm::mat3(sceneData->viewMatrix)));
+		shader->UploadUniformMat4("u_Projection", sceneData->projectionMatrix);
 
 		vertexArray->Bind();
 		RenderCommand::DrawWithArray(vertexArray, indices);

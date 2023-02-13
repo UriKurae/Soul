@@ -140,7 +140,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Soul\Renderer\CubeMap.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h" />
@@ -168,6 +167,7 @@
     <ClInclude Include="src\Soul\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Soul\Renderer\Buffer.h" />
     <ClInclude Include="src\Soul\Renderer\Camera.h" />
+    <ClInclude Include="src\Soul\Renderer\CubeMap.h" />
     <ClInclude Include="src\Soul\Renderer\EditorCamera.h" />
     <ClInclude Include="src\Soul\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Soul\Renderer\GraphicsContext.h" />
@@ -600,7 +600,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Soul\Renderer\CubeMap.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp" />
@@ -618,6 +617,7 @@
     <ClCompile Include="src\Soul\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Soul\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Soul\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Soul\Renderer\CubeMap.cpp" />
     <ClCompile Include="src\Soul\Renderer\EditorCamera.cpp" />
     <ClCompile Include="src\Soul\Renderer\Framebuffer.cpp" />
     <ClCompile Include="src\Soul\Renderer\Material.cpp" />

@@ -25,6 +25,8 @@ namespace Soul
 		struct SceneData
 		{
 			glm::mat4 viewProjectionMatrix;
+			glm::mat4 viewMatrix;
+			glm::mat4 projectionMatrix;
 		};
 	};
 }

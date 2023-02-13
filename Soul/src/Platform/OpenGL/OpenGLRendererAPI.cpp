@@ -34,7 +34,6 @@ namespace Soul
 
 	void OpenGLRendererAPI::DrawArrays(const Ref<VertexArray>& vertexArray, unsigned int indices)
 	{
-		vertexArray->Bind();
 		glDrawArrays(GL_TRIANGLES, 0, indices);
 	}
 }
