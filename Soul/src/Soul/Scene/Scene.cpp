@@ -98,8 +98,6 @@ namespace Soul
 	{
 		// TODO: Render things
 		Renderer::BeginScene(camera);
-		
-		skyBox->Draw();
 
 		auto view = m_Registry.view<MeshComponent>();
 		for (auto entity : view)
@@ -117,6 +115,8 @@ namespace Soul
 			mesh.model->Draw(shaderExample, transform.GetTransform());
 
 		}
+
+		skyBox->Draw();
 
 		Renderer::EndScene();
 	}
