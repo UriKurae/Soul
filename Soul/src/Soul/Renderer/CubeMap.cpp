@@ -66,8 +66,6 @@ namespace Soul
     void CubeMap::Draw()
     {
         glDepthFunc(GL_LEQUAL);
-        // use cubemap shader
-        // ... set view and projection matrix
         glActiveTexture(cubeMapTexture);
         glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMapTexture);
         Renderer::SubmitArrays(cubeMapShader, vao, 36);

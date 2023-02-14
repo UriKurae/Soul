@@ -79,8 +79,9 @@ void main()
     for(int i = 0; i < totalPointLights; ++i)
         totalLight += CalcPointLight(pointLights[i], norm, FacePos, viewDir);
     
-
     color = vec4(totalLight, 1.0);
+    float gamma = 2.2;
+    color.rgb = pow(color.rgb, vec3(1.0/gamma));
 }
 
 vec3 CalcDirLight(DirectionalLight light, vec3 normal, vec3 viewDir)
@@ -102,19 +103,20 @@ vec3 CalcDirLight(DirectionalLight light, vec3 normal, vec3 viewDir)
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 facePos, vec3 viewDir)
 {
     vec3 lightDir = normalize(light.position - facePos);
-    
+
     vec3 ambient = light.ambient * vec3(texture(material.diffuse, v_TexCoord));
 
     float diff = max(dot(normal, lightDir), 0.0);
     vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, v_TexCoord));
 
+    vec3 halfWayDir = normalize(lightDir + viewDir);
     vec3 reflectDir = reflect(-lightDir, normal);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+    float spec = pow(max(dot(normal, halfWayDir), 0.0), material.shininess);
     vec3 specular = light.specular * spec * vec3(texture(material.specular, v_TexCoord));
 
     float distance = length(light.position - facePos);
     float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
-
+    attenuation = 1.0 / distance;
     ambient *= attenuation;
     diffuse *= attenuation;
     specular *= attenuation;
