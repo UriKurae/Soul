@@ -22,6 +22,12 @@ namespace Soul
 		case TextureType::TEXT_SPECULAR:
 			return aiTextureType_SPECULAR;
 			break;
+		case TextureType::TEXT_NORMAL:
+			return aiTextureType_NORMALS;
+			break;
+		case TextureType::TEXT_HEIGHT:
+			return aiTextureType_HEIGHT;
+			break;
 		default:
 			return aiTextureType_UNKNOWN;
 		}
@@ -86,19 +92,6 @@ namespace Soul
 				nodes.push(node->mChildren[i]);
 			}
 		}
-
-
-		// TODO: This is the old way, recursive, not deleting yet just in case.
-		/*for (unsigned int i = 0; i < node->mNumMeshes; ++i)
-		{
-			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-			meshes.push_back(processMesh(mesh, scene));
-		}
-
-		for (unsigned int i = 0; i < node->mNumChildren; ++i)
-		{
-			ProcessNode(node->mChildren[i], scene);
-		}*/
 	}
 
 	Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
@@ -138,22 +131,26 @@ namespace Soul
 			}
 		}
 
-		if (mesh->mMaterialIndex >= 0)
-		{
-			aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-			std::vector<Ref<Texture2D>> diffuseMaps = LoadMaterialTextures(material, TextureType::TEXT_DIFFUSE, "u_Texture");
-			texts.insert(texts.end(), diffuseMaps.begin(), diffuseMaps.end());
-			std::vector<Ref<Texture2D>> specularMaps = LoadMaterialTextures(material, TextureType::TEXT_SPECULAR, "texture_specular");
-			texts.insert(texts.end(), specularMaps.begin(), specularMaps.end());
-		}
+		//if (mesh->mMaterialIndex >= 0)
+		//{
+		//	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+		//	std::vector<Ref<Texture2D>> diffuseMaps = LoadMaterialTextures(material, TextureType::TEXT_DIFFUSE, "u_Texture");
+		//	texts.insert(texts.end(), diffuseMaps.begin(), diffuseMaps.end());
+		//	std::vector<Ref<Texture2D>> specularMaps = LoadMaterialTextures(material, TextureType::TEXT_SPECULAR, "texture_specular");
+		//	texts.insert(texts.end(), specularMaps.begin(), specularMaps.end());
+		//	std::vector<Ref<Texture2D>> normalMaps = LoadMaterialTextures(material, TextureType::TEXT_HEIGHT, "texture_normal");
+		//	texts.insert(texts.end(), normalMaps.begin(), normalMaps.end());
+		//}
 
 		return Mesh(vertices, indices, texts);
 	}
 
+
 	std::vector<Ref<Texture2D>> Model::LoadMaterialTextures(aiMaterial* mat, TextureType type, std::string typeName)
 	{
 		std::vector<Ref<Texture2D>> textures;
-		for (unsigned int i = 0; i < mat->GetTextureCount(ToAiTextureType(type)); ++i)
+		unsigned int matType = mat->GetTextureCount(ToAiTextureType(type));
+		for (unsigned int i = 0; i < matType; ++i)
 		{
 			aiString str;
 			mat->GetTexture(ToAiTextureType(type), i, &str);

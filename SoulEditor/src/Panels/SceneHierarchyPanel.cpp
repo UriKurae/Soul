@@ -7,6 +7,8 @@
 
 #include "Soul/Scene/Components.h"
 
+#include "Soul/Utils/PlatformUtils.h"
+
 namespace Soul
 {
 	SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& context)
@@ -168,7 +170,7 @@ namespace Soul
 
 		ImGui::PopID();
 	}
-
+	
 	template<typename T, typename UIFunction>
 	static void DrawComponent(const std::string& name, Entity entity, UIFunction uiFunction)
 	{
@@ -241,6 +243,12 @@ namespace Soul
 				ImGui::CloseCurrentPopup();
 			}
 
+			if (ImGui::MenuItem("Material Component") && !m_SelectionContext.HasComponent<MaterialComponent>())
+			{
+				m_SelectionContext.AddComponent<MaterialComponent>();
+				ImGui::CloseCurrentPopup();
+			}
+
 			ImGui::EndPopup();
 		}
 		ImGui::PopItemWidth();
@@ -259,6 +267,55 @@ namespace Soul
 			DrawComponent<MeshComponent>("Mesh Component", entity, [](auto& component)
 				{
 
+				});
+		}
+
+		if (entity.HasComponent<MaterialComponent>())
+		{
+			
+			DrawComponent<MaterialComponent>("Material Component", entity, [](auto& component)
+				{
+					ImGui::Text(("Albedo: " + component.mat->diffuse->GetName()).c_str());
+					ImGui::SameLine();
+					ImGui::PushID(0);
+					if (ImGui::Button("Add"))
+					{
+						std::string filePath = FileDialogs::OpenFile("Supported Files(*.png, *.jpg)\0*.png;*.jpg;\0");
+						if (!filePath.empty())
+						{
+							std::replace(filePath.begin(), filePath.end(), '\\', '/');
+							component.mat->AddDiffuse(filePath);
+						}
+					}
+					ImGui::PopID();
+
+					ImGui::Text(("Specular: " + component.mat->specular->GetName()).c_str());
+					ImGui::SameLine();
+					ImGui::PushID(1);
+					if (ImGui::Button("Add"))
+					{
+						std::string filePath = FileDialogs::OpenFile("Supported Files(*.png, *.jpg)\0*.png;*.jpg;\0");
+						if (!filePath.empty())
+						{
+							std::replace(filePath.begin(), filePath.end(), '\\', '/');
+							component.mat->AddSpecular(filePath);
+						}
+					}
+					ImGui::PopID();
+
+					ImGui::Text(("Normal: " + component.mat->normal->GetName()).c_str());
+					ImGui::SameLine();
+					ImGui::PushID(2);
+					if (ImGui::Button("Add"))
+					{
+						std::string filePath = FileDialogs::OpenFile("Supported Files(*.png, *.jpg)\0*.png;*.jpg;\0");
+						if (!filePath.empty())
+						{
+							std::replace(filePath.begin(), filePath.end(), '\\', '/');
+							component.mat->AddNormal(filePath);
+						}
+					}
+					ImGui::PopID();
 				});
 		}
 

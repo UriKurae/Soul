@@ -14,6 +14,7 @@ namespace Soul
 		virtual uint32_t GetHeight() const override { return m_Height; }
 		virtual uint32_t GetRendererID() const override { return m_RendererID; }
 		virtual std::string GetPath() const override { return m_Path; }
+		virtual std::string GetName() const override;
 
 		virtual void Bind(uint32_t slot = 0) const override;
 	private:

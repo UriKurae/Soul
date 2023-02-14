@@ -47,6 +47,13 @@ namespace Soul
 		glDeleteTextures(1, &m_RendererID);
 	}
 
+	std::string OpenGLTexture2D::GetName() const
+	{
+		std::string name = m_Path.substr(m_Path.find_last_of("/") + 1, std::string::npos);
+
+		return name;
+	}
+
 	void OpenGLTexture2D::Bind(uint32_t slot) const
 	{
 		glBindTextureUnit(slot, m_RendererID);

@@ -114,7 +114,7 @@ namespace Soul
 			}
 
 			style.WindowMinSize.x = 32.0f;
-
+			
 			if (ImGui::BeginMenuBar())
 			{
 				if (ImGui::BeginMenu("File"))

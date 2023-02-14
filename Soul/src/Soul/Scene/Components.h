@@ -5,6 +5,7 @@
 #include "Soul/Renderer/Camera.h"
 #include "Soul/Utils/Model.h"
 #include "Soul/Scene/Lights/Light.h"
+#include "Soul/Renderer/Material.h"
 
 namespace Soul
 {
@@ -67,5 +68,13 @@ namespace Soul
 		LightComponent(const LightComponent&) = default;
 
 		std::shared_ptr<Light> light;
+	};
+
+	struct MaterialComponent
+	{
+		MaterialComponent() = default;
+		MaterialComponent(const MaterialComponent&) = default;
+
+		std::shared_ptr<Material> mat;
 	};
 }

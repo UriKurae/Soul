@@ -20,6 +20,7 @@ namespace Soul
 		shaderExample->Bind();
 		shaderExample->UploadUniformInt("material.diffuse", 0);
 		shaderExample->UploadUniformInt("material.specular", 1);
+		shaderExample->UploadUniformInt("material.normal", 2);
 	
 		shaderExample->Unbind();
 
@@ -86,6 +87,9 @@ namespace Soul
 		auto& mesh = entity.AddComponent<MeshComponent>();
 		mesh.model = currentModel;
 
+		auto& mat = entity.AddComponent<MaterialComponent>();
+		mat.mat = std::make_shared<Material>();
+
 		return entity;
 	}
 
@@ -103,6 +107,7 @@ namespace Soul
 		for (auto entity : view)
 		{
 			MeshComponent& mesh = view.get<MeshComponent>(entity);
+			MaterialComponent& mat = m_Registry.get<MaterialComponent>(entity);
 			TransformComponent& transform = m_Registry.get<TransformComponent>(entity);
 
 			shaderExample->Bind();
@@ -111,9 +116,9 @@ namespace Soul
 			shaderExample->UploadUniformFloat("material.shininess", 1.0f);
 
 			UploadLightUniforms(shaderExample);
-
+			
+			mat.mat->BindTextures();
 			mesh.model->Draw(shaderExample, transform.GetTransform());
-
 		}
 
 		skyBox->Draw();
@@ -213,6 +218,12 @@ namespace Soul
 	void Scene::OnComponentAdded(Entity entity, T& component)
 	{
 		static_assert(false);
+	}
+
+	template<>
+	void Scene::OnComponentAdded<MaterialComponent>(Entity entity, MaterialComponent& component)
+	{
+
 	}
 
 	template<>

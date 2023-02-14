@@ -27,6 +27,7 @@ struct Material
 {
     sampler2D diffuse;
     sampler2D specular;
+    sampler2D normal;
     float shininess;
 };
 
@@ -71,7 +72,8 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 
 void main()
 {
-    vec3 norm = normalize(Normal);
+    vec3 norm = texture(material.normal, v_TexCoord).rgb;
+    norm = normalize(norm * 2.0 - 1.0);
     vec3 viewDir = normalize(camPos - FacePos);
 
     vec3 totalLight = CalcDirLight(dirLight, norm, viewDir);

@@ -7,8 +7,9 @@ namespace Soul
 	{
 		ambient = { 0.1f, 0.1f, 0.1f };
 
-		diffuse = Texture2D::Create("assets/textures/defaultDiffuse.png");
-		specular = Texture2D::Create("assets/textures/defaultDiffuse.png");
+		diffuse = Texture2D::Create("assets/textures/defaultDiffuse.jpg");
+		specular = Texture2D::Create("assets/textures/defaultDiffuse.jpg");
+		normal = Texture2D::Create("assets/textures/defaultNormal.jpg");
 	}
 
 	Material::~Material()
@@ -17,4 +18,26 @@ namespace Soul
 	}
 
 
+
+	void Material::BindTextures() const
+	{
+		diffuse->Bind(0);
+		specular->Bind(1);
+		normal->Bind(2);
+	}
+
+	void Material::AddDiffuse(std::string path)
+	{
+		diffuse = Texture2D::Create(path);	
+	}
+
+	void Material::AddSpecular(std::string path)
+	{
+		specular = Texture2D::Create(path);
+	}
+
+	void Material::AddNormal(std::string path)
+	{
+		normal = Texture2D::Create(path);
+	}
 }
