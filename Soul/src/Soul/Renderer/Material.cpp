@@ -17,8 +17,6 @@ namespace Soul
 
 	}
 
-
-
 	void Material::BindTextures() const
 	{
 		diffuse->Bind(0);

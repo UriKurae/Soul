@@ -36,9 +36,11 @@ namespace Soul
 		vbo = VertexBuffer::Create(vertices, vertices.size());
 		vbo->SetLayout(
 			{
-				{ Soul::ShaderDataType::Float3, "a_Position" },
-				{ Soul::ShaderDataType::Float3, "a_Normal" },
-			   { Soul::ShaderDataType::Float2, "a_TexCoord" }
+				{ ShaderDataType::Float3, "a_Position" },
+				{ ShaderDataType::Float3, "a_Normal" },
+				{ ShaderDataType::Float2, "a_TexCoord" },
+				{ ShaderDataType::Float3, "a_Tangent"},
+				{ ShaderDataType::Float3, "a_Bitangent"},
 			}
 		);
 		vao->AddVertexBuffer(vbo);

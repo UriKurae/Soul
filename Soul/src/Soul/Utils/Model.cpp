@@ -45,7 +45,6 @@ namespace Soul
 
 		for (unsigned int i = 0; i < meshes.size(); ++i)
 		{
-			meshes[i].BindTextures();
 			Renderer::Submit(shader, meshes[i].GetVertexArrayObject(), transform);
 		}
 	}
@@ -53,7 +52,7 @@ namespace Soul
 	void Model::LoadModel(std::string path)
 	{
 		Assimp::Importer importer;
-		const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate);
+		const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_CalcTangentSpace);
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{
@@ -108,14 +107,22 @@ namespace Soul
 			glm::vec3 pos = { mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z };
 			glm::vec3 normal = { mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z };
 
+			glm::vec3 tangents = {};
+			glm::vec3 bitangents = {};
+			if (mesh->HasTangentsAndBitangents())
+			{
+				tangents = { mesh->mTangents[i].x, mesh->mTangents[i].y, mesh->mTangents[i].z };
+				bitangents = { mesh->mBitangents[i].x, mesh->mBitangents[i].y, mesh->mBitangents[i].z };
+			}
+
 			if (mesh->mTextureCoords[0])
 			{
 				glm::vec2 texture = { mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y };
-				vertex = {pos, normal, texture};
+				vertex = {pos, normal, texture, tangents, bitangents };
 			}
 			else
 			{
-				vertex = { pos, normal, glm::vec2(0.0f, 0.0f)};
+				vertex = { pos, normal, glm::vec2(0.0f, 0.0f), tangents, bitangents };
 			}
 			vertices.push_back(vertex);
 		}
@@ -131,6 +138,8 @@ namespace Soul
 			}
 		}
 
+		
+		// TODO: Moved textures to Material
 		//if (mesh->mMaterialIndex >= 0)
 		//{
 		//	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
