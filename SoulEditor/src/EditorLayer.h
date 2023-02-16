@@ -28,15 +28,15 @@ namespace Soul
 		void ImportModel();
 	private:
 		ShaderLibrary m_ShaderLibrary;
-		
-		Ref<Shader> m_Shader;
-		Ref<VertexArray> m_VertexArray;
+	
+		std::vector<float> quadVerticesFB;
+		Ref<VertexArray> vaoFB;
+		Ref<VertexBuffer> vboFB;
+		Ref<Shader> floatingFBShader;
+		Ref<Texture2D> fBTexture;
 
-		Ref<Shader> m_FlatColorShader;
-		Ref<VertexArray> m_SquareVA;
 		Ref<Framebuffer> m_Framebuffer;
-
-		Ref<Texture2D> m_Texture, m_ZoroTexture;
+		Ref<Framebuffer> hdrFramebuffer;
 
 		Ref<Scene> m_ActiveScene;
 		

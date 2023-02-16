@@ -19,23 +19,42 @@ namespace Soul
 
 		void EditorLayer::OnAttach()
 		{
-			//m_Texture = Soul::Texture2D::Create("assets/textures/dog.jpg");
-			//m_ZoroTexture = Soul::Texture2D::Create("assets/textures/zoro.png");
+			floatingFBShader = m_ShaderLibrary.Load("assets/shaders/HdrFrameBuffer.glsl");
+			vaoFB = VertexArray::Create();
+			vaoFB->Bind();
+		
+			quadVerticesFB = { 
+				// positions   // texCoords
+				-1.0f,  1.0f,  0.0f, 1.0f,
+				-1.0f, -1.0f,  0.0f, 0.0f,
+				 1.0f, -1.0f,  1.0f, 0.0f,
 
-			Soul::FramebufferSpecification fbSpec;
+				-1.0f,  1.0f,  0.0f, 1.0f,
+				 1.0f, -1.0f,  1.0f, 0.0f,
+				 1.0f,  1.0f,  1.0f, 1.0f
+			}; 
+			vboFB = VertexBuffer::Create(quadVerticesFB.data(), sizeof(float) * quadVerticesFB.size());
+			vboFB->SetLayout(
+				{
+					{ ShaderDataType::Float2, "a_Position" },
+					{ ShaderDataType::Float2, "a_TexCoord" }
+				});
+			vaoFB->AddVertexBuffer(vboFB);
+
+			FramebufferSpecification fbSpec;
+			fbSpec.floatingPointFB = false;
 			fbSpec.width = 1280;
 			fbSpec.height = 720;
 			m_Framebuffer = Framebuffer::Create(fbSpec);
 
+			FramebufferSpecification hdrSpec;
+			hdrSpec.floatingPointFB = true;
+			hdrSpec.width = 1280;
+			hdrSpec.height = 720;
+			hdrFramebuffer = Framebuffer::Create(hdrSpec);
+
 			m_ActiveScene = std::make_shared<Scene>();
-			
-			// TODO: May need it later
-			/*auto square = m_ActiveScene->CreateEntity("Square");
-			square.GetComponent<TagComponent>().tag;
-			
-			m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
-			m_CameraEntity.AddComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));*/
-			
+					
 
 			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 
@@ -57,17 +76,39 @@ namespace Soul
 				m_EditorCamera.SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
 			}
 
-			m_Framebuffer->Bind();
-			Soul::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
-			Soul::RenderCommand::Clear();
-	
-			// Update Scene
-		
+			if (FramebufferSpecification spec = hdrFramebuffer->GetSpecification();
+				m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized framebuffer is invalid
+				(spec.width != m_ViewportSize.x || spec.height != m_ViewportSize.y))
+			{
+				hdrFramebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+				m_EditorCamera.SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
+			}
+
+			// First pass with HDR framebuffer
+			hdrFramebuffer->Bind();
+			RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+			RenderCommand::Clear();
+			RenderCommand::ManageDepth(true);
+			
 			m_EditorCamera.OnUpdate(ts);
 
 			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+		
+			hdrFramebuffer->Unbind();
 
+			/////////////////////////////// 
+
+			// Second pass with normal famebuffer
+			m_Framebuffer->Bind();
+			RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+			RenderCommand::Clear(true, false);
+			RenderCommand::ManageDepth(false);
+
+			hdrFramebuffer->BindFBTexture();
+			Renderer::SubmitArrays(floatingFBShader, vaoFB, 6);
+			
 			m_Framebuffer->Unbind();
+
 		}
 
 		void EditorLayer::OnImGuiRender()

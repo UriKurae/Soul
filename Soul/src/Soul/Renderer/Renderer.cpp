@@ -57,4 +57,9 @@ namespace Soul
 		vertexArray->Bind();
 		RenderCommand::DrawWithArray(vertexArray, indices);
 	}
+
+	static void ManageDepth(bool enable)
+	{
+		RenderCommand::ManageDepth(enable);
+	}
 }

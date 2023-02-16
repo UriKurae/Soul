@@ -23,9 +23,14 @@ namespace Soul
 		glClearColor(color.r, color.g, color.b, color.a);
 	}
 
-	void OpenGLRendererAPI::Clear()
+	void OpenGLRendererAPI::Clear(bool color = true, bool depth = true)
 	{
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		if (color && depth)
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		else if (color && !depth)
+			glClear(GL_COLOR_BUFFER_BIT);
+		else if (!color && depth)
+			glClear(GL_DEPTH_BUFFER_BIT);
 	}
 
 	void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray)
@@ -36,5 +41,13 @@ namespace Soul
 	void OpenGLRendererAPI::DrawArrays(const Ref<VertexArray>& vertexArray, unsigned int indices)
 	{
 		glDrawArrays(GL_TRIANGLES, 0, indices);
+	}
+
+	void OpenGLRendererAPI::ManageDepth(bool enable)
+	{
+		if (enable)
+			glEnable(GL_DEPTH_TEST);
+		else
+			glDisable(GL_DEPTH_TEST);
 	}
 }

@@ -21,9 +21,9 @@ namespace Soul
 		{
 			s_RendererAPI->SetClearColor(color);
 		}
-		inline static void Clear()
+		inline static void Clear(bool color = true, bool depth = true)
 		{
-			s_RendererAPI->Clear();
+			s_RendererAPI->Clear(color, depth);
 		}
 
 		inline static void DrawIndexed(const Ref<VertexArray>& vertexArray)
@@ -34,6 +34,11 @@ namespace Soul
 		inline static void DrawWithArray(const Ref<VertexArray>& vertexArray, unsigned int indices)
 		{
 			s_RendererAPI->DrawArrays(vertexArray, indices);
+		}
+
+		inline static void ManageDepth(bool enable)
+		{
+			s_RendererAPI->ManageDepth(enable);
 		}
 
 	private:

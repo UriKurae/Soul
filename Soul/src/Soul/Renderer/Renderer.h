@@ -20,6 +20,8 @@ namespace Soul
 		static void Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform);
 		static void SubmitArrays(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, unsigned int indices);
 
+		static void ManageDepth(bool enable);
+
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 		
 		struct SceneData
