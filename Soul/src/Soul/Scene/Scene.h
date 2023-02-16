@@ -30,6 +30,9 @@ namespace Soul
 		void UploadLightUniforms(Ref<Shader> desiredShader);
 		int RetieveTotalLights(LightType type);
 
+		void SetSceneExposure(float level) { sceneExposure = level; }
+		float* GetSceneExposure() { return &sceneExposure; }
+
 		void OnUpdateEditor(Timestep ts, EditorCamera& camera);
 		void OnUpdateRuntime(Timestep ts);
 	private:
@@ -50,6 +53,8 @@ namespace Soul
 		std::shared_ptr<Model> currentModel;
 
 		
+		float sceneExposure = 25.0f;
+
 		Ref<Shader> lightShader;
 
 		entt::registry m_Registry;

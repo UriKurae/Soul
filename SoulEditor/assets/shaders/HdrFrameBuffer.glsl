@@ -13,13 +13,29 @@ void main()
 
 #type fragment
 #version 330 core
-out vec4 FragColor;
+out vec4 color;
   
 in vec2 v_TexCoords;
 
-uniform sampler2D screenTexture;
+uniform sampler2D hdrBuffer;
+uniform bool hdr;
+uniform float exposure;
 
 void main()
 { 
-    FragColor = texture(screenTexture, v_TexCoords);
+    const float gamma = 2.2;
+    vec3 hdrColor = texture(hdrBuffer, v_TexCoords).rgb;
+   
+    if (hdr)
+    {
+        vec3 result = vec3(1.0) - exp(-hdrColor * exposure);
+        result = pow(result, vec3(1.0 / gamma));
+        color = vec4(result, 1.0);
+    }
+    else
+    {
+        vec3 result = pow(hdrColor, vec3(1.0 / gamma));
+        color = vec4(result, 1.0);
+    }
+    
 }

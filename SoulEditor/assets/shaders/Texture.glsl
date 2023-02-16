@@ -133,7 +133,7 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 facePos, vec3 viewDir)
 
     float distance = length(light.position - facePos);
     float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
-    attenuation = 1.0 / distance;
+    attenuation = 1.0 / (distance * distance);
     ambient *= attenuation;
     diffuse *= attenuation;
     specular *= attenuation;

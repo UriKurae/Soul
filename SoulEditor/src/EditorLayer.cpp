@@ -20,6 +20,9 @@ namespace Soul
 		void EditorLayer::OnAttach()
 		{
 			floatingFBShader = m_ShaderLibrary.Load("assets/shaders/HdrFrameBuffer.glsl");
+			floatingFBShader->Bind();
+			floatingFBShader->UploadUniformInt("hdrBuffer", 0);
+			floatingFBShader->UploadUniformFloat("exposure", 25.0f);
 			vaoFB = VertexArray::Create();
 			vaoFB->Bind();
 		
@@ -100,7 +103,7 @@ namespace Soul
 
 			// Second pass with normal famebuffer
 			m_Framebuffer->Bind();
-			RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+			RenderCommand::SetClearColor({ 1.0f, 1.0f, 1.0f, 1.0f });
 			RenderCommand::Clear(true, false);
 			RenderCommand::ManageDepth(false);
 
@@ -176,15 +179,37 @@ namespace Soul
 					ImGui::EndMenu();
 				}
 
+				if (ImGui::BeginMenu("Edit"))
+				{
+
+					if (ImGui::BeginMenu("Lighting"))
+					{
+						if (ImGui::TreeNode("Exp level"))
+						{
+							static bool hdr = false;
+							ImGui::Checkbox("Hdr?", &hdr);
+							ImGui::DragFloat("Level", m_ActiveScene->GetSceneExposure(), 0.1f,0.1f, 100.0f, "%.3f");
+							floatingFBShader->Bind();
+							floatingFBShader->UploadUniformFloat("exposure", *m_ActiveScene->GetSceneExposure());
+							floatingFBShader->UploadUniformInt("hdr", hdr);
+							ImGui::TreePop();
+						}
+						
+						ImGui::EndMenu();
+					}
+					
+					ImGui::EndMenu();
+				}
+
 				ImGui::EndMenuBar();
 			}
 			
 
 			m_SceneHierarchyPanel.OnImGuiRender();
-
+			
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0,0 });
 			ImGui::Begin("Viewport");
-
+	
 			m_ViewportFocused = ImGui::IsWindowFocused();
 			m_ViewportHovered = ImGui::IsWindowHovered();
 			Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
