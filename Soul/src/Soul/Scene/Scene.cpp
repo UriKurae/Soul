@@ -175,7 +175,7 @@ namespace Soul
 			{
 				std::string num = std::to_string(index);
 				desiredShader->UploadUniformFloat3(("pointLights[" + num + "].position"), lightTransform.translation);
-				desiredShader->UploadUniformFloat3(("pointLights[" + num + "].ambient"), point->GetAmbient());
+				desiredShader->UploadUniformFloat3(("pointLights[" + num + "].ambient"), point->GetColor());
 				desiredShader->UploadUniformFloat3(("pointLights[" + num + "].diffuse"), point->GetDiffuse());
 				desiredShader->UploadUniformFloat3(("pointLights[" + num + "].specular"), point->GetSpecular());
 				desiredShader->UploadUniformFloat(("pointLights[" + num + "].constant"), point->GetConstant());
@@ -189,7 +189,7 @@ namespace Soul
 			{
 				std::string str = "dirLight.";
 				desiredShader->UploadUniformFloat3(str + "direction", glm::normalize(lightTransform.rotation));
-				desiredShader->UploadUniformFloat3(str + "ambient", DirLight->GetAmbient());
+				desiredShader->UploadUniformFloat3(str + "ambient", DirLight->GetColor());
 				desiredShader->UploadUniformFloat3(str + "diffuse", DirLight->GetDiffuse());
 				desiredShader->UploadUniformFloat3(str + "specular", DirLight->GetSpecular());
 			}

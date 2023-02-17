@@ -143,7 +143,7 @@ namespace Soul
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 			ImGui::Begin("DockSpace Demo", &dockspaceOpen, window_flags);
 			ImGui::PopStyleVar();
-
+			ImGui::ShowDemoWindow();
 			if (opt_fullscreen)
 				ImGui::PopStyleVar(2);
 
