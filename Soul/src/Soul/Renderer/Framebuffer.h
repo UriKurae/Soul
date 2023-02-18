@@ -10,6 +10,7 @@ namespace Soul
 		uint32_t height;
 		uint32_t samples = 1;
 		bool floatingPointFB = false;
+		uint32_t colorAttachments = 1;
 
 		bool swapChainTarget = false;
 	};

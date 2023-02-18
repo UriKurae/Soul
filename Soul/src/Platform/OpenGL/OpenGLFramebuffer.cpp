@@ -9,13 +9,21 @@ namespace Soul
 
 	OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpecification& spec) : m_Specification(spec)
 	{
+		for (uint32_t i = 0; i < m_Specification.colorAttachments; ++i)
+		{
+			colorAttachments.push_back(i);
+		}
 		Invalidate();
 	}
 
 	OpenGLFramebuffer::~OpenGLFramebuffer()
 	{
 		glDeleteFramebuffers(1, &m_RendererID);
-		glDeleteTextures(1, &m_ColorAttachment);
+		for (int i = 0; i < colorAttachments.size(); ++i)
+		{
+			glDeleteTextures(1, &colorAttachments[i]);
+
+		}
 		glDeleteTextures(1, &m_DepthAttachment);
 	}
 
@@ -24,25 +32,36 @@ namespace Soul
 		if (m_RendererID)
 		{
 			glDeleteFramebuffers(1, &m_RendererID);
-			glDeleteTextures(1, &m_ColorAttachment);
+			for (int i = 0; i < colorAttachments.size(); ++i)
+			{
+				glDeleteTextures(1, &colorAttachments[i]);
+			}
 			glDeleteTextures(1, &m_DepthAttachment);
 		}
 
 		glCreateFramebuffers(1, &m_RendererID);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
 		
-		glCreateTextures(GL_TEXTURE_2D, 1, &m_ColorAttachment);
-		glBindTexture(GL_TEXTURE_2D, m_ColorAttachment);
-		if (!m_Specification.floatingPointFB) 
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Specification.width, m_Specification.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-		else
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, m_Specification.width, m_Specification.height, 0, GL_RGBA, GL_FLOAT, nullptr);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_ColorAttachment, 0);
 		
+		for (uint32_t i = 0; i < m_Specification.colorAttachments; i++)
+		{
+			glCreateTextures(GL_TEXTURE_2D, 1, &colorAttachments[i]);
+			glBindTexture(GL_TEXTURE_2D, colorAttachments[i]);
+
+			if (!m_Specification.floatingPointFB)
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Specification.width, m_Specification.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+			else
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, m_Specification.width, m_Specification.height, 0, GL_RGBA, GL_FLOAT, nullptr);
+
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, colorAttachments[i], 0);
+			attachments.push_back(GL_COLOR_ATTACHMENT0 + i);
+		}
+
+		glDrawBuffers(2, attachments.data());
+
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_DepthAttachment);
 		glBindTexture(GL_TEXTURE_2D, m_DepthAttachment);
 		glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH24_STENCIL8, m_Specification.width, m_Specification.height);
@@ -66,7 +85,10 @@ namespace Soul
 
 	void OpenGLFramebuffer::BindFBTexture() const
 	{
-		glBindTexture(GL_TEXTURE_2D, m_ColorAttachment);
+		for (int i = 0; i < colorAttachments.size(); ++i)
+		{
+			glBindTexture(GL_TEXTURE_2D, colorAttachments[i]);
+		}
 	}
 
 	void OpenGLFramebuffer::Resize(uint32_t width, uint32_t height)

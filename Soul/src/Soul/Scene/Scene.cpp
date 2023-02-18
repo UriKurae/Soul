@@ -24,6 +24,7 @@ namespace Soul
 	
 		shaderExample->Unbind();
 
+		CreateLight(LightType::DIRECTIONAL_LIGHT);
 
 
 		//texture = Texture2D::Create("assets/textures/dog.jpg");
