@@ -68,6 +68,7 @@ namespace Soul
 		LightComponent(const LightComponent&) = default;
 
 		std::shared_ptr<Light> light;
+		std::shared_ptr<Model> lightModel;
 	};
 
 	struct MaterialComponent

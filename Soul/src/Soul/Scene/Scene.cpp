@@ -15,30 +15,16 @@ namespace Soul
 	{
 		skyBox = std::make_shared<CubeMap>();
 
-		shaderExample = shaderLib.Load("assets/shaders/Texture.glsl");
+		textureShader = shaderLib.Load("assets/shaders/Texture.glsl");
 		// Setup shader uniforms
-		shaderExample->Bind();
-		shaderExample->UploadUniformInt("material.diffuse", 0);
-		shaderExample->UploadUniformInt("material.specular", 1);
-		shaderExample->UploadUniformInt("material.normal", 2);
-	
-		shaderExample->Unbind();
+		textureShader->Bind();
+		textureShader->UploadUniformInt("material.diffuse", 0);
+		textureShader->UploadUniformInt("material.specular", 1);
+		textureShader->UploadUniformInt("material.normal", 2);
+		textureShader->Unbind();
+
 
 		CreateLight(LightType::DIRECTIONAL_LIGHT);
-
-
-		//texture = Texture2D::Create("assets/textures/dog.jpg");
-		//
-		
-
-		/*lightShader = shaderLib.Load("assets/shaders/LightObject.glsl");
-		lightShader->Bind();
-		lightShader->UploadUniformFloat3("objectColor", { 1.0f, 0.5f, 0.31f });
-		lightShader->UploadUniformFloat3("lightColor", { 1.0f, 1.0f, 1.0f });
-		Entity light = light = CreateEntity("Directional Light");
-		light.AddComponent<LightComponent>();
-		auto& meshTest = light.AddComponent<MeshComponent>();
-		meshTest.model = std::make_shared<Model>("assets/Models/backpack/backpack.obj");*/
 	}
 
 	Scene::~Scene()
@@ -70,6 +56,12 @@ namespace Soul
 			entity = CreateEntity("Point Light");
 			auto& light = entity.AddComponent<LightComponent>();
 			light.light = std::make_shared<PointLight>();
+			
+			light.light->lightShader = shaderLib.Load("assets/shaders/LightObject.glsl");			
+			light.lightModel = std::make_shared<Model>("assets/Models/DefaultModels/source/sphere.fbx");
+			
+			auto& trans = entity.GetComponent<TransformComponent>();
+			trans.scale = glm::vec3(0.1f);
 		}
 
 		return entity;
@@ -107,21 +99,36 @@ namespace Soul
 		auto view = m_Registry.view<MeshComponent>();
 		for (auto entity : view)
 		{
+
 			MeshComponent& mesh = view.get<MeshComponent>(entity);
 			MaterialComponent& mat = m_Registry.get<MaterialComponent>(entity);
 			TransformComponent& transform = m_Registry.get<TransformComponent>(entity);
 
-			shaderExample->Bind();
+			textureShader->Bind();
 
-			shaderExample->UploadUniformFloat3("camPos", camera.GetPosition());
-			shaderExample->UploadUniformFloat("material.shininess", 1.0f);
+			textureShader->UploadUniformFloat3("camPos", camera.GetPosition());
+			textureShader->UploadUniformFloat("material.shininess", 1.0f);
 
-			UploadLightUniforms(shaderExample);
-			
+			UploadLightUniforms(textureShader);
+
 			mat.mat->BindTextures();
-			mesh.model->Draw(shaderExample, transform.GetTransform());
+			mesh.model->Draw(textureShader, transform.GetTransform());
 		}
 
+		auto lightView = m_Registry.view<LightComponent>();
+		for (auto entity : lightView)
+		{
+			LightComponent& light = lightView.get<LightComponent>(entity);
+			Ref<PointLight> point = std::dynamic_pointer_cast<PointLight>(light.light);
+			if (point)
+			{
+				
+				TransformComponent& transform = m_Registry.get<TransformComponent>(entity);
+
+				light.lightModel->Draw(light.light->lightShader, transform.GetTransform());
+			}
+			
+		}
 		skyBox->Draw();
 
 		Renderer::EndScene();

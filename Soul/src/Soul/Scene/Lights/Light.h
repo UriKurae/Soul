@@ -1,6 +1,7 @@
 #pragma once
 
 #include "glm/glm.hpp"
+#include "Soul/Renderer/Shader.h"
 
 namespace Soul
 {
@@ -23,22 +24,33 @@ namespace Soul
 
 		virtual void SetColor(glm::vec4 color) 
 		{ 
-			ambient = { color.r, color.g, color.b };
-			oldAmbient = ambient;
+			ambient = glm::vec3(color.r, color.g, color.b) * intensity;
+			oldAmbient = ambient * intensity;
+			lightShader->Bind();
+			lightShader->UploadUniformFloat3("objectColor", ambient); 
+			lightShader->UploadUniformFloat3("lightColor", ambient);
 		}
 		virtual void SetIntensity(float level) 
 		{
 			ambient = level * oldAmbient;
+			intensity = level;
+			lightShader->Bind();
+			lightShader->UploadUniformFloat3("objectColor", ambient);
+			lightShader->UploadUniformFloat3("lightColor", ambient);
 		}
 		
 
 		virtual LightType GetType() const { return type; }
 
+	public:
+		Ref<Shader> lightShader;
 	protected:
 		glm::vec3 ambient;
 		glm::vec3 oldAmbient = { 1.0f, 1.0f, 1.0f };
 		glm::vec3 diffuse;
 		glm::vec3 specular;
+		float intensity = 1.0f;
+
 	
 		LightType type;
 	};

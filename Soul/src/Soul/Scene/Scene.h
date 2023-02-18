@@ -42,11 +42,7 @@ namespace Soul
 
 		ShaderLibrary shaderLib;
 
-		Ref<Shader> shaderExample;
-		Ref<VertexArray> vao;
-		Ref<VertexBuffer> vbo;
-		Ref<IndexBuffer> ebo;
-		Ref<Texture2D> texture;
+		Ref<Shader> textureShader;
 
 		std::shared_ptr<CubeMap> skyBox;
 
