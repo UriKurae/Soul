@@ -45,15 +45,15 @@ namespace Soul
 			vaoFB->AddVertexBuffer(vboFB);
 
 			FramebufferSpecification fbSpec;
-			fbSpec.attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::Depth };
+			fbSpec.attachments = { FramebufferTextureFormat::RGBA8,FramebufferTextureFormat::RED_INTEGER, FramebufferTextureFormat::Depth };
 			fbSpec.floatingPointFB = false;
 			fbSpec.width = 1280;
 			fbSpec.height = 720;
 			m_Framebuffer = Framebuffer::Create(fbSpec);
 
 			FramebufferSpecification hdrSpec;
-			hdrSpec.attachments = { FramebufferTextureFormat::RGBA16F,FramebufferTextureFormat::RGBA16F, FramebufferTextureFormat::Depth };
-			hdrSpec.floatingPointFB = true;
+			hdrSpec.attachments = { FramebufferTextureFormat::RGBA8,FramebufferTextureFormat::RED_INTEGER, FramebufferTextureFormat::Depth };
+			hdrSpec.floatingPointFB = false;
 			hdrSpec.width = 1280;
 			hdrSpec.height = 720;
 			hdrFramebuffer = Framebuffer::Create(hdrSpec);
@@ -89,7 +89,33 @@ namespace Soul
 				m_EditorCamera.SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
 			}
 
-			// First pass with HDR framebuffer
+			//// First pass with HDR framebuffer
+			//hdrFramebuffer->Bind();
+			//RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+			//RenderCommand::Clear();
+			//RenderCommand::ManageDepth(true);
+			//
+			//m_EditorCamera.OnUpdate(ts);
+
+			//m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+		
+			//
+
+			//hdrFramebuffer->Unbind();
+
+			///////////////////////////////// 
+
+			//// Second pass with normal famebuffer
+			//m_Framebuffer->Bind();
+			//RenderCommand::SetClearColor({ 1.0f, 1.0f, 1.0f, 1.0f });
+			//RenderCommand::Clear(true, false);
+			//RenderCommand::ManageDepth(false);
+
+			//hdrFramebuffer->BindFBTexture();
+			//Renderer::SubmitArrays(floatingFBShader, vaoFB, 6);
+			//
+			//m_Framebuffer->Unbind();
+			
 			hdrFramebuffer->Bind();
 			RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 			RenderCommand::Clear();
@@ -98,21 +124,23 @@ namespace Soul
 			m_EditorCamera.OnUpdate(ts);
 
 			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
-		
+
+			auto [mx, my] = ImGui::GetMousePos();
+			mx -= viewportBounds[0].x;
+			my -= viewportBounds[0].y;
+			glm::vec2 viewportSize = viewportBounds[1] - viewportBounds[0];
+			my = viewportSize.y - my;
+			int mouseX = (int)mx;
+			int mouseY = (int)my;
+
+			if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
+			{
+				int pixelData = hdrFramebuffer->ReadPixel(1, mouseX, mouseY);
+				SL_CORE_WARN("Pixel data = {0}", pixelData);
+			}
+
 			hdrFramebuffer->Unbind();
-
-			/////////////////////////////// 
-
-			// Second pass with normal famebuffer
-			m_Framebuffer->Bind();
-			RenderCommand::SetClearColor({ 1.0f, 1.0f, 1.0f, 1.0f });
-			RenderCommand::Clear(true, false);
-			RenderCommand::ManageDepth(false);
-
-			hdrFramebuffer->BindFBTexture();
-			Renderer::SubmitArrays(floatingFBShader, vaoFB, 6);
 			
-			m_Framebuffer->Unbind();
 
 		}
 
@@ -212,6 +240,16 @@ namespace Soul
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0,0 });
 			ImGui::Begin("Viewport");
 	
+			auto viewportOffset = ImGui::GetCursorPos();
+			auto windowSize = ImGui::GetWindowSize();
+			ImVec2 minBound = ImGui::GetWindowPos();
+			minBound.x += viewportOffset.x;
+			minBound.y += viewportOffset.y;
+
+			ImVec2 maxBound = { minBound.x + m_ViewportSize.x, minBound.y + m_ViewportSize.y };
+			viewportBounds[0] = { minBound.x, minBound.y };
+			viewportBounds[1] = { maxBound.x, maxBound.y };
+
 			m_ViewportFocused = ImGui::IsWindowFocused();
 			m_ViewportHovered = ImGui::IsWindowHovered();
 			Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
@@ -222,7 +260,7 @@ namespace Soul
 				m_Framebuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
 				m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 			}
-			uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID(1);
+			uint32_t textureID = hdrFramebuffer->GetColorAttachmentRendererID();
 			ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 			ImGui::PopStyleVar();
 

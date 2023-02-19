@@ -108,6 +108,7 @@ namespace Soul
 
 			textureShader->UploadUniformFloat3("camPos", camera.GetPosition());
 			textureShader->UploadUniformFloat("material.shininess", 1.0f);
+			
 
 			UploadLightUniforms(textureShader);
 

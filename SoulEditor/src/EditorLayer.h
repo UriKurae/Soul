@@ -34,6 +34,7 @@ namespace Soul
 		Ref<VertexBuffer> vboFB;
 		Ref<Shader> floatingFBShader;
 		Ref<Texture2D> fBTexture;
+	
 
 		Ref<Framebuffer> m_Framebuffer;
 		Ref<Framebuffer> hdrFramebuffer;
@@ -47,6 +48,7 @@ namespace Soul
 		bool m_ViewportFocused = false;
 		bool m_ViewportHovered = false;
 		glm::vec2 m_ViewportSize = { 0,0 };
+		glm::vec2 viewportBounds[2];
 
 		glm::vec3 m_SquareColor = { 0.2f, 0.3f, -0.8f };
 

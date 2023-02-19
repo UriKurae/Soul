@@ -40,9 +40,9 @@ namespace Soul
 		void OnComponentAdded(Entity entity, T& component);
 	private:
 
+		Ref<Shader> textureShader;
 		ShaderLibrary shaderLib;
 
-		Ref<Shader> textureShader;
 
 		std::shared_ptr<CubeMap> skyBox;
 

@@ -24,17 +24,17 @@ namespace Soul
 			glBindTexture(TextureTarget(multisampled), id);
 		}
 
-		static void AttachColorTexture(uint32_t id, int samples, GLenum format, uint32_t width, uint32_t height, GLenum type, int index)
+		static void AttachColorTexture(uint32_t id, int samples, GLenum internalFormat, GLenum format, uint32_t width, uint32_t height, GLenum type, int index)
 		{
 			bool multisampled = samples > 1;
 			if (multisampled)
 			{
-				glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, format, width, height, GL_FALSE);
+				glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, internalFormat, width, height, GL_FALSE);
 			}
 			else
 			{
 				
-				glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, GL_RGBA, type, nullptr);
+				glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, type, nullptr);
 
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -133,10 +133,13 @@ namespace Soul
 				switch (colorAttachmentSpecs[i].textureFormat)
 				{
 				case FramebufferTextureFormat::RGBA8:
-					Utils::AttachColorTexture(colorAttachments[i], m_Specification.samples, GL_RGBA8, m_Specification.width, m_Specification.height, GL_UNSIGNED_BYTE, i);
+					Utils::AttachColorTexture(colorAttachments[i], m_Specification.samples, GL_RGBA8, GL_RGBA, m_Specification.width, m_Specification.height, GL_UNSIGNED_BYTE, i);
+					break;
+				case FramebufferTextureFormat::RED_INTEGER:
+					Utils::AttachColorTexture(colorAttachments[i], m_Specification.samples, GL_R32I, GL_RED_INTEGER, m_Specification.width, m_Specification.height, GL_UNSIGNED_BYTE, i);
 					break;
 				case FramebufferTextureFormat::RGBA16F:
-					Utils::AttachColorTexture(colorAttachments[i], m_Specification.samples, GL_RGBA8, m_Specification.width, m_Specification.height, GL_FLOAT, i);
+					Utils::AttachColorTexture(colorAttachments[i], m_Specification.samples, GL_RGBA16F, GL_RGBA, m_Specification.width, m_Specification.height, GL_FLOAT, i);
 					break;
 				}
 			}
@@ -202,5 +205,16 @@ namespace Soul
 		m_Specification.height = height;
 
 		Invalidate();
+	}
+
+	int OpenGLFramebuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
+	{
+		SL_CORE_ASSERT(attachmentIndex < colorAttachments.size(), "Index is more than the size");
+
+		glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);
+		int pixelData;
+		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
+		return pixelData;
+
 	}
 }
