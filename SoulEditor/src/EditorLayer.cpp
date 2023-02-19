@@ -45,12 +45,14 @@ namespace Soul
 			vaoFB->AddVertexBuffer(vboFB);
 
 			FramebufferSpecification fbSpec;
+			fbSpec.attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::Depth };
 			fbSpec.floatingPointFB = false;
 			fbSpec.width = 1280;
 			fbSpec.height = 720;
 			m_Framebuffer = Framebuffer::Create(fbSpec);
 
 			FramebufferSpecification hdrSpec;
+			hdrSpec.attachments = { FramebufferTextureFormat::RGBA16F,FramebufferTextureFormat::RGBA16F, FramebufferTextureFormat::Depth };
 			hdrSpec.floatingPointFB = true;
 			hdrSpec.width = 1280;
 			hdrSpec.height = 720;
@@ -143,7 +145,7 @@ namespace Soul
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 			ImGui::Begin("DockSpace Demo", &dockspaceOpen, window_flags);
 			ImGui::PopStyleVar();
-			ImGui::ShowDemoWindow();
+
 			if (opt_fullscreen)
 				ImGui::PopStyleVar(2);
 
@@ -220,7 +222,7 @@ namespace Soul
 				m_Framebuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
 				m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 			}
-			uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
+			uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID(1);
 			ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 			ImGui::PopStyleVar();
 
