@@ -116,10 +116,13 @@ namespace Soul
 			//
 			//m_Framebuffer->Unbind();
 			
-			hdrFramebuffer->Bind();
+			m_Framebuffer->Bind();
 			RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 			RenderCommand::Clear();
+
+
 			RenderCommand::ManageDepth(true);
+			m_Framebuffer->ClearAttachments(1, -1);
 			
 			m_EditorCamera.OnUpdate(ts);
 
@@ -135,11 +138,11 @@ namespace Soul
 
 			if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
 			{
-				int pixelData = hdrFramebuffer->ReadPixel(1, mouseX, mouseY);
+				int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
 				SL_CORE_WARN("Pixel data = {0}", pixelData);
 			}
 
-			hdrFramebuffer->Unbind();
+			m_Framebuffer->Unbind();
 			
 
 		}
@@ -260,7 +263,7 @@ namespace Soul
 				m_Framebuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
 				m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 			}
-			uint32_t textureID = hdrFramebuffer->GetColorAttachmentRendererID();
+			uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
 			ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 			ImGui::PopStyleVar();
 
