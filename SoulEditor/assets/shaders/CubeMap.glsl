@@ -18,7 +18,8 @@ void main()
 #type fragment
 #version 330 core
 
-out vec4 color;
+layout(location = 0) out vec4 color;
+layout(location = 1) out int color2;
 
 in vec3 TexCoords;
 
@@ -27,4 +28,6 @@ uniform samplerCube skybox;
 void main()
 {    
     color = texture(skybox, TexCoords);
+
+    color2 = -1;
 }
