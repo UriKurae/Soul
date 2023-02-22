@@ -11,14 +11,23 @@ struct aiMaterial;
 
 namespace Soul
 {
+	struct Triangle
+	{
+		glm::vec3 a;
+		glm::vec3 b;
+		glm::vec3 c;
+	};
 	class Model
 	{
 	public:
 		Model(std::string path);
 
 		void Draw(const Ref<Shader>& shader, const glm::mat4& transform);
+		std::vector<Mesh>& GetMeshes();
+		std::vector<Triangle>& GetTriangles();
 	private:
 		std::vector<Mesh> meshes;
+		std::vector<Triangle> modelTriangles;
 		std::vector<Ref<Texture2D>> loadedTextures;
 		std::string directory;
 

@@ -103,7 +103,8 @@ namespace Soul
 			MeshComponent& mesh = view.get<MeshComponent>(entity);
 			MaterialComponent& mat = m_Registry.get<MaterialComponent>(entity);
 			TransformComponent& transform = m_Registry.get<TransformComponent>(entity);
-
+			
+			modelTransform = transform;
 			textureShader->Bind();
 
 			textureShader->UploadUniformFloat3("camPos", camera.GetPosition());
@@ -130,7 +131,7 @@ namespace Soul
 			}
 			
 		}
-		skyBox->Draw();
+		//skyBox->Draw();
 
 		Renderer::EndScene();
 	}

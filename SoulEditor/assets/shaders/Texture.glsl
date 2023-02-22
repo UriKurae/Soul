@@ -13,7 +13,9 @@ uniform mat4 u_Transform;
 out vec2 v_TexCoord;
 out vec3 Normal;
 out vec3 FacePos;
+out vec3 vertexPo;
 out mat3 TBN;
+out vec3 FacePosMVP;
 
 void main()
 {
@@ -21,16 +23,17 @@ void main()
     vec3 b = normalize(vec3(u_Transform * vec4(a_Bitangent, 0.0)));
     vec3 n = normalize(vec3(u_Transform * vec4(a_Normal, 0.0)));
     t = normalize(t - dot(t, n) * n);
-
+    vertexPo = a_Position;
     TBN = mat3(t,b,n);
 
 	gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
-    
+	
     Normal = mat3(transpose(inverse(u_Transform))) * a_Normal;
 	
     v_TexCoord = a_TexCoord;
     
     FacePos = vec3(u_Transform * vec4(a_Position, 1.0));
+    FacePosMVP = vec3(u_ViewProjection * u_Transform * vec4(a_Position, 1.0));
 }
 
 #type fragment
@@ -75,13 +78,16 @@ in vec2 v_TexCoord;
 in vec3 Normal;
 in vec3 FacePos;
 in mat3 TBN;
+in vec3 vertexPo;
+in vec3 FacePosMVP;
 
 uniform vec3 camPos;
 uniform DirectionalLight dirLight;
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
 uniform int totalPointLights;
 uniform Material material;
-uniform int mousePos;
+uniform vec3 HitPoint;
+
 
 vec3 CalcDirLight(DirectionalLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir); 
@@ -101,9 +107,13 @@ void main()
     color = vec4(totalLight, 1.0);
     float gamma = 2.2;
     color.rgb = pow(color.rgb, vec3(1.0/gamma));
+
+  
+    float dist = length(FacePos - HitPoint);
+        if (dist < 0.1)
+        color.rgb = vec3(0.0, 0.0, 1.0);
    
-    if (mousePos > 1)
-    color = vec4(0.0, 0.0, 1.0, 1.0);
+  
     
     color2 = 50;
 }

@@ -128,6 +128,7 @@ namespace Soul
 
 			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
+
 			auto [mx, my] = ImGui::GetMousePos();
 			mx -= viewportBounds[0].x;
 			my -= viewportBounds[0].y;
@@ -136,10 +137,27 @@ namespace Soul
 			int mouseX = (int)mx;
 			int mouseY = (int)my;
 
+			
+			
+			
 			if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
 			{
+				bool teste = {};
+				if (Input::IsMouseButtonPressed(Mouse::Button0))
+				{
+					std::vector<Triangle> meshes = m_ActiveScene->currentModel->GetTriangles();
+					
+					static glm::vec3 hola = {};
+					teste = m_EditorCamera.RayToMeshes(meshes, 100.0f, glm::vec2(mx, my), glm::vec2(viewportSize.x, viewportSize.y), hola);
+					m_ActiveScene->textureShader->Bind();
+					m_ActiveScene->textureShader->UploadUniformFloat3("HitPoint", hola);
+					m_ActiveScene->textureShader->Unbind();
+					int a = 0;
+					a++;
+				}
+
 				int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
-				SL_CORE_WARN("Pixel data = {0}", pixelData);
+				//SL_CORE_WARN("Pixel data = {0}", pixelData);
 			}
 
 			m_Framebuffer->Unbind();
@@ -278,6 +296,7 @@ namespace Soul
 
 			EventDispatcher dispatcher(event);
 			dispatcher.Dispatch<KeyPressedEvent>(SL_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
+			dispatcher.Dispatch<MouseButtonPressedEvent>(SL_BIND_EVENT_FN(EditorLayer::OnMousePressed));
 		}
 
 		bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
@@ -315,6 +334,17 @@ namespace Soul
 			}
 			return true;
 		}
+
+		bool EditorLayer::OnMousePressed(MouseButtonPressedEvent& e)
+		{
+			if (e.GetMouseButton() == Mouse::ButtonLeft)
+			{
+				
+				return true;
+			}
+			return false;
+		}
+
 		void EditorLayer::NewScene()
 		{
 			m_ActiveScene = std::make_shared<Scene>();

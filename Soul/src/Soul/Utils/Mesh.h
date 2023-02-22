@@ -18,6 +18,7 @@ namespace Soul
 		std::vector<Ref<Texture2D>> GetTextures() { return textures; }
 		void BindTextures();
 
+		std::vector<Vertex>& GetVertices() { return vertices; }
 	private:
 		std::vector<Vertex> vertices;
 		std::vector<uint32_t> indices;

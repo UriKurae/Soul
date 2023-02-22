@@ -38,6 +38,7 @@ namespace Soul
 
 	}
 
+
 	void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform)
 	{
 		shader->Bind();

@@ -6,6 +6,7 @@
 #include "Soul/Renderer/Renderer.h" // TODO: Move this to cpp
 #include "Soul/Renderer/Texture.h"
 #include <Soul/Renderer/CubeMap.h>
+#include "Soul/Scene/Components.h"
 #include "entt.hpp"
 
 
@@ -35,20 +36,20 @@ namespace Soul
 
 		void OnUpdateEditor(Timestep ts, EditorCamera& camera);
 		void OnUpdateRuntime(Timestep ts);
+	public:
+		std::shared_ptr<Model> currentModel;
+		Ref<Shader> textureShader;
+		TransformComponent modelTransform = {};
 	private:
 		template<typename T>
 		void OnComponentAdded(Entity entity, T& component);
 	private:
 
-		Ref<Shader> textureShader;
-		ShaderLibrary shaderLib;
 
+		ShaderLibrary shaderLib;
 
 		std::shared_ptr<CubeMap> skyBox;
 
-		std::shared_ptr<Model> currentModel;
-
-		
 		float sceneExposure = 25.0f;
 
 		Ref<Shader> lightShader;

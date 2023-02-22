@@ -4,11 +4,15 @@
 #include "Soul/Core/Input.h"
 #include "Soul/Core/KeyCodes.h"
 #include "Soul/Core/MouseButtonCodes.h"
+#include "Platform/OpenGL/OpenGLVertexArray.h"
+#include <Soul/Utils/Model.h>
 
 #include <glfw/glfw3.h>
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/intersect.hpp>
+#include "glad/glad.h"
 
 namespace Soul
 {
@@ -74,8 +78,10 @@ namespace Soul
 			else if (Input::IsMouseButtonPressed(Mouse::ButtonRight))
 				MouseZoom(delta.y);
 		}
-
+		
 		UpdateView();
+
+		
 	}
 
 	void EditorCamera::OnEvent(Event& e)
@@ -129,6 +135,95 @@ namespace Soul
 	glm::vec3 EditorCamera::GetForward() const
 	{
 		return glm::rotate(GetOrientation(), glm::vec3(0.0f, 0.0f, -1.0f));
+	}
+
+	glm::vec3 EditorCamera::RayCastLine(glm::vec2 mousePos, glm::vec2 viewPortSize)
+	{
+		float mouseX = (2.0f * mousePos.x) / viewPortSize.x - 1.0f;
+		float mouseY = 1.0f - (2.0f * mousePos.y) / viewPortSize.y;
+		float mouseZ = 1.0f;
+		glm::vec3 rayNDC = glm::vec3(mouseX, mouseY, mouseZ);
+
+		glm::vec4 ray = glm::vec4(rayNDC.x, rayNDC.y, -mouseZ, 1.0);
+		glm::vec4 eyeRay = glm::inverse(GetProjectionMatrix()) * ray;
+
+		eyeRay = glm::vec4(eyeRay.x, eyeRay.y, -1.0, 0.0);
+
+		glm::vec3 worldRay = (glm::inverse(GetViewMatrix()) * eyeRay);
+		glm::vec3 normWorldRay = glm::normalize(worldRay);
+		glm::vec3 finalRay = { normWorldRay.x, -normWorldRay.y, -1.0f };
+		
+		return finalRay;
+	}
+
+	bool EditorCamera::RayToMeshes(std::vector<Triangle> triangles, float distance, glm::vec2 mousePos, glm::vec2 viewPortSize, glm::vec3& intersectionPoint)
+	{
+		glm::vec3 origin = GetPosition();
+		glm::vec3 direction = glm::unProject(glm::vec3(mousePos.x, mousePos.y, 1.0f), GetViewMatrix(), GetProjectionMatrix(), glm::vec4(0.0f, 0.0f, viewPortSize.x, viewPortSize.y));
+		//glm::vec3 ra = RayCastLine(mousePos, glm::vec2(viewPortSize.x, viewPortSize.y));
+		SL_CORE_WARN("dir {0}, {1}, {2}", direction.x, direction.y, direction.z);
+
+
+		bool hit = false;
+		bool trujit = false;
+		std::vector<int> trianglesHit = {};
+		float closestDistance = 5000.0f;
+		Triangle closestTriangle = {};
+		for (uint32_t i = 0; i < triangles.size(); ++i)
+		{
+			glm::vec3 hitPoint;
+			hit = glm::intersectLineTriangle(origin, direction, triangles[i].a, triangles[i].b, triangles[i].c, hitPoint);
+			if (hit)
+			{
+				float distance = 0.0f;
+				
+				distance = glm::distance(hitPoint, origin);
+				if (distance < closestDistance)
+				{
+					closestDistance = distance;
+					closestTriangle = triangles[i];
+					trujit = true;
+				}
+				trianglesHit.push_back(i);
+				hit = false;
+			}
+		}
+
+		
+		if (trujit)
+		{
+			intersectionPoint.x = (closestTriangle.a.x + closestTriangle.b.x + closestTriangle.c.x) / 3;
+			intersectionPoint.y = (closestTriangle.a.y + closestTriangle.b.y + closestTriangle.c.y) / 3;
+			intersectionPoint.z = (closestTriangle.a.z + closestTriangle.b.z + closestTriangle.c.z) / 3;
+		}
+
+
+		/*if (!trianglesHit.empty())
+		{
+			glm::vec3 closestTriangle;
+			closestTriangle.x = (triangles[trianglesHit[0]].a.x + triangles[trianglesHit[0]].b.x + triangles[trianglesHit[0]].c.x) / 3;
+			closestTriangle.y = (triangles[trianglesHit[0]].a.y + triangles[trianglesHit[0]].b.y + triangles[trianglesHit[0]].c.y) / 3;
+			closestTriangle.z = (triangles[trianglesHit[0]].a.z + triangles[trianglesHit[0]].b.z + triangles[trianglesHit[0]].c.z) / 3;
+
+			float lowestDistance = 0.0f;
+			lowestDistance = (closestTriangle - origin).length();
+			intersectionPoint = closestTriangle;
+			for (uint32_t i = 0; i < trianglesHit.size(); ++i)
+			{
+				glm::vec3 newTriangle = {};
+				newTriangle.x = (triangles[trianglesHit[i]].a.x + triangles[trianglesHit[i]].b.x + triangles[trianglesHit[i]].c.x) / 3;
+				newTriangle.y = (triangles[trianglesHit[i]].a.y + triangles[trianglesHit[i]].b.y + triangles[trianglesHit[i]].c.y) / 3;
+				newTriangle.z = (triangles[trianglesHit[i]].a.z + triangles[trianglesHit[i]].b.z + triangles[trianglesHit[i]].c.z) / 3;
+
+				if ((newTriangle - origin).length() < lowestDistance)
+				{
+					closestTriangle = newTriangle;
+					intersectionPoint = closestTriangle;
+				}
+			}
+		}*/
+		
+		return hit;
 	}
 
 	glm::vec3 EditorCamera::CalculatePosition() const
