@@ -7,6 +7,7 @@
 #include "Soul/Renderer/Texture.h"
 #include <Soul/Renderer/CubeMap.h>
 #include "Soul/Scene/Components.h"
+#include "Soul/Renderer/Brush.h"
 #include "entt.hpp"
 
 
@@ -33,6 +34,8 @@ namespace Soul
 
 		void SetSceneExposure(float level) { sceneExposure = level; }
 		float* GetSceneExposure() { return &sceneExposure; }
+		
+		void PaintModel(glm::vec2 uvCoords);
 
 		void OnUpdateEditor(Timestep ts, EditorCamera& camera);
 		void OnUpdateRuntime(Timestep ts);
@@ -45,7 +48,7 @@ namespace Soul
 		void OnComponentAdded(Entity entity, T& component);
 	private:
 
-
+		Brush currentBrush;
 		ShaderLibrary shaderLib;
 
 		std::shared_ptr<CubeMap> skyBox;

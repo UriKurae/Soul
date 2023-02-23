@@ -1437,7 +1437,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="Brush.h">
+    <ClInclude Include="src\Soul\Renderer\Brush.h">
       <Filter>src\Soul\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1550,7 +1550,7 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="Brush.cpp">
+    <ClCompile Include="src\Soul\Renderer\Brush.cpp">
       <Filter>src\Soul\Renderer</Filter>
     </ClCompile>
   </ItemGroup>

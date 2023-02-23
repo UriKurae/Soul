@@ -9,6 +9,7 @@ namespace Soul
 {
 	OpenGLTexture2D::OpenGLTexture2D(const std::string& path) : m_Path(path)
 	{
+		pixels = nullptr;
 		int width, height, channels;
 		stbi_set_flip_vertically_on_load(1);
 		stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
@@ -45,6 +46,12 @@ namespace Soul
 	OpenGLTexture2D::~OpenGLTexture2D()
 	{
 		glDeleteTextures(1, &m_RendererID);
+		
+		if (pixels)
+		{
+			delete[] pixels;
+			pixels = nullptr;
+		}
 	}
 
 	std::string OpenGLTexture2D::GetName() const
@@ -57,5 +64,66 @@ namespace Soul
 	void OpenGLTexture2D::Bind(uint32_t slot) const
 	{
 		glBindTextureUnit(slot, m_RendererID);
+	}
+
+	bool OpenGLTexture2D::Unlock()
+	{
+		//If texture is locked and a texture exists
+		if (pixels != nullptr && m_RendererID != 0)
+		{
+			//Set current texture
+			glBindTexture(GL_TEXTURE_2D, m_RendererID);
+
+			//Update texture
+			glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_Width, m_Height, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+
+			//Delete pixels
+			delete[] pixels;
+			pixels = nullptr;
+
+			//Unbind texture
+			glBindTexture(GL_TEXTURE_2D, NULL);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	bool OpenGLTexture2D::Lock()
+	{
+		if (pixels == nullptr && m_RendererID != 0)
+		{
+			GLuint size = m_Width * m_Height;
+			pixels = new GLuint[size];
+
+			//Set current texture
+			glBindTexture(GL_TEXTURE_2D, m_RendererID);
+
+			//Get pixels
+			glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+
+			//Unbind texture
+			glBindTexture(GL_TEXTURE_2D, NULL);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	uint32_t* OpenGLTexture2D::GetPixelData32()
+	{
+		return pixels;
+	}
+
+	uint32_t OpenGLTexture2D::GetPixel32(uint32_t x, uint32_t y)
+	{
+		return pixels[y * m_Width + x];
+	}
+
+	uint32_t OpenGLTexture2D::SetPixel32(uint32_t x, uint32_t y, uint32_t pixel)
+	{
+		return pixels[y * m_Width + x] = pixel;
 	}
 }

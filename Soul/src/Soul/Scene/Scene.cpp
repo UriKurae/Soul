@@ -8,6 +8,7 @@
 #include <glm/glm.hpp>
 
 #include "Entity.h"
+#include <glad/glad.h>
 
 namespace Soul
 {
@@ -23,6 +24,7 @@ namespace Soul
 		textureShader->UploadUniformInt("material.normal", 2);
 		textureShader->Unbind();
 
+		currentBrush = Brush();
 
 		CreateLight(LightType::DIRECTIONAL_LIGHT);
 	}
@@ -91,6 +93,7 @@ namespace Soul
 		m_Registry.destroy(entity);
 	}
 
+	
 	void Scene::OnUpdateEditor(Timestep ts, EditorCamera& camera)
 	{
 		// TODO: Render things
@@ -114,6 +117,27 @@ namespace Soul
 			UploadLightUniforms(textureShader);
 
 			mat.mat->BindTextures();
+			//static bool once = true;
+			//if (once)
+			//{
+			//	mat.mat->diffuse->Lock();
+
+			//	// testing purposes
+			//	/*GLuint testingColor = currentBrush.RGBToPixel(22, 229, 229, 255);
+			//	
+
+			//	GLuint* pixels = mat.mat->diffuse->GetPixelData32();
+			//	GLuint pixelCount = mat.mat->diffuse->GetWidth() * mat.mat->diffuse->GetHeight();
+			//	for (int i = 0; i < pixelCount; ++i)
+			//	{
+			//		pixels[i] = testingColor;
+			//	}*/
+			//	
+			//	mat.mat->diffuse->Unlock();
+			//	once = false;
+			//}
+
+
 			mesh.model->Draw(textureShader, transform.GetTransform());
 		}
 
@@ -131,7 +155,7 @@ namespace Soul
 			}
 			
 		}
-		//skyBox->Draw();
+		skyBox->Draw();
 
 		Renderer::EndScene();
 	}
@@ -221,6 +245,17 @@ namespace Soul
 		}
 
 		return total;
+	}
+
+	void Scene::PaintModel(glm::vec2 uvCoords)
+	{
+		auto view = m_Registry.view<MeshComponent>();
+		for (auto entity : view)
+		{
+			MaterialComponent& mat = m_Registry.get<MaterialComponent>(entity);
+			currentBrush.PaintTexture(mat.mat->diffuse, uvCoords);
+
+		}
 	}
 
 	// Must have one for each component, if there's nothing to do, put it but leave it blank

@@ -10,7 +10,8 @@
 namespace Soul
 {
 	struct Vertex;
-	struct Triangle;
+	struct Model;
+
 	class EditorCamera : public Camera
 	{
 	public:
@@ -35,7 +36,7 @@ namespace Soul
 		const glm::vec3& GetPosition() const { return m_Position; }
 
 		glm::vec3 RayCastLine(glm::vec2 mousePos, glm::vec2 viewPortSize);
-		bool RayToMeshes(std::vector<Triangle>triangles, float distance, glm::vec2 mousePos, glm::vec2 viewPortSize, glm::vec3& intersectionPoint);
+		bool RayToMeshes(std::shared_ptr<Model> model, float distance, glm::vec2 mousePos, glm::vec2 viewPortSize, glm::vec3& intersectionPoint, glm::vec2& uvCoords);
 		
 	
 		float GetPitch() const { return m_Pitch; }

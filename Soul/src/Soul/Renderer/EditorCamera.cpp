@@ -156,7 +156,7 @@ namespace Soul
 		return finalRay;
 	}
 
-	bool EditorCamera::RayToMeshes(std::vector<Triangle> triangles, float distance, glm::vec2 mousePos, glm::vec2 viewPortSize, glm::vec3& intersectionPoint)
+	bool EditorCamera::RayToMeshes(std::shared_ptr<Model> model, float distance, glm::vec2 mousePos, glm::vec2 viewPortSize, glm::vec3& intersectionPoint, glm::vec2& uvCoords)
 	{
 		glm::vec3 origin = GetPosition();
 		glm::vec3 direction = glm::unProject(glm::vec3(mousePos.x, mousePos.y, 1.0f), GetViewMatrix(), GetProjectionMatrix(), glm::vec4(0.0f, 0.0f, viewPortSize.x, viewPortSize.y));
@@ -165,7 +165,9 @@ namespace Soul
 
 
 		bool hit = false;
-		bool trujit = false;
+		bool hitOnce = false;
+
+		std::vector<Triangle> triangles = model->GetTriangles();
 		std::vector<int> trianglesHit = {};
 		float closestDistance = 5000.0f;
 		Triangle closestTriangle = {};
@@ -182,20 +184,22 @@ namespace Soul
 				{
 					closestDistance = distance;
 					closestTriangle = triangles[i];
-					trujit = true;
 				}
-				trianglesHit.push_back(i);
+				//trianglesHit.push_back(i);
 				hit = false;
+				hitOnce = true;
 			}
 		}
 
+		uvCoords = model->PositionToUvs(closestTriangle.a).uv;
+
 		
-		if (trujit)
-		{
-			intersectionPoint.x = (closestTriangle.a.x + closestTriangle.b.x + closestTriangle.c.x) / 3;
-			intersectionPoint.y = (closestTriangle.a.y + closestTriangle.b.y + closestTriangle.c.y) / 3;
-			intersectionPoint.z = (closestTriangle.a.z + closestTriangle.b.z + closestTriangle.c.z) / 3;
-		}
+
+	
+		intersectionPoint.x = (closestTriangle.a.x + closestTriangle.b.x + closestTriangle.c.x) / 3;
+		intersectionPoint.y = (closestTriangle.a.y + closestTriangle.b.y + closestTriangle.c.y) / 3;
+		intersectionPoint.z = (closestTriangle.a.z + closestTriangle.b.z + closestTriangle.c.z) / 3;
+	
 
 
 		/*if (!trianglesHit.empty())
@@ -223,7 +227,7 @@ namespace Soul
 			}
 		}*/
 		
-		return hit;
+		return hitOnce;
 	}
 
 	glm::vec3 EditorCamera::CalculatePosition() const

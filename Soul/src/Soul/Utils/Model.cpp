@@ -134,6 +134,8 @@ namespace Soul
 			{
 				vertex = { pos, normal, glm::vec2(0.0f, 0.0f), tangents, bitangents };
 			}
+			PosUvs relation = { vertex.positions, vertex.texCoords };
+			positionsAndUvs.push_back(relation);
 			vertices.push_back(vertex);
 		}
 
@@ -208,5 +210,20 @@ namespace Soul
 	std::vector<Triangle>& Model::GetTriangles()
 	{
 		return modelTriangles;
+	}
+
+	PosUvs Model::PositionToUvs(glm::vec3 pos)
+	{
+		PosUvs equivalence = {};
+		for (int i = 0; i < positionsAndUvs.size(); ++i)
+		{
+			if (pos == positionsAndUvs[i].position)
+			{
+				equivalence = positionsAndUvs[i];
+				break;
+			}
+		}
+
+		return equivalence;
 	}
 }

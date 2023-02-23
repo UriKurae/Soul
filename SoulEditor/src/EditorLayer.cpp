@@ -142,21 +142,22 @@ namespace Soul
 			
 			if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
 			{
-				bool teste = {};
 				if (Input::IsMouseButtonPressed(Mouse::Button0))
-				{
-					std::vector<Triangle> meshes = m_ActiveScene->currentModel->GetTriangles();
-					
-					static glm::vec3 hola = {};
-					teste = m_EditorCamera.RayToMeshes(meshes, 100.0f, glm::vec2(mx, my), glm::vec2(viewportSize.x, viewportSize.y), hola);
-					m_ActiveScene->textureShader->Bind();
-					m_ActiveScene->textureShader->UploadUniformFloat3("HitPoint", hola);
-					m_ActiveScene->textureShader->Unbind();
-					int a = 0;
-					a++;
+				{					
+					glm::vec3 hitPoint = {};
+					glm::vec2 uvCoords = {};
+					bool hit = false;
+					hit = m_EditorCamera.RayToMeshes(m_ActiveScene->currentModel, 100.0f, glm::vec2(mx, my), glm::vec2(viewportSize.x, viewportSize.y), hitPoint, uvCoords);
+					if (hit)
+					{
+						//m_ActiveScene->textureShader->Bind();
+						//m_ActiveScene->textureShader->UploadUniformFloat3("HitPoint", hitPoint);
+						//m_ActiveScene->textureShader->Unbind();
+						m_ActiveScene->PaintModel(uvCoords);
+					}
 				}
 
-				int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
+				//int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
 				//SL_CORE_WARN("Pixel data = {0}", pixelData);
 			}
 

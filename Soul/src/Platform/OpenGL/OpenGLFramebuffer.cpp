@@ -224,6 +224,7 @@ namespace Soul
 		return pixelData;
 	}
 
+
 	void OpenGLFramebuffer::ClearAttachments(uint32_t attachmentIndex, int value)
 	{
 		SL_CORE_ASSERT(attachmentIndex < m_ColorAttachments.size(), "Index out of size");

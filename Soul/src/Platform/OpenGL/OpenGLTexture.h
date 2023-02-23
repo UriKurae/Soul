@@ -16,11 +16,19 @@ namespace Soul
 		virtual std::string GetPath() const override { return m_Path; }
 		virtual std::string GetName() const override;
 
+		bool Unlock() override;
+		bool Lock() override;
+		uint32_t* GetPixelData32() override;
+		uint32_t GetPixel32(uint32_t x, uint32_t y) override;
+		uint32_t SetPixel32(uint32_t x, uint32_t y, uint32_t pixel) override;
+
 		virtual void Bind(uint32_t slot = 0) const override;
 	private:
 		std::string m_Path;
 		uint32_t m_Width, m_Height;
 		std::string type;
 		uint32_t m_RendererID;
+
+		unsigned int* pixels;
 	};
 }
