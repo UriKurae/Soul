@@ -109,9 +109,9 @@ void main()
     color.rgb = pow(color.rgb, vec3(1.0/gamma));
 
   
-    //float dist = distance(FacePos, HitPoint);
-      //  if (dist < 0.1)
-        //color.rgb = vec3(0.0, 0.0, 1.0);
+    float dist = distance(FacePos, HitPoint);
+        if (dist < 0.1)
+        color.rgb = vec3(0.0, 0.0, 1.0);
    
   
     

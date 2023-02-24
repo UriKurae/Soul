@@ -150,9 +150,9 @@ namespace Soul
 					hit = m_EditorCamera.RayToMeshes(m_ActiveScene->currentModel, 100.0f, glm::vec2(mx, my), glm::vec2(viewportSize.x, viewportSize.y), hitPoint, uvCoords);
 					if (hit)
 					{
-						//m_ActiveScene->textureShader->Bind();
-						//m_ActiveScene->textureShader->UploadUniformFloat3("HitPoint", hitPoint);
-						//m_ActiveScene->textureShader->Unbind();
+						m_ActiveScene->textureShader->Bind();
+						m_ActiveScene->textureShader->UploadUniformFloat3("HitPoint", hitPoint);
+						m_ActiveScene->textureShader->Unbind();
 						m_ActiveScene->PaintModel(uvCoords);
 					}
 				}

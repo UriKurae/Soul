@@ -8,6 +8,7 @@ namespace Soul
 		vertices = vert;
 		indices = ind;
 		textures = texts;
+		CalculateTriangles();
 		setupMesh();
 	}
 
@@ -21,6 +22,18 @@ namespace Soul
 		for (int i = 0; i < textures.size(); ++i)
 		{
 			textures[i]->Bind(i);
+		}
+	}
+
+	void Mesh::CalculateTriangles()
+	{
+		Triangle tri = {};
+		for (int i = 0; i < indices.size(); i+=3)
+		{
+			tri.a = vertices[indices[i]].positions;
+			tri.b = vertices[indices[i+1]].positions;
+			tri.c = vertices[indices[i+2]].positions;
+			meshTriangles.push_back(tri);
 		}
 	}
 

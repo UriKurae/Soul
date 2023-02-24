@@ -27,13 +27,37 @@ namespace Soul
 		uint32_t color = RGBToPixel(r,g,b,a);
 		int pixelX, pixelY;
 		UvToPixel(uvCoords, texture->GetWidth(), texture->GetHeight(), pixelX, pixelY);
-		texture->Lock();
+		int size = texture->GetWidth() * texture->GetHeight();
+		textureToPaint = texture;
+		textureToPaint->Lock();
 		
-		texture->SetPixel32(pixelX, pixelY, color);
+		textureToPaint->SetPixel32(pixelX, pixelY, color);
+		
+		
 
-		texture->Unlock();
+		editTextureRequested = true;
 
 		return true;
+	}
+
+	void Brush::OnUpdate(Timestep dt)
+	{
+		actualFrequency += dt.GetSeconds();
+		if (actualFrequency > updateFrequency)
+		{
+			if (editTextureRequested)
+			{
+				//textureToPaint->Unlock();
+				editTextureRequested = false;
+			}
+			actualFrequency = 0.0f;
+			
+		}
+	}
+
+	void Brush::UpdateTexture(Ref<Texture2D> texture)
+	{
+		texture->Lock();
 	}
 
 	void Brush::UvToPixel(glm::vec2 uvCoords, int width, int height, int& pixelX, int& pixelY)

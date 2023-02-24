@@ -11,13 +11,6 @@ struct aiMaterial;
 
 namespace Soul
 {
-	struct Triangle
-	{
-		glm::vec3 a;
-		glm::vec3 b;
-		glm::vec3 c;
-	};
-
 	struct PosUvs
 	{
 		glm::vec3 position;
@@ -31,13 +24,13 @@ namespace Soul
 
 		void Draw(const Ref<Shader>& shader, const glm::mat4& transform);
 		std::vector<Mesh>& GetMeshes();
-		std::vector<Triangle>& GetTriangles();
 		PosUvs PositionToUvs(glm::vec3 pos);
+		
 	private:
 		std::vector<Mesh> meshes;
-		std::vector<Triangle> modelTriangles;
 		std::vector<Ref<Texture2D>> loadedTextures;
 		std::vector<PosUvs> positionsAndUvs;
+		
 		std::string directory;
 
 		void LoadModel(std::string path);

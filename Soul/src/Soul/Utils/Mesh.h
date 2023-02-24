@@ -8,6 +8,13 @@
 
 namespace Soul
 {
+	struct Triangle
+	{
+		glm::vec3 a;
+		glm::vec3 b;
+		glm::vec3 c;
+	};
+
 	class Mesh
 	{
 	public:
@@ -18,11 +25,14 @@ namespace Soul
 		std::vector<Ref<Texture2D>> GetTextures() { return textures; }
 		void BindTextures();
 
+		std::vector<Triangle>& GetTriangles() { return meshTriangles; }
 		std::vector<Vertex>& GetVertices() { return vertices; }
 	private:
+		void CalculateTriangles();
 		std::vector<Vertex> vertices;
 		std::vector<uint32_t> indices;
 		std::vector<Ref<Texture2D>> textures;
+		std::vector<Triangle> meshTriangles;
 
 		Ref<VertexArray> vao;
 		Ref<VertexBuffer> vbo;

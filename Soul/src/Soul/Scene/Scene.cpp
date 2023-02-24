@@ -98,6 +98,7 @@ namespace Soul
 	{
 		// TODO: Render things
 		Renderer::BeginScene(camera);
+		currentBrush.OnUpdate(ts);
 
 		auto view = m_Registry.view<MeshComponent>();
 		for (auto entity : view)

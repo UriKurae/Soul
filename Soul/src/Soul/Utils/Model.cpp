@@ -98,16 +98,7 @@ namespace Soul
 		std::vector<Vertex> vertices;
 		std::vector<uint32_t> indices;
 		std::vector<Ref<Texture2D>> texts;
-		
-		int totalTriangles = mesh->mNumVertices / 3;
-		for (unsigned int i = 0; i < mesh->mNumVertices; i+=3)
-		{
-			Triangle triangle;
-			triangle.a = { mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z };
-			triangle.b = { mesh->mVertices[i+1].x, mesh->mVertices[i+1].y, mesh->mVertices[i+1].z };
-			triangle.c = { mesh->mVertices[i+2].x, mesh->mVertices[i+2].y, mesh->mVertices[i+2].z };
-			modelTriangles.push_back(triangle);
-		}
+	
 
 		// Get all vertex info
 		for (unsigned int i = 0; i < mesh->mNumVertices; ++i)
@@ -136,6 +127,7 @@ namespace Soul
 			}
 			PosUvs relation = { vertex.positions, vertex.texCoords };
 			positionsAndUvs.push_back(relation);
+			
 			vertices.push_back(vertex);
 		}
 
@@ -149,8 +141,17 @@ namespace Soul
 				indices.push_back(face.mIndices[j]);
 			}
 		}
-
 		
+		//int totalTriangles = meshm / 3;
+		/*for (unsigned int i = 0; i < mesh->mNumVertices; i += 3)
+		{
+			Triangle triangle;
+			triangle.a = { mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z };
+			triangle.b = { mesh->mVertices[i + 1].x, mesh->mVertices[i + 1].y, mesh->mVertices[i + 1].z };
+			triangle.c = { mesh->mVertices[i + 2].x, mesh->mVertices[i + 2].y, mesh->mVertices[i + 2].z };
+			modelTriangles.push_back(triangle);
+		}
+		*/
 		// TODO: Moved textures to Material
 		//if (mesh->mMaterialIndex >= 0)
 		//{
@@ -207,10 +208,6 @@ namespace Soul
 		return meshes;
 	}
 
-	std::vector<Triangle>& Model::GetTriangles()
-	{
-		return modelTriangles;
-	}
 
 	PosUvs Model::PositionToUvs(glm::vec3 pos)
 	{
