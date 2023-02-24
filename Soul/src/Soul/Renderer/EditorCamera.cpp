@@ -139,6 +139,7 @@ namespace Soul
 
 	glm::vec3 EditorCamera::RayCastLine(glm::vec2 mousePos, glm::vec2 viewPortSize)
 	{
+		// Deprecated
 		float mouseX = (2.0f * mousePos.x) / viewPortSize.x - 1.0f;
 		float mouseY = 1.0f - (2.0f * mousePos.y) / viewPortSize.y;
 		float mouseZ = 1.0f;
@@ -160,13 +161,8 @@ namespace Soul
 	bool EditorCamera::RayToMeshes(std::shared_ptr<Model> model, float distance, glm::vec2 mousePos, glm::vec2 viewPortSize, glm::vec3& intersectionPoint, glm::vec2& uvCoords)
 	{
 		glm::vec3 origin = GetPosition();
-		//glm::vec3 direction = glm::unProject(glm::vec3(mousePos.x, mousePos.y, 1.0f), GetViewMatrix(), GetProjectionMatrix(), glm::vec4(0.0f, 0.0f, viewPortSize.x, viewPortSize.y));
-		glm::vec3 ra = RayCastLine(mousePos, glm::vec2(viewPortSize.x, viewPortSize.y));
-		
-	/*	glBegin(GL_LINES);
-		glVertex3f(origin.x, origin.y, origin.z);
-		glVertex3f(ra.x, ra.y, ra.z);
-		glEnd();*/
+
+		glm::vec3 direction = glm::unProject(glm::vec3(mousePos.x, mousePos.y, 1.0f), GetViewMatrix(), GetProjectionMatrix(), glm::vec4(0.0f, 0.0f, viewPortSize.x, viewPortSize.y));
 
 		// Booleans to know if we hit
 		bool hit = false;
@@ -185,10 +181,9 @@ namespace Soul
 			for (uint32_t i = 0; i < triangles.size(); ++i)
 			{
 				glm::vec3 hitPoint;
-				hit = glm::intersectLineTriangle(origin, ra, triangles[i].a, triangles[i].b, triangles[i].c, hitPoint);
+				hit = glm::intersectLineTriangle(origin, direction, triangles[i].a, triangles[i].b, triangles[i].c, hitPoint);
 				if (hit)
 				{
-					SL_CORE_WARN("hitPoint is {0}, {1}, {2}", hitPoint.x, hitPoint.y, hitPoint.z);
 					trianglesHit.push_back(triangles[i]);
 					hit = false;
 					hitOnce = true;
@@ -225,7 +220,6 @@ namespace Soul
 		if (hitOnce)
 		{
 			uvCoords = model->PositionToUvs(finalTriangle.a).uv;
-
 			intersectionPoint.x = (finalTriangle.a.x + finalTriangle.b.x + finalTriangle.c.x) / 3;
 			intersectionPoint.y = (finalTriangle.a.y + finalTriangle.b.y + finalTriangle.c.y) / 3;
 			intersectionPoint.z = (finalTriangle.a.z + finalTriangle.b.z + finalTriangle.c.z) / 3;
