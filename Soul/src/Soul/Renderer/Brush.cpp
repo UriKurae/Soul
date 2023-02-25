@@ -30,9 +30,16 @@ namespace Soul
 		int size = texture->GetWidth() * texture->GetHeight();
 		textureToPaint = texture;
 		textureToPaint->Lock();
-		
-		textureToPaint->SetPixel32(pixelX, pixelY, color);
-		
+
+		uint32_t pixelCount = textureToPaint->GetWidth() * textureToPaint->GetHeight();
+
+		for (int i = -brushSize; i < brushSize; ++i)
+		{
+			for (int j = -brushSize; j < brushSize; ++j)
+			{
+				textureToPaint->SetPixel32(pixelX + i, pixelY + j, color);
+			}
+		}	
 		
 
 		editTextureRequested = true;
@@ -47,7 +54,7 @@ namespace Soul
 		{
 			if (editTextureRequested)
 			{
-				//textureToPaint->Unlock();
+				textureToPaint->Unlock();
 				editTextureRequested = false;
 			}
 			actualFrequency = 0.0f;

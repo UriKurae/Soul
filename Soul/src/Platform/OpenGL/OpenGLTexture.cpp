@@ -122,8 +122,10 @@ namespace Soul
 		return pixels[y * m_Width + x];
 	}
 
-	uint32_t OpenGLTexture2D::SetPixel32(uint32_t x, uint32_t y, uint32_t pixel)
+	void OpenGLTexture2D::SetPixel32(uint32_t x, uint32_t y, uint32_t pixel)
 	{
-		return pixels[y * m_Width + x] = pixel;
+		if (x >= m_Width || x < 0) return;
+		if (y >= m_Height || y < 0) return;
+		pixels[y * m_Width + x] = pixel;
 	}
 }

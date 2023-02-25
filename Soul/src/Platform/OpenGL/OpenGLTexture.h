@@ -20,7 +20,7 @@ namespace Soul
 		bool Lock() override;
 		uint32_t* GetPixelData32() override;
 		uint32_t GetPixel32(uint32_t x, uint32_t y) override;
-		uint32_t SetPixel32(uint32_t x, uint32_t y, uint32_t pixel) override;
+		void SetPixel32(uint32_t x, uint32_t y, uint32_t pixel) override;
 
 		virtual void Bind(uint32_t slot = 0) const override;
 	private:

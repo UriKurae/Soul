@@ -22,12 +22,14 @@ namespace Soul
 
 		bool canUpdateTexture = false;
 		bool editTextureRequested = false;
-		float updateFrequency = 1.5f;
+		float updateFrequency = 0.25f;
 		float actualFrequency = 0.0f;
+
 		//Ref<Texture2D> brushTexture;
 		Ref<Texture2D> textureToPaint;
 
 		int r = 255, g = 0, b = 0, a = 255;
+		float brushSize = 50.0f;
 
 	};
 }
