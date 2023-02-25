@@ -14,6 +14,14 @@ namespace Soul
 		uint32_t RGBToPixel(uint32_t r, uint32_t g, uint32_t b, uint32_t a);
 		bool PaintTexture(Ref<Texture2D> texture, glm::vec2 uvCoords);
 
+		int GetCurrentTextureID() 
+		{ 
+			if (textureToPaint)
+				return textureToPaint->GetRendererID(); 
+
+			return -1;
+		}
+
 		void OnUpdate(Timestep dt);
 	private:
 		void UpdateTexture(Ref<Texture2D> texture);

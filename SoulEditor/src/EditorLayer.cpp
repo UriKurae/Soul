@@ -147,14 +147,18 @@ namespace Soul
 					glm::vec3 hitPoint = {};
 					glm::vec2 uvCoords = {};
 					bool hit = false;
-					hit = m_EditorCamera.RayToMeshes(m_ActiveScene->currentModel, 100.0f, glm::vec2(mx, my), glm::vec2(viewportSize.x, viewportSize.y), hitPoint, uvCoords);
-					if (hit)
+					if (m_ActiveScene->currentModel)
 					{
-						m_ActiveScene->textureShader->Bind();
-						m_ActiveScene->textureShader->UploadUniformFloat3("HitPoint", hitPoint);
-						m_ActiveScene->textureShader->Unbind();
-						m_ActiveScene->PaintModel(uvCoords);
+						hit = m_EditorCamera.RayToMeshes(m_ActiveScene->currentModel, 100.0f, glm::vec2(mx, my), glm::vec2(viewportSize.x, viewportSize.y), hitPoint, uvCoords);
+						if (hit)
+						{
+							m_ActiveScene->textureShader->Bind();
+							m_ActiveScene->textureShader->UploadUniformFloat3("HitPoint", hitPoint);
+							m_ActiveScene->textureShader->Unbind();
+							m_ActiveScene->PaintModel(uvCoords);
+						}
 					}
+				
 				}
 
 				//int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
@@ -284,10 +288,48 @@ namespace Soul
 			}
 			uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
 			ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+			
 			ImGui::PopStyleVar();
 
 			ImGui::End();
 
+			int textureReady = m_ActiveScene->currentBrush.GetCurrentTextureID();
+			if (textureReady != -1)
+			{
+				ImGui::Begin("UVs");
+
+
+				auto viewportUVsOffset = ImGui::GetCursorPos();
+				auto windowUVsSize = ImGui::GetWindowSize();
+				ImVec2 minBoundUVs = ImGui::GetWindowPos();
+				minBoundUVs.x += viewportUVsOffset.x;
+				minBoundUVs.y += viewportUVsOffset.y;
+
+				ImVec2 maxBoundUVs = { minBoundUVs.x + m_ViewportSizeUVs.x, minBoundUVs.y + m_ViewportSizeUVs.y };
+				viewportBoundsUVs[0] = { minBoundUVs.x, minBoundUVs.y };
+				viewportBoundsUVs[1] = { maxBoundUVs.x, maxBoundUVs.y };
+
+				m_ViewportFocusedUVs = ImGui::IsWindowFocused();
+				m_ViewportHoveredUVs = ImGui::IsWindowHovered();
+				//Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
+
+				ImVec2 viewportPanelSizeUVs = ImGui::GetContentRegionAvail();
+				if (m_ViewportSizeUVs != *((glm::vec2*)&viewportPanelSizeUVs) && viewportPanelSizeUVs.x > 0 && viewportPanelSizeUVs.y > 0)
+				{
+					//m_Framebuffer->Resize((uint32_t)viewportPanelSizeUVs.x, (uint32_t)viewportPanelSizeUVs.y);
+					m_ViewportSizeUVs = { viewportPanelSizeUVs.x, viewportPanelSizeUVs.y };
+				}
+
+
+
+
+
+
+				ImGui::Image((void*)m_ActiveScene->currentBrush.GetCurrentTextureID(), ImVec2{ m_ViewportSizeUVs.x, m_ViewportSizeUVs.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+
+				ImGui::End();
+
+			}
 			ImGui::End();
 		}
 

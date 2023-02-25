@@ -43,12 +43,12 @@ namespace Soul
 		std::shared_ptr<Model> currentModel;
 		Ref<Shader> textureShader;
 		TransformComponent modelTransform = {};
+		Brush currentBrush;
 	private:
 		template<typename T>
 		void OnComponentAdded(Entity entity, T& component);
 	private:
 
-		Brush currentBrush;
 		ShaderLibrary shaderLib;
 
 		std::shared_ptr<CubeMap> skyBox;

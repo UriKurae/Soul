@@ -51,6 +51,11 @@ namespace Soul
 		glm::vec2 m_ViewportSize = { 0,0 };
 		glm::vec2 viewportBounds[2];
 
+		bool m_ViewportFocusedUVs = false;
+		bool m_ViewportHoveredUVs = false;
+		glm::vec2 m_ViewportSizeUVs = { 0,0 };
+		glm::vec2 viewportBoundsUVs[2];
+
 		glm::vec3 m_SquareColor = { 0.2f, 0.3f, -0.8f };
 
 		// Panels
