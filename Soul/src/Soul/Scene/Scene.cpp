@@ -259,6 +259,17 @@ namespace Soul
 		}
 	}
 
+	void Scene::PaintModelUVs(glm::vec2 pos, glm::vec2 viewportSize)
+	{
+		auto view = m_Registry.view<MeshComponent>();
+		for (auto entity : view)
+		{
+			MaterialComponent& mat = m_Registry.get<MaterialComponent>(entity);
+			currentBrush.PaintTextureUVs(mat.mat->diffuse, pos, viewportSize);
+
+		}
+	}
+
 	// Must have one for each component, if there's nothing to do, put it but leave it blank
 	template<typename T>
 	void Scene::OnComponentAdded(Entity entity, T& component)

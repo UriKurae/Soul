@@ -36,6 +36,7 @@ namespace Soul
 		float* GetSceneExposure() { return &sceneExposure; }
 		
 		void PaintModel(glm::vec2 uvCoords);
+		void PaintModelUVs(glm::vec2 pos, glm::vec2 viewportSize);
 
 		void OnUpdateEditor(Timestep ts, EditorCamera& camera);
 		void OnUpdateRuntime(Timestep ts);

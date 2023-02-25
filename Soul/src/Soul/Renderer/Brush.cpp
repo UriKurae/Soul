@@ -47,6 +47,35 @@ namespace Soul
 		return true;
 	}
 
+	bool Brush::PaintTextureUVs(Ref<Texture2D> texture, glm::vec2 pos, glm::vec2 viewportSize)
+	{
+		uint32_t color = RGBToPixel(r, g, b, a);
+		int pixelX, pixelY;
+
+		pixelX = (texture->GetWidth() * pos.x) / viewportSize.x;
+		pixelY = (texture->GetHeight() * pos.y) / viewportSize.y;
+		int size = texture->GetWidth() * texture->GetHeight();
+
+
+		textureToPaint = texture;
+		textureToPaint->Lock();
+
+		uint32_t pixelCount = textureToPaint->GetWidth() * textureToPaint->GetHeight();
+
+		for (int i = -brushSize; i < brushSize; ++i)
+		{
+			for (int j = -brushSize; j < brushSize; ++j)
+			{
+				textureToPaint->SetPixel32(pixelX + i, pixelY + j, color);
+			}
+		}
+
+
+		editTextureRequested = true;
+
+		return true;
+	}
+
 	void Brush::OnUpdate(Timestep dt)
 	{
 		actualFrequency += dt.GetSeconds();

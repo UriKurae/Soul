@@ -20,6 +20,7 @@ namespace Soul
 		virtual void OnImGuiRender() override;
 		void OnEvent(Event& e) override;
 	private:
+
 		bool OnKeyPressed(KeyPressedEvent& e);
 		bool OnMousePressed(MouseButtonPressedEvent& e);
 

@@ -136,9 +136,6 @@ namespace Soul
 			my = viewportSize.y - my;
 			int mouseX = (int)mx;
 			int mouseY = (int)my;
-
-			
-			
 			
 			if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
 			{
@@ -166,8 +163,25 @@ namespace Soul
 			}
 
 			m_Framebuffer->Unbind();
-			
 
+
+			// For the UVs
+
+			auto [mxUv, myUv] = ImGui::GetMousePos();
+			mxUv -= viewportBoundsUVs[0].x;
+			myUv -= viewportBoundsUVs[0].y;
+			viewportSize = viewportBoundsUVs[1] - viewportBoundsUVs[0];
+			myUv = viewportSize.y - myUv;
+			mouseX = (int)mxUv;
+			mouseY = (int)myUv;
+
+			if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
+			{
+				if (Input::IsMouseButtonPressed(Mouse::Button0))
+				{
+					m_ActiveScene->PaintModelUVs(glm::vec2(mouseX, mouseY), viewportSize);
+				}
+			}
 		}
 
 		void EditorLayer::OnImGuiRender()
