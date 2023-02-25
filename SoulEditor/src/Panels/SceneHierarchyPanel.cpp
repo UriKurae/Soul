@@ -65,6 +65,13 @@ namespace Soul
 		}
 		
 		ImGui::End();
+
+		ImGui::Begin("Brush Properties");
+		
+		ImGui::DragFloat("Brush Size", &m_Context->currentBrush.GetBrushSize(), 0.1f, 0.1f, 500.0f, "%.2f");
+		
+
+		ImGui::End();
 	}
 	void SceneHierarchyPanel::DrawEntityNode(Entity entity)
 	{
