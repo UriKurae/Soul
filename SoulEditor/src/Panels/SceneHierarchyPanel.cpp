@@ -68,7 +68,18 @@ namespace Soul
 
 		ImGui::Begin("Brush Properties");
 		
-		ImGui::DragFloat("Brush Size", &m_Context->currentBrush.GetBrushSize(), 0.1f, 0.1f, 500.0f, "%.2f");
+		ImGui::Text("Brush Size");
+		ImGui::SliderFloat("##Brush Size", &m_Context->currentBrush.GetBrushSize(), 1.0f, 500.0f, "%.2f");
+		
+		ImGui::Separator();
+
+		static glm::vec4 brushColor = {};
+		ImGui::Text("Brush Color");
+		if (ImGui::ColorPicker4("##Brush Color", &brushColor[0]))
+		{
+			m_Context->currentBrush.SetBrushColor(brushColor.r * 255.0f, brushColor.g * 255.0f, brushColor.b * 255.0f, brushColor.a * 255.0f);
+		}
+
 		
 
 		ImGui::End();

@@ -25,6 +25,8 @@ namespace Soul
 			return -1;
 		}
 
+		void SetBrushColor(int red, int green, int blue, int alpha);
+
 		void OnUpdate(Timestep dt);
 	private:
 		void UpdateTexture(Ref<Texture2D> texture);

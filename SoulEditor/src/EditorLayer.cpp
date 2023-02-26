@@ -164,6 +164,31 @@ namespace Soul
 
 			m_Framebuffer->Unbind();
 
+			// Control brush size shortcut
+			if (Input::IsMouseButtonPressed(Mouse::Button0))
+			{
+				static float brushSize = 0.0f;
+				if (!holdingMouse)
+				{
+					brushSize = m_ActiveScene->currentBrush.GetBrushSize();
+					offsetMouse = ImGui::GetMousePos().x;
+					holdingMouse = true;
+				}
+				
+				if (Input::IsKeyPressed(Key::LeftControl))
+				{
+					float *currentBrush = &m_ActiveScene->currentBrush.GetBrushSize();
+					float currentMousePos = ImGui::GetMousePos().x;
+					*currentBrush = brushSize + currentMousePos - offsetMouse;
+					if (*currentBrush < 0) *currentBrush = 0.0f;
+					if (*currentBrush > 500.0f) *currentBrush = 500.0f;
+				}
+			}
+			else
+			{
+				holdingMouse = false;
+			}
+			
 
 			// For the UVs
 

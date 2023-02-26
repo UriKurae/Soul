@@ -57,6 +57,9 @@ namespace Soul
 		glm::vec2 m_ViewportSizeUVs = { 0,0 };
 		glm::vec2 viewportBoundsUVs[2];
 
+		bool holdingMouse = false;
+		float offsetMouse =  0.0f;
+
 		glm::vec3 m_SquareColor = { 0.2f, 0.3f, -0.8f };
 
 		// Panels

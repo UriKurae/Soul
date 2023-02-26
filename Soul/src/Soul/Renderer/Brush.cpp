@@ -105,4 +105,12 @@ namespace Soul
 		pixelX = int(pixels.x);
 		pixelY = int(pixels.y);
 	}
+
+	void Brush::SetBrushColor(int red, int green, int blue, int alpha)
+	{
+		r = red;
+		g = green;
+		b = blue;
+		a = alpha;
+	}
 }
