@@ -99,6 +99,7 @@ namespace Soul
 		// TODO: Render things
 		Renderer::BeginScene(camera);
 		currentBrush.OnUpdate(ts);
+		skyBox->Draw();
 
 		auto view = m_Registry.view<MeshComponent>();
 		for (auto entity : view)
@@ -156,7 +157,7 @@ namespace Soul
 			}
 			
 		}
-		skyBox->Draw();
+		
 
 		Renderer::EndScene();
 	}

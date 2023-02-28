@@ -1,6 +1,8 @@
 #pragma once
 
+#include "Soul/Renderer/Texture.h"
 #include <filesystem>
+
 
 namespace Soul
 {
@@ -14,5 +16,7 @@ namespace Soul
 
 	private:
 		std::filesystem::path currDirectory;
+		Ref<Texture2D> directoryIcon;
+		Ref<Texture2D> fileIcon;
 	};
 }

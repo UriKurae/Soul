@@ -12,6 +12,8 @@
 
 namespace Soul
 {
+	extern const std::filesystem::path assetsPath;
+
 	EditorLayer::EditorLayer()
 			: Layer("Editor")
 	{
@@ -329,6 +331,19 @@ namespace Soul
 			uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
 			ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 			
+			if (ImGui::BeginDragDropTarget())
+			{
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Content_Browser_Item"))
+				{
+					const wchar_t* path = (const wchar_t*)payload->Data;
+					if (wcsstr(path, L"scenes") != 0)
+					{
+						OpenScene(std::filesystem::path(assetsPath) / path);
+					}
+				}
+				ImGui::EndDragDropTarget();
+			}
+
 			ImGui::PopStyleVar();
 
 			ImGui::End();
@@ -359,11 +374,6 @@ namespace Soul
 					//m_Framebuffer->Resize((uint32_t)viewportPanelSizeUVs.x, (uint32_t)viewportPanelSizeUVs.y);
 					m_ViewportSizeUVs = { viewportPanelSizeUVs.x, viewportPanelSizeUVs.y };
 				}
-
-
-
-
-
 
 				ImGui::Image((void*)m_ActiveScene->currentBrush.GetCurrentTextureID(), ImVec2{ m_ViewportSizeUVs.x, m_ViewportSizeUVs.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 
@@ -439,13 +449,17 @@ namespace Soul
 			std::string filePath = FileDialogs::OpenFile("Soul Scene (*.soul)\0*.soul\0");
 			if (!filePath.empty())
 			{
-				m_ActiveScene = std::make_shared<Scene>();
-				m_SceneHierarchyPanel.SetContext(m_ActiveScene);
-
-
-				SceneSerializer serializer(m_ActiveScene);
-				serializer.Deserialize(filePath);
+				OpenScene(filePath);
 			}
+		}
+
+		void EditorLayer::OpenScene(const std::filesystem::path& path)
+		{
+			m_ActiveScene = std::make_shared<Scene>();
+			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Deserialize(path.string());
 		}
 
 		void EditorLayer::SaveSceneAs()
