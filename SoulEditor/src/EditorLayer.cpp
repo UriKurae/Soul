@@ -301,6 +301,7 @@ namespace Soul
 			
 
 			m_SceneHierarchyPanel.OnImGuiRender();
+			contentBrowserPanel.OnImGuiRender();
 			
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0,0 });
 			ImGui::Begin("Viewport");

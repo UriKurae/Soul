@@ -2,6 +2,7 @@
 
 #include "Soul.h"
 #include "Panels/SceneHierarchyPanel.h"
+#include "Panels/ContentBrowserPanel.h"
 
 #include "Soul/Renderer/EditorCamera.h"
 
@@ -64,5 +65,6 @@ namespace Soul
 
 		// Panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;
+		ContentBrowserPanel contentBrowserPanel;
 	};
 }
