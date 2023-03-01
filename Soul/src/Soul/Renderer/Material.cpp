@@ -19,7 +19,7 @@ namespace Soul
 
 	void Material::BindTextures() const
 	{
-		diffuse->Bind(0);
+		//diffuse->Bind(0);
 		specular->Bind(1);
 		normal->Bind(2);
 	}

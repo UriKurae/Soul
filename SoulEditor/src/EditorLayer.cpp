@@ -120,7 +120,12 @@ namespace Soul
 			//Renderer::SubmitArrays(floatingFBShader, vaoFB, 6);
 			//
 			//m_Framebuffer->Unbind();
-			
+
+			computeShaderTexture->BindToCompute();
+			computeShader->Bind();
+			computeShader->UploadUniformInt("imgOutput", 0);
+			computeShader->Dispatch();
+
 			m_Framebuffer->Bind();
 			RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 			RenderCommand::Clear();
@@ -131,13 +136,10 @@ namespace Soul
 			
 			m_EditorCamera.OnUpdate(ts);
 
-			computeShaderTexture->BindToCompute();
-			computeShader->Bind();
-			m_ActiveScene->textureShader->Bind();
-			computeShader->Dispatch();
 
+			//m_ActiveScene->textureShader->Bind();
 
-			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera, computeShaderTexture);
 
 
 			auto [mx, my] = ImGui::GetMousePos();

@@ -48,16 +48,41 @@ namespace Soul
 		shader = glCreateShader(GL_COMPUTE_SHADER);
 		glShaderSource(shader, 1, &code, NULL);
 		glCompileShader(shader);
+		int success;
+		glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+		if (!success)
+		{
+			char infoLog[512];
+			glGetShaderInfoLog(shader, 512, NULL, infoLog);
+			SL_CORE_WARN("Error {0}", infoLog);
+		}
+
 	
 		// shader Program
 		m_RendererID = glCreateProgram();
 		glAttachShader(m_RendererID, shader);
 		glLinkProgram(m_RendererID);
+		glValidateProgram(m_RendererID);
+		glGetProgramiv(m_RendererID, GL_LINK_STATUS, &success);
+		if (!success)
+		{
+			char infoLog[512];
+			glGetProgramInfoLog(m_RendererID, 512, NULL, infoLog);
+			SL_CORE_ERROR("Compute Shader linking failed {0}", infoLog);
+		}
+		else
+		{
+			SL_CORE_INFO("Compute Shader linked successfully!");
+		}
+
+		glDetachShader(m_RendererID, shader);
+		glDeleteShader(shader);
+
 	}
 
 	void ComputeShader::Dispatch()
 	{
-		glDispatchCompute(1, 1, 1);
+		glDispatchCompute(512, 512, 1);
 
 		glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
 	}

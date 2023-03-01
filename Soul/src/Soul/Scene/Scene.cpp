@@ -19,7 +19,7 @@ namespace Soul
 		textureShader = shaderLib.Load("assets/shaders/Texture.glsl");
 		// Setup shader uniforms
 		textureShader->Bind();
-		textureShader->UploadUniformInt("material.diffuse", 0);
+		//textureShader->UploadUniformInt("material.diffuse", 0);
 		textureShader->UploadUniformInt("material.specular", 1);
 		textureShader->UploadUniformInt("material.normal", 2);
 		textureShader->Unbind();
@@ -94,7 +94,7 @@ namespace Soul
 	}
 
 	
-	void Scene::OnUpdateEditor(Timestep ts, EditorCamera& camera)
+	void Scene::OnUpdateEditor(Timestep ts, EditorCamera& camera, Ref<Texture2D> computeShaderTexture)
 	{
 		// TODO: Render things
 		Renderer::BeginScene(camera);
@@ -118,7 +118,8 @@ namespace Soul
 
 			UploadLightUniforms(textureShader);
 
-			//mat.mat->BindTextures();
+			mat.mat->BindTextures();
+			computeShaderTexture->Bind(0);
 			//static bool once = true;
 			//if (once)
 			//{

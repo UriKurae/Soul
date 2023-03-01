@@ -38,7 +38,7 @@ namespace Soul
 		void PaintModel(glm::vec2 uvCoords);
 		void PaintModelUVs(glm::vec2 pos, glm::vec2 viewportSize);
 
-		void OnUpdateEditor(Timestep ts, EditorCamera& camera);
+		void OnUpdateEditor(Timestep ts, EditorCamera& camera, Ref<Texture2D> computeShaderTexture);
 		void OnUpdateRuntime(Timestep ts);
 	public:
 		std::shared_ptr<Model> currentModel;
