@@ -24,7 +24,7 @@ namespace Soul
 		void SetPixel32(uint32_t x, uint32_t y, uint32_t pixel) override;
 
 		virtual void Bind(uint32_t slot = 0) const override;
-		virtual void BindToCompute() const;
+		virtual void BindToCompute(uint32_t slot) const;
 	private:
 		std::string m_Path;
 		uint32_t m_Width, m_Height;

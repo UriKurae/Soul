@@ -14,7 +14,7 @@ namespace Soul
 		void Unbind() const override;
 
 		void Compute();
-		void Dispatch();
+		void Dispatch(uint32_t width, uint32_t height);
 
 		virtual const std::string& GetName() const override { return m_Name; }
 

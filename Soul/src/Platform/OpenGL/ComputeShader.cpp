@@ -80,9 +80,9 @@ namespace Soul
 
 	}
 
-	void ComputeShader::Dispatch()
+	void ComputeShader::Dispatch(uint32_t width, uint32_t height)
 	{
-		glDispatchCompute(512, 512, 1);
+		glDispatchCompute(width, height, 1);
 
 		glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
 	}

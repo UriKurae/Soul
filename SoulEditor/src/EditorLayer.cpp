@@ -21,8 +21,8 @@ namespace Soul
 
 		void EditorLayer::OnAttach()
 		{
-			computeShader = std::make_shared<ComputeShader>("assets/shaders/ComputeShader.glsl");
-			computeShaderTexture = Texture2D::Create(512, 512);
+			//computeShader = std::make_shared<ComputeShader>("assets/shaders/ComputeShader.glsl");
+			//computeShaderTexture = Texture2D::Create(512, 512);
 
 			floatingFBShader = m_ShaderLibrary.Load("assets/shaders/HdrFrameBuffer.glsl");
 			floatingFBShader->Bind();
@@ -121,10 +121,10 @@ namespace Soul
 			//
 			//m_Framebuffer->Unbind();
 
-			computeShaderTexture->BindToCompute();
-			computeShader->Bind();
-			computeShader->UploadUniformInt("imgOutput", 0);
-			computeShader->Dispatch();
+			//computeShaderTexture->BindToCompute(0);
+			//computeShader->Bind();
+			//computeShader->UploadUniformInt("imgOutput", 0);
+			//computeShader->Dispatch(computeShaderTexture->GetWidth(), computeShaderTexture->GetHeight());
 
 			m_Framebuffer->Bind();
 			RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
@@ -139,7 +139,7 @@ namespace Soul
 
 			//m_ActiveScene->textureShader->Bind();
 
-			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera, computeShaderTexture);
+			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
 
 			auto [mx, my] = ImGui::GetMousePos();
@@ -162,10 +162,13 @@ namespace Soul
 						hit = m_EditorCamera.RayToMeshes(m_ActiveScene->currentModel, 100.0f, glm::vec2(mx, my), glm::vec2(viewportSize.x, viewportSize.y), hitPoint, uvCoords);
 						if (hit)
 						{
-							m_ActiveScene->textureShader->Bind();
-							m_ActiveScene->textureShader->UploadUniformFloat3("HitPoint", hitPoint);
-							m_ActiveScene->textureShader->Unbind();
-							m_ActiveScene->PaintModel(uvCoords);
+							m_ActiveScene->computeShader->Bind();
+							m_ActiveScene->computeShader->UploadUniformFloat2("brushPosition", {mx, my});
+
+							//m_ActiveScene->textureShader->Bind();
+							//m_ActiveScene->textureShader->UploadUniformFloat3("HitPoint", hitPoint);
+							//m_ActiveScene->textureShader->Unbind();
+							//m_ActiveScene->PaintModel(uvCoords);
 						}
 					}
 				

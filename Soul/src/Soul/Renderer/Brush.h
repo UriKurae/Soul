@@ -16,6 +16,10 @@ namespace Soul
 		bool PaintTextureUVs(Ref<Texture2D> texture, glm::vec2 pos, glm::vec2 viewportSize);
 
 		float& GetBrushSize() { return brushSize; }
+		glm::vec4 GetBrushColor()
+		{
+			return {r,g,b,a};
+		}
 
 		int GetCurrentTextureID() 
 		{ 

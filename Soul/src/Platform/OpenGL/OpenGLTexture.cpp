@@ -84,9 +84,9 @@ namespace Soul
 		glBindTextureUnit(slot, m_RendererID);
 	}
 
-	void OpenGLTexture2D::BindToCompute() const
+	void OpenGLTexture2D::BindToCompute(uint32_t slot) const
 	{
-		glBindImageTexture(0, m_RendererID, 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
+		glBindImageTexture(slot, m_RendererID, 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
 	}
 
 	bool OpenGLTexture2D::Unlock()

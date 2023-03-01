@@ -14,12 +14,17 @@ namespace Soul
 {
 	Scene::Scene()
 	{
+		// Prepare textures for painting with compute shaders
+		computeShader = std::make_shared<ComputeShader>("assets/shaders/ComputeShader.glsl");
+		computeShaderTexture = Texture2D::Create(512, 512);
+
+		// Create skybox
 		skyBox = std::make_shared<CubeMap>();
 
 		textureShader = shaderLib.Load("assets/shaders/Texture.glsl");
 		// Setup shader uniforms
 		textureShader->Bind();
-		//textureShader->UploadUniformInt("material.diffuse", 0);
+		textureShader->UploadUniformInt("material.diffuse", 0);
 		textureShader->UploadUniformInt("material.specular", 1);
 		textureShader->UploadUniformInt("material.normal", 2);
 		textureShader->Unbind();
@@ -94,7 +99,7 @@ namespace Soul
 	}
 
 	
-	void Scene::OnUpdateEditor(Timestep ts, EditorCamera& camera, Ref<Texture2D> computeShaderTexture)
+	void Scene::OnUpdateEditor(Timestep ts, EditorCamera& camera)
 	{
 		// TODO: Render things
 		Renderer::BeginScene(camera);
@@ -119,27 +124,7 @@ namespace Soul
 			UploadLightUniforms(textureShader);
 
 			mat.mat->BindTextures();
-			computeShaderTexture->Bind(0);
-			//static bool once = true;
-			//if (once)
-			//{
-			//	mat.mat->diffuse->Lock();
-
-			//	// testing purposes
-			//	/*GLuint testingColor = currentBrush.RGBToPixel(22, 229, 229, 255);
-			//	
-
-			//	GLuint* pixels = mat.mat->diffuse->GetPixelData32();
-			//	GLuint pixelCount = mat.mat->diffuse->GetWidth() * mat.mat->diffuse->GetHeight();
-			//	for (int i = 0; i < pixelCount; ++i)
-			//	{
-			//		pixels[i] = testingColor;
-			//	}*/
-			//	
-			//	mat.mat->diffuse->Unlock();
-			//	once = false;
-			//}
-
+			BindComputeShaders();
 
 			mesh.model->Draw(textureShader, transform.GetTransform());
 		}
@@ -248,6 +233,18 @@ namespace Soul
 		}
 
 		return total;
+	}
+
+	void Scene::BindComputeShaders()
+	{
+		computeShaderTexture->BindToCompute(0);
+		computeShader->Bind();
+		computeShader->UploadUniformInt("imgOutput", 0);
+		computeShader->UploadUniformFloat("brushSize", currentBrush.GetBrushSize());
+		computeShader->UploadUniformFloat4("brushColor", currentBrush.GetBrushColor());
+		computeShader->Dispatch(computeShaderTexture->GetWidth(), computeShaderTexture->GetHeight());
+		computeShaderTexture->Bind(0);
+
 	}
 
 	void Scene::PaintModel(glm::vec2 uvCoords)

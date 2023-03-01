@@ -9,6 +9,7 @@
 #include "Soul/Scene/Components.h"
 #include "Soul/Renderer/Brush.h"
 #include "entt.hpp"
+#include <Platform/OpenGL/ComputeShader.h>
 
 
 namespace Soul
@@ -32,19 +33,25 @@ namespace Soul
 		void UploadLightUniforms(Ref<Shader> desiredShader);
 		int RetieveTotalLights(LightType type);
 
+		void BindComputeShaders();
+
 		void SetSceneExposure(float level) { sceneExposure = level; }
 		float* GetSceneExposure() { return &sceneExposure; }
 		
 		void PaintModel(glm::vec2 uvCoords);
 		void PaintModelUVs(glm::vec2 pos, glm::vec2 viewportSize);
 
-		void OnUpdateEditor(Timestep ts, EditorCamera& camera, Ref<Texture2D> computeShaderTexture);
+		void OnUpdateEditor(Timestep ts, EditorCamera& camera);
 		void OnUpdateRuntime(Timestep ts);
 	public:
 		std::shared_ptr<Model> currentModel;
 		Ref<Shader> textureShader;
 		TransformComponent modelTransform = {};
 		Brush currentBrush;
+
+		// Compute Shaders
+		std::shared_ptr<ComputeShader> computeShader;
+		Ref<Texture2D> computeShaderTexture;
 	private:
 		template<typename T>
 		void OnComponentAdded(Entity entity, T& component);
@@ -59,6 +66,8 @@ namespace Soul
 		Ref<Shader> lightShader;
 
 		entt::registry m_Registry;
+
+		
 
 		friend class Entity;
 		friend class SceneSerializer;
