@@ -21,6 +21,9 @@ namespace Soul
 
 		void EditorLayer::OnAttach()
 		{
+			computeShader = std::make_shared<ComputeShader>("assets/shaders/ComputeShader.glsl");
+			computeShaderTexture = Texture2D::Create(512, 512);
+
 			floatingFBShader = m_ShaderLibrary.Load("assets/shaders/HdrFrameBuffer.glsl");
 			floatingFBShader->Bind();
 			floatingFBShader->UploadUniformInt("hdrBuffer", 0);
@@ -127,6 +130,12 @@ namespace Soul
 			m_Framebuffer->ClearAttachments(1, -1);
 			
 			m_EditorCamera.OnUpdate(ts);
+
+			computeShaderTexture->BindToCompute();
+			computeShader->Bind();
+			m_ActiveScene->textureShader->Bind();
+			computeShader->Dispatch();
+
 
 			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 

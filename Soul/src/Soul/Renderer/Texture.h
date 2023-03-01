@@ -23,6 +23,7 @@ namespace Soul
 		virtual uint32_t GetRendererID() const = 0;
 		virtual std::string GetPath() const = 0;
 		virtual std::string GetName() const = 0;
+		virtual void BindToCompute() const = 0;
 		virtual bool Unlock() = 0;
 		virtual bool Lock() = 0;
 		virtual uint32_t* GetPixelData32() = 0;
@@ -36,5 +37,6 @@ namespace Soul
 	{
 	public:
 		static Ref<Texture2D> Create(const std::string& path);
+		static Ref<Texture2D> Create(uint32_t width, uint32_t height);
 	};
 }

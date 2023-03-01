@@ -6,6 +6,8 @@
 
 #include "Soul/Renderer/EditorCamera.h"
 
+#include "Platform/OpenGL/ComputeShader.h"
+
 namespace Soul
 {
 	class EditorLayer : public Layer
@@ -46,6 +48,9 @@ namespace Soul
 		Ref<Scene> m_ActiveScene;
 		
 		EditorCamera m_EditorCamera;
+
+		std::shared_ptr<ComputeShader> computeShader;
+		Ref<Texture2D> computeShaderTexture;
 		
 		Entity m_CameraEntity;
 

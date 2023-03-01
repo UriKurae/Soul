@@ -118,7 +118,7 @@ namespace Soul
 
 			UploadLightUniforms(textureShader);
 
-			mat.mat->BindTextures();
+			//mat.mat->BindTextures();
 			//static bool once = true;
 			//if (once)
 			//{
