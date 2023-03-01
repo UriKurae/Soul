@@ -163,7 +163,7 @@ namespace Soul
 						if (hit)
 						{
 							m_ActiveScene->computeShader->Bind();
-							m_ActiveScene->computeShader->UploadUniformFloat2("brushPosition", {mx, my});
+							m_ActiveScene->computeShader->UploadUniformFloat3("intersectionPoint", hitPoint);
 
 							//m_ActiveScene->textureShader->Bind();
 							//m_ActiveScene->textureShader->UploadUniformFloat3("HitPoint", hitPoint);
