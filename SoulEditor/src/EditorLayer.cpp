@@ -50,7 +50,7 @@ namespace Soul
 			vaoFB->AddVertexBuffer(vboFB);
 
 			FramebufferSpecification fbSpec;
-			fbSpec.attachments = { FramebufferTextureFormat::RGBA8,FramebufferTextureFormat::RED_INTEGER, FramebufferTextureFormat::Depth };
+			fbSpec.attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::Depth };
 			fbSpec.floatingPointFB = false;
 			fbSpec.width = 1280;
 			fbSpec.height = 720;
@@ -132,7 +132,7 @@ namespace Soul
 
 
 			RenderCommand::ManageDepth(true);
-			m_Framebuffer->ClearAttachments(1, -1);
+			//m_Framebuffer->ClearAttachments(1, -1);
 			
 			m_EditorCamera.OnUpdate(ts);
 
@@ -164,11 +164,17 @@ namespace Soul
 						{
 							m_ActiveScene->computeShader->Bind();
 							m_ActiveScene->computeShader->UploadUniformFloat3("intersectionPoint", hitPoint);
+							m_ActiveScene->computeShader->UploadUniformFloat2("uv", uvCoords);
+							m_ActiveScene->computeShader->UploadUniformInt("painting", true);
 
 							//m_ActiveScene->textureShader->Bind();
 							//m_ActiveScene->textureShader->UploadUniformFloat3("HitPoint", hitPoint);
 							//m_ActiveScene->textureShader->Unbind();
 							//m_ActiveScene->PaintModel(uvCoords);
+						}
+						else
+						{
+							m_ActiveScene->computeShader->UploadUniformInt("painting", false);
 						}
 					}
 				

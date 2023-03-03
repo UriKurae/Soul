@@ -97,7 +97,7 @@ void main()
     norm = normalize(norm * 2.0 - 1.0);
     norm = normalize(TBN * norm);
     vec3 viewDir = normalize(camPos - FacePos);
-
+    
     vec3 totalLight = CalcDirLight(dirLight, norm, viewDir);
     
     for(int i = 0; i < totalPointLights; ++i)

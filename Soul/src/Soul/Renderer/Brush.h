@@ -46,7 +46,7 @@ namespace Soul
 		Ref<Texture2D> textureToPaint;
 
 		int r = 255, g = 0, b = 0, a = 255;
-		float brushSize = 50.0f;
+		float brushSize = 20.0f;
 
 	};
 }

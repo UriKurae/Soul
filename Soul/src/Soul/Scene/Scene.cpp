@@ -240,7 +240,8 @@ namespace Soul
 		computeShaderTexture->BindToCompute(0);
 		computeShader->Bind();
 		computeShader->UploadUniformInt("imgOutput", 0);
-		computeShader->UploadUniformFloat("brushSize", currentBrush.GetBrushSize());
+		float hola = currentBrush.GetBrushSize();
+		computeShader->UploadUniformFloat("brushSize", hola );
 		computeShader->UploadUniformFloat4("brushColor", currentBrush.GetBrushColor());
 		computeShader->Dispatch(computeShaderTexture->GetWidth(), computeShaderTexture->GetHeight());
 		computeShaderTexture->Bind(0);
