@@ -2,6 +2,7 @@
 #include "OpenGLTexture.h"
 
 #include "stb_image.h"
+#include "stb_image_write.h"
 
 #include <glad/glad.h>
 
@@ -87,6 +88,26 @@ namespace Soul
 	void OpenGLTexture2D::BindToCompute(uint32_t slot) const
 	{
 		glBindImageTexture(slot, m_RendererID, 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
+	}
+
+	bool OpenGLTexture2D::GenerateImagePNG(std::string pathToGenerate) const
+	{
+
+		GLuint size = m_Width * m_Height;
+		unsigned int* data = new GLuint[size];
+
+		//Set current texture
+		glBindTexture(GL_TEXTURE_2D, m_RendererID);
+
+		//Get pixels
+		glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+
+		int success = stbi_write_png(pathToGenerate.c_str(), m_Width, m_Height, 4, data, 4 * m_Width);
+
+		//Unbind texture
+		glBindTexture(GL_TEXTURE_2D, NULL);
+
+		return success == 0 ? false : true;
 	}
 
 	bool OpenGLTexture2D::Unlock()

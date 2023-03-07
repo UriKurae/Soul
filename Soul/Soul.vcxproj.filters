@@ -1441,6 +1441,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\ComputeShader.h" />
+    <ClInclude Include="vendor\stb_image\stb_image_write.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1555,5 +1556,6 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\ComputeShader.cpp" />
+    <ClCompile Include="vendor\stb_image\stb_image_write.cpp" />
   </ItemGroup>
 </Project>

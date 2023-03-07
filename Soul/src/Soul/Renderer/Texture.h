@@ -29,6 +29,7 @@ namespace Soul
 		virtual uint32_t* GetPixelData32() = 0;
 		virtual uint32_t GetPixel32(uint32_t x, uint32_t y) = 0;
 		virtual void SetPixel32(uint32_t x, uint32_t y, uint32_t pixel) = 0;
+		virtual bool GenerateImagePNG(std::string pathToGenerate) const = 0;
 
 		virtual void Bind(uint32_t slot = 0) const = 0;
 	};

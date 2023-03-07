@@ -32,6 +32,7 @@ namespace Soul
 		void OpenScene(const std::filesystem::path& path);
 		void SaveSceneAs();
 		void ImportModel();
+		void ExportImage(Ref<Texture2D> image);
 	private:
 		ShaderLibrary m_ShaderLibrary;
 	

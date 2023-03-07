@@ -25,6 +25,9 @@ namespace Soul
 
 		virtual void Bind(uint32_t slot = 0) const override;
 		virtual void BindToCompute(uint32_t slot) const;
+
+		virtual bool GenerateImagePNG(std::string pathToGenerate) const override;
+
 	private:
 		std::string m_Path;
 		uint32_t m_Width, m_Height;
