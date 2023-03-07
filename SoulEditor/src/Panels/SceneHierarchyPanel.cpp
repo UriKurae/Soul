@@ -80,8 +80,6 @@ namespace Soul
 			m_Context->currentBrush.SetBrushColor(brushColor.r * 255.0f, brushColor.g * 255.0f, brushColor.b * 255.0f, brushColor.a * 255.0f);
 		}
 
-		
-
 		ImGui::End();
 	}
 	void SceneHierarchyPanel::DrawEntityNode(Entity entity)

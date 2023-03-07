@@ -32,6 +32,10 @@ namespace Soul
 		void SetBrushColor(int red, int green, int blue, int alpha);
 
 		void OnUpdate(Timestep dt);
+
+	public:
+
+		bool painting = false;
 	private:
 		void UpdateTexture(Ref<Texture2D> texture);
 		void UvToPixel(glm::vec2 uvCoords, int width, int height, int& pixelX, int& pixelY);

@@ -113,23 +113,23 @@ namespace Soul
 	bool OpenGLTexture2D::Unlock()
 	{
 		//If texture is locked and a texture exists
-		if (pixels != nullptr && m_RendererID != 0)
-		{
-			//Set current texture
-			glBindTexture(GL_TEXTURE_2D, m_RendererID);
-
-			//Update texture
-			glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_Width, m_Height, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-
-			//Delete pixels
-			delete[] pixels;
-			pixels = nullptr;
-
-			//Unbind texture
-			glBindTexture(GL_TEXTURE_2D, NULL);
-
-			return true;
-		}
+		//if (pixels != nullptr && m_RendererID != 0)
+		//{
+		//	//Set current texture
+		//	glBindTexture(GL_TEXTURE_2D, m_RendererID);
+		//
+		//	//Update texture
+		//	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_Width, m_Height, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+		//
+		//	//Delete pixels
+		//	delete[] pixels;
+		//	pixels = nullptr;
+		//
+		//	//Unbind texture
+		//	glBindTexture(GL_TEXTURE_2D, NULL);
+		//
+		//	return true;
+		//}
 
 		return false;
 	}

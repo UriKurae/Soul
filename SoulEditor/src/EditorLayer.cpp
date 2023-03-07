@@ -166,18 +166,15 @@ namespace Soul
 							m_ActiveScene->computeShader->UploadUniformFloat3("intersectionPoint", hitPoint);
 							m_ActiveScene->computeShader->UploadUniformFloat2("uv", uvCoords);
 							m_ActiveScene->computeShader->UploadUniformInt("painting", true);
-
-							//m_ActiveScene->textureShader->Bind();
-							//m_ActiveScene->textureShader->UploadUniformFloat3("HitPoint", hitPoint);
-							//m_ActiveScene->textureShader->Unbind();
-							//m_ActiveScene->PaintModel(uvCoords);
+							m_ActiveScene->currentBrush.painting = true;
 						}
-						else
-						{
-							m_ActiveScene->computeShader->UploadUniformInt("painting", false);
-						}
+						
 					}
-				
+				}
+				else
+				{
+					m_ActiveScene->currentBrush.painting = false;
+					m_ActiveScene->computeShader->UploadUniformInt("painting", false);
 				}
 
 				//int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
