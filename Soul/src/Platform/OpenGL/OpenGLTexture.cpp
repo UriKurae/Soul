@@ -92,7 +92,7 @@ namespace Soul
 
 	bool OpenGLTexture2D::GenerateImagePNG(std::string pathToGenerate) const
 	{
-
+		pathToGenerate += ".png";
 		GLuint size = m_Width * m_Height;
 		unsigned int* data = new GLuint[size];
 

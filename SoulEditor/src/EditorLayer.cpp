@@ -469,14 +469,20 @@ namespace Soul
 
 		void EditorLayer::ExportImage(Ref<Texture2D> image)
 		{
-			if (image->GenerateImagePNG("assets/textures/finalComputeImage.png"))
+			std::string filepath = FileDialogs::SaveFile("Soul Texture (*.png)\0*.png\0");
+
+			if (!filepath.empty())
 			{
-				SL_CORE_INFO("Successfully generated PNG Image {0}", image->GetName());
+				if (image->GenerateImagePNG(filepath))
+				{
+					SL_CORE_INFO("Successfully generated PNG Image {0}", image->GetName());
+				}
+				else
+				{
+					SL_CORE_WARN("Error generating PNG Image {0}", image->GetName());
+				}
 			}
-			else
-			{
-				SL_CORE_WARN("Error generating PNG Image {0}", image->GetName());
-			}
+			
 		}
 
 		void EditorLayer::OpenScene()
