@@ -9,6 +9,8 @@
 #include "Soul/Scene/SceneSerializer.h"
 
 #include "Soul/Utils/PlatformUtils.h"
+#include <Soul/Scene/Lights/DirectionalLight.h>
+#include <Soul/Scene/Lights/Light.h>
 
 namespace Soul
 {
@@ -64,8 +66,7 @@ namespace Soul
 			hdrFramebuffer = Framebuffer::Create(hdrSpec);
 
 			m_ActiveScene = std::make_shared<Scene>();
-					
-
+		
 			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 
 			m_EditorCamera = EditorCamera(45.0f, 1.778f, 0.1f, 1000.0f);
@@ -187,8 +188,10 @@ namespace Soul
 			if (Input::IsMouseButtonPressed(Mouse::Button0))
 			{
 				static float brushSize = 0.0f;
+				static float lightDirCurrent = 0.0f;
 				if (!holdingMouse)
 				{
+					lightDirCurrent = m_ActiveScene->RetieveMainLightTransform()->rotation.y;
 					brushSize = m_ActiveScene->currentBrush.GetBrushSize();
 					offsetMouse = ImGui::GetMousePos().x;
 					holdingMouse = true;
@@ -201,6 +204,13 @@ namespace Soul
 					*currentBrush = brushSize + currentMousePos - offsetMouse;
 					if (*currentBrush < 0) *currentBrush = 0.0f;
 					if (*currentBrush > 500.0f) *currentBrush = 500.0f;
+				}
+				else if (Input::IsKeyPressed(Key::LeftShift))
+				{
+					auto light = m_ActiveScene->RetieveMainLightTransform();
+					float currentMousePos = ImGui::GetMousePos().x - offsetMouse;
+					light->rotation.y = glm::radians(lightDirCurrent + currentMousePos);
+					
 				}
 			}
 			else
@@ -312,6 +322,20 @@ namespace Soul
 							ImGui::TreePop();
 						}
 						
+						ImGui::EndMenu();
+					}
+
+					if (ImGui::BeginMenu("Mode"))
+					{
+						if (ImGui::Button("Edit Mode"))
+						{
+							m_ActiveScene->SetMode(PaintMode::EDIT);
+							
+						}
+						if (ImGui::Button("Paint Mode"))
+						{
+							m_ActiveScene->SetMode(PaintMode::PAINT);
+						}
 						ImGui::EndMenu();
 					}
 					

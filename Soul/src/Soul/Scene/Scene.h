@@ -19,6 +19,12 @@ namespace Soul
 	class Entity;
 	enum class LightType;
 
+	enum class PaintMode
+	{
+		PAINT = 0,
+		EDIT
+	};
+
 	class Scene
 	{
 	public:
@@ -32,8 +38,11 @@ namespace Soul
 
 		void UploadLightUniforms(Ref<Shader> desiredShader);
 		int RetieveTotalLights(LightType type);
+		TransformComponent* RetieveMainLightTransform();
 
 		void BindComputeShaders();
+
+		void SetMode(PaintMode editMode) { mode = editMode; }
 
 		void SetSceneExposure(float level) { sceneExposure = level; }
 		float* GetSceneExposure() { return &sceneExposure; }
@@ -48,7 +57,6 @@ namespace Soul
 		Ref<Shader> textureShader;
 		TransformComponent modelTransform = {};
 		Brush currentBrush;
-
 		// Compute Shaders
 		std::shared_ptr<ComputeShader> computeShader;
 		Ref<Texture2D> computeShaderTexture;
@@ -67,7 +75,7 @@ namespace Soul
 
 		entt::registry m_Registry;
 
-		
+		PaintMode mode;
 
 		friend class Entity;
 		friend class SceneSerializer;

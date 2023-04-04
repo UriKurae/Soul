@@ -6,6 +6,7 @@
 #include "Lights/DirectionalLight.h"
 
 #include <glm/glm.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 #include "Entity.h"
 #include <glad/glad.h>
@@ -57,6 +58,7 @@ namespace Soul
 			entity = CreateEntity("Directional Light");
 			auto& light = entity.AddComponent<LightComponent>();
 			light.light = std::make_shared<DirectionalLight>();
+			light.light->lightShader = shaderLib.Load("assets/shaders/LightObject.glsl");
 		}
 		else
 		{
@@ -122,9 +124,15 @@ namespace Soul
 			
 
 			UploadLightUniforms(textureShader);
+			if (mode == PaintMode::EDIT)
+			{
+				mat.mat->BindTextures();
 
-			mat.mat->BindTextures();
-			BindComputeShaders();
+			}
+			else if (mode == PaintMode::PAINT)
+			{
+				BindComputeShaders();
+			}
 
 			mesh.model->Draw(textureShader, transform.GetTransform());
 		}
@@ -210,10 +218,12 @@ namespace Soul
 			if (DirLight)
 			{
 				std::string str = "dirLight.";
-				desiredShader->UploadUniformFloat3(str + "direction", glm::normalize(lightTransform.rotation));
+				glm::quat quaternion(glm::vec3(0.0f, lightTransform.rotation.y, 0.0f));
+				desiredShader->UploadUniformFloat3(str + "direction", quaternion * glm::normalize(glm::vec3(0.0f, 1.0f, 1.0f)));
 				desiredShader->UploadUniformFloat3(str + "ambient", DirLight->GetColor());
 				desiredShader->UploadUniformFloat3(str + "diffuse", DirLight->GetDiffuse());
 				desiredShader->UploadUniformFloat3(str + "specular", DirLight->GetSpecular());
+				desiredShader->UploadUniformFloat3(str + "lightColor", DirLight->GetColor());
 			}
 		}
 	}
@@ -233,6 +243,27 @@ namespace Soul
 		}
 
 		return total;
+	}
+
+	TransformComponent* Scene::RetieveMainLightTransform()
+	{
+		auto lights = m_Registry.view<LightComponent>();
+		
+
+		int index = 0;
+		for (auto light : lights)
+		{
+			LightComponent& lightComp = lights.get<LightComponent>(light);
+			TransformComponent& lightTransform = m_Registry.get<TransformComponent>(light);
+			
+			Ref<DirectionalLight> DirLight = std::dynamic_pointer_cast<DirectionalLight>(lightComp.light);
+			if (DirLight)
+			{
+				return &lightTransform;
+			}
+		}
+
+		return nullptr;
 	}
 
 	void Scene::BindComputeShaders()
