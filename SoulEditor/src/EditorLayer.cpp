@@ -53,7 +53,7 @@ namespace Soul
 			vaoFB->AddVertexBuffer(vboFB);
 
 			FramebufferSpecification texturefbSpec;
-			texturefbSpec.attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::Depth };
+			texturefbSpec.attachments = { FramebufferTextureFormat::RGBA16F, FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::Depth };
 			texturefbSpec.floatingPointFB = false;
 			texturefbSpec.width = 1280;
 			texturefbSpec.height = 720;
