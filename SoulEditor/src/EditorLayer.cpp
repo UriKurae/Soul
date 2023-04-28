@@ -26,6 +26,7 @@ namespace Soul
 			//computeShader = std::make_shared<ComputeShader>("assets/shaders/ComputeShader.glsl");
 			//computeShaderTexture = Texture2D::Create(512, 512);
 
+			currentAttachment = Attachment::ALBEDO;
 			floatingFBShader = m_ShaderLibrary.Load("assets/shaders/HdrFrameBuffer.glsl");
 			floatingFBShader->Bind();
 			floatingFBShader->UploadUniformInt("hdrBuffer", 0);
@@ -52,7 +53,7 @@ namespace Soul
 			vaoFB->AddVertexBuffer(vboFB);
 
 			FramebufferSpecification fbSpec;
-			fbSpec.attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::Depth };
+			fbSpec.attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::Depth };
 			fbSpec.floatingPointFB = false;
 			fbSpec.width = 1280;
 			fbSpec.height = 720;
@@ -95,54 +96,19 @@ namespace Soul
 				m_EditorCamera.SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
 			}
 
-			//// First pass with HDR framebuffer
-			//hdrFramebuffer->Bind();
-			//RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
-			//RenderCommand::Clear();
-			//RenderCommand::ManageDepth(true);
-			//
-			//m_EditorCamera.OnUpdate(ts);
-
-			//m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
-		
-			//
-
-			//hdrFramebuffer->Unbind();
-
-			///////////////////////////////// 
-
-			//// Second pass with normal famebuffer
-			//m_Framebuffer->Bind();
-			//RenderCommand::SetClearColor({ 1.0f, 1.0f, 1.0f, 1.0f });
-			//RenderCommand::Clear(true, false);
-			//RenderCommand::ManageDepth(false);
-
-			//hdrFramebuffer->BindFBTexture();
-			//Renderer::SubmitArrays(floatingFBShader, vaoFB, 6);
-			//
-			//m_Framebuffer->Unbind();
-
-			//computeShaderTexture->BindToCompute(0);
-			//computeShader->Bind();
-			//computeShader->UploadUniformInt("imgOutput", 0);
-			//computeShader->Dispatch(computeShaderTexture->GetWidth(), computeShaderTexture->GetHeight());
-
 			m_Framebuffer->Bind();
 			RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 			RenderCommand::Clear();
 
 
 			RenderCommand::ManageDepth(true);
-			//m_Framebuffer->ClearAttachments(1, -1);
 			
 			m_EditorCamera.OnUpdate(ts);
-
-
-			//m_ActiveScene->textureShader->Bind();
 
 			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
 
+			// --------------------------- Mouse related calculations ---------------------------
 			auto [mx, my] = ImGui::GetMousePos();
 			mx -= viewportBounds[0].x;
 			my -= viewportBounds[0].y;
@@ -169,7 +135,6 @@ namespace Soul
 							m_ActiveScene->computeShader->UploadUniformInt("painting", true);
 							m_ActiveScene->currentBrush.painting = true;
 						}
-						
 					}
 				}
 				else
@@ -177,14 +142,11 @@ namespace Soul
 					m_ActiveScene->currentBrush.painting = false;
 					m_ActiveScene->computeShader->UploadUniformInt("painting", false);
 				}
-
-				//int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
-				//SL_CORE_WARN("Pixel data = {0}", pixelData);
 			}
 
 			m_Framebuffer->Unbind();
 
-			// Control brush size shortcut
+			// --------------------------- Shortcuts for artist ---------------------------
 			if (Input::IsMouseButtonPressed(Mouse::Button0))
 			{
 				static float brushSize = 0.0f;
@@ -217,9 +179,9 @@ namespace Soul
 			{
 				holdingMouse = false;
 			}
-			
+			// --------------------------- Shortcuts end ---------------------------
 
-			// For the UVs
+			// --------------------------- UV mouse calculations ---------------------------
 
 			auto [mxUv, myUv] = ImGui::GetMousePos();
 			mxUv -= viewportBoundsUVs[0].x;
@@ -236,6 +198,7 @@ namespace Soul
 					m_ActiveScene->PaintModelUVs(glm::vec2(mouseX, mouseY), viewportSize);
 				}
 			}
+			// --------------------------- Mouse related calculations End ---------------------------
 		}
 
 		void EditorLayer::OnImGuiRender()
@@ -325,17 +288,25 @@ namespace Soul
 						ImGui::EndMenu();
 					}
 
+					if (ImGui::BeginMenu("Render Mode"))
+					{
+						const char* items[] = { "Albedo", "Normals" ,"Position" };
+						static int itemCurrent = 0;
+					
+						ImGui::Combo("##combo", &itemCurrent, items, IM_ARRAYSIZE(items));
+						currentAttachment = (Attachment)itemCurrent;
+						ImGui::EndMenu();
+					}
+
+
 					if (ImGui::BeginMenu("Mode"))
 					{
-						if (ImGui::Button("Edit Mode"))
-						{
-							m_ActiveScene->SetMode(PaintMode::EDIT);
-							
-						}
-						if (ImGui::Button("Paint Mode"))
-						{
-							m_ActiveScene->SetMode(PaintMode::PAINT);
-						}
+						const char* items[] = { "Paint Mode", "Edit Mode"};
+						static int itemCurrent = 0;
+
+						ImGui::Combo("##combo", &itemCurrent, items, IM_ARRAYSIZE(items));
+						m_ActiveScene->SetMode((PaintMode)itemCurrent);
+									
 						ImGui::EndMenu();
 					}
 					
@@ -351,7 +322,7 @@ namespace Soul
 			
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0,0 });
 			ImGui::Begin("Viewport");
-	
+		
 			auto viewportOffset = ImGui::GetCursorPos();
 			auto windowSize = ImGui::GetWindowSize();
 			ImVec2 minBound = ImGui::GetWindowPos();
@@ -372,7 +343,8 @@ namespace Soul
 				m_Framebuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
 				m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 			}
-			uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
+
+			uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID((uint32_t)currentAttachment);
 			ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 			
 			if (ImGui::BeginDragDropTarget())

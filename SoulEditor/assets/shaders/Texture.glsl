@@ -73,7 +73,8 @@ struct PointLight
 #define MAX_POINT_LIGHTS 4
 
 layout(location = 0) out vec4 color;
-layout(location = 1) out int color2;
+layout(location = 1) out vec4 normals;
+layout(location = 2) out vec4 position;
 
 in vec2 v_TexCoord;
 in vec3 Normal;
@@ -108,7 +109,8 @@ void main()
     float gamma = 2.2;
     color.rgb = pow(color.rgb, vec3(1.0/gamma));  
     
-    color2 = 50;
+    normals = vec4(Normal, 1.0);
+    position = vec4(FacePos, 1.0);
 }
 
 vec3 CalcDirLight(DirectionalLight light, vec3 normal, vec3 viewDir)
