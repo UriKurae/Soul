@@ -10,12 +10,7 @@
 
 namespace Soul
 {
-	enum class Attachment
-	{
-		ALBEDO = 0,
-		NORMALS,
-		POSITION
-	};
+
 	class EditorLayer : public Layer
 	{
 	public:
@@ -45,12 +40,12 @@ namespace Soul
 		std::vector<float> quadVerticesFB;
 		Ref<VertexArray> vaoFB;
 		Ref<VertexBuffer> vboFB;
-		Ref<Shader> floatingFBShader;
+		Ref<Shader> hdrShader;
 		Ref<Texture2D> fBTexture;
 	
 		Attachment currentAttachment;
 
-		Ref<Framebuffer> m_Framebuffer;
+		Ref<Framebuffer> textureFramebuffer;
 		Ref<Framebuffer> hdrFramebuffer;
 
 		Ref<Scene> m_ActiveScene;

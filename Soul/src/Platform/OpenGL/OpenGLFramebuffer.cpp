@@ -234,4 +234,9 @@ namespace Soul
 		glClearTexImage(m_ColorAttachments[attachmentIndex], 0, 
 			Utils::SoulFBTextureFormatToGL(spec.textureFormat), GL_INT, &value);
 	}
+	void OpenGLFramebuffer::BindColorAttachmentTexture(uint32_t index, Attachment attach) const
+	{
+		glActiveTexture(index);
+		glBindTexture(GL_TEXTURE_2D, (GLuint)attach);
+	}
 }

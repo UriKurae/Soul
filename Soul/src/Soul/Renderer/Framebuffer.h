@@ -4,6 +4,12 @@
 
 namespace Soul
 {
+	enum class Attachment
+	{
+		ALBEDO = 0,
+		NORMALS,
+		POSITION
+	};
 	enum class FramebufferTextureFormat
 	{
 		NONE = 0,
@@ -63,6 +69,7 @@ namespace Soul
 		virtual void ClearAttachments(uint32_t attachmentIndex, int value) = 0;
 
 		virtual uint32_t GetColorAttachmentRendererID(uint32_t index = 0) const = 0;
+		virtual void BindColorAttachmentTexture(uint32_t index, Attachment attach) const = 0;
 		virtual uint32_t GetFrameBufferID() const = 0;
 
 		virtual void BindFBTexture() const = 0;

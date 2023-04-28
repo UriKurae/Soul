@@ -51,7 +51,7 @@ public:
 
 		fbSpec.width = 1280;
 		fbSpec.height= 720;
-		m_Framebuffer = Soul::Framebuffer::Create(fbSpec);
+		textureFramebuffer = Soul::Framebuffer::Create(fbSpec);
 	}
 
 	void OnDetach() override
@@ -61,7 +61,7 @@ public:
 
 	void OnUpdate(Soul::Timestep ts) override
 	{
-		m_Framebuffer->Bind();
+		textureFramebuffer->Bind();
 
 		Soul::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 		Soul::RenderCommand::Clear();
@@ -79,7 +79,7 @@ public:
 		//Soul::Renderer::Submit(textureShader, m_SquareVA);
 		//
 		//Soul::Renderer::EndScene();
-		m_Framebuffer->Unbind();
+		textureFramebuffer->Unbind();
 	}
 
 	virtual void OnImGuiRender() override
@@ -87,7 +87,7 @@ public:
 		ImGui::Begin("Settings");
 
 		ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
-		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
+		uint32_t textureID = textureFramebuffer->GetColorAttachmentRendererID();
 		ImGui::Image((void*)textureID, ImVec2{ 1280.0f, 720.0f });
 
 		ImGui::End();
@@ -106,7 +106,7 @@ private:
 
 	Soul::Ref<Soul::Shader> m_FlatColorShader;
 	Soul::Ref<Soul::VertexArray> m_SquareVA;
-	Soul::Ref<Soul::Framebuffer> m_Framebuffer;
+	Soul::Ref<Soul::Framebuffer> textureFramebuffer;
 
 	Soul::Ref<Soul::Texture2D> m_Texture, m_ZoroTexture;
 
