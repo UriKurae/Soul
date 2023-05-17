@@ -25,7 +25,7 @@ namespace Soul
 		{
 			//computeShader = std::make_shared<ComputeShader>("assets/shaders/ComputeShader.glsl");
 			//computeShaderTexture = Texture2D::Create(512, 512);
-
+			
 			currentAttachment = Attachment::ALBEDO;
 			hdrShader = m_ShaderLibrary.Load("assets/shaders/HdrFrameBuffer.glsl");
 			hdrShader->Bind();
@@ -53,7 +53,7 @@ namespace Soul
 			vaoFB->AddVertexBuffer(vboFB);
 
 			FramebufferSpecification texturefbSpec;
-			texturefbSpec.attachments = { FramebufferTextureFormat::RGBA16F, FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::Depth };
+			texturefbSpec.attachments = { FramebufferTextureFormat::RGBA16F, FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RGBA16F, FramebufferTextureFormat::Depth };
 			texturefbSpec.floatingPointFB = false;
 			texturefbSpec.width = 1280;
 			texturefbSpec.height = 720;
@@ -71,6 +71,8 @@ namespace Soul
 			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 
 			m_EditorCamera = EditorCamera(45.0f, 1.778f, 0.1f, 1000.0f);
+
+			m_ActiveScene->SetMode(PaintMode::EDIT);
 		}
 
 		void EditorLayer::OnDetach()
@@ -320,7 +322,7 @@ namespace Soul
 
 					if (ImGui::BeginMenu("Mode"))
 					{
-						const char* items[] = { "Paint Mode", "Edit Mode"};
+						const char* items[] = { "Edit Mode", "Paint Mode"};
 						static int itemCurrent = 0;
 
 						ImGui::Combo("##combo", &itemCurrent, items, IM_ARRAYSIZE(items));

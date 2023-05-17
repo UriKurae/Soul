@@ -21,8 +21,9 @@ namespace Soul
 
 	enum class PaintMode
 	{
-		PAINT = 0,
-		EDIT
+		EDIT = 0,
+		PAINT
+		
 	};
 
 	class Scene

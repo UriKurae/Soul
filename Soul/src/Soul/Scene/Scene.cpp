@@ -224,6 +224,7 @@ namespace Soul
 				desiredShader->UploadUniformFloat3(str + "diffuse", DirLight->GetDiffuse());
 				desiredShader->UploadUniformFloat3(str + "specular", DirLight->GetSpecular());
 				desiredShader->UploadUniformFloat3(str + "lightColor", DirLight->GetColor());
+				desiredShader->UploadUniformFloat(str + "intensity", DirLight->intensity);
 			}
 		}
 	}

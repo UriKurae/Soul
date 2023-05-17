@@ -23,7 +23,6 @@ out vec4 color;
 
 in vec2 v_TexCoord;
 
-uniform vec3 objectColor;
 uniform vec3 lightColor;
 
 void main()
