@@ -18,6 +18,7 @@ namespace Soul
 		// Prepare textures for painting with compute shaders
 		computeShader = std::make_shared<ComputeShader>("assets/shaders/ComputeShader.glsl");
 		computeShaderTexture = Texture2D::Create(512, 512);
+		glClearTexImage(computeShaderTexture->GetRendererID(), 0, GL_RGBA, GL_FLOAT, nullptr);
 
 		// Create skybox
 		skyBox = std::make_shared<CubeMap>();
