@@ -76,6 +76,7 @@ struct PointLight
 layout(location = 0) out vec4 color;
 layout(location = 1) out vec4 normals;
 layout(location = 2) out vec4 position;
+layout(location = 3) out vec4 brightColor;
 
 in vec2 v_TexCoord;
 in vec3 Normal;
@@ -89,6 +90,7 @@ uniform DirectionalLight dirLight;
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
 uniform int totalPointLights;
 uniform Material material;
+uniform float threshHold;
 
 
 vec3 CalcDirLight(DirectionalLight light, vec3 normal, vec3 viewDir);
@@ -105,10 +107,19 @@ void main()
     
     for(int i = 0; i < totalPointLights; ++i)
         totalLight += CalcPointLight(pointLights[i], norm, FacePos, viewDir);
-    
+   
+
     color = vec4(totalLight, 1.0);
+     
+    float brightness = dot(color.rgb, vec3(0.2126, 0.7152, 0.0722));
+    if(brightness > threshHold)
+        brightColor = vec4(color.rgb, 1.0);
+    else
+        brightColor = vec4(0.0, 0.0, 0.0, 1.0);
+
     float gamma = 2.2;
     color.rgb = pow(color.rgb, vec3(1.0/gamma));  
+
     
     normals = vec4(Normal, 1.0);
     position = vec4(FacePos, 1.0);

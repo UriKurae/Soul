@@ -8,7 +8,8 @@ namespace Soul
 	{
 		ALBEDO = 0,
 		NORMALS,
-		POSITION
+		POSITION,
+		BRIGHTNESS
 	};
 	enum class FramebufferTextureFormat
 	{

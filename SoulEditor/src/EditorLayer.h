@@ -41,12 +41,19 @@ namespace Soul
 		Ref<VertexArray> vaoFB;
 		Ref<VertexBuffer> vboFB;
 		Ref<Shader> hdrShader;
+		Ref<Shader> bloomShader;
 		Ref<Texture2D> fBTexture;
+
+		// Bloom
+		int iterations = 5;
+		float threshHold = 1.0f;
 	
 		Attachment currentAttachment;
 
 		Ref<Framebuffer> textureFramebuffer;
 		Ref<Framebuffer> hdrFramebuffer;
+
+		std::vector<Ref<Framebuffer>> bloomBuffers;
 
 		Ref<Scene> m_ActiveScene;
 		

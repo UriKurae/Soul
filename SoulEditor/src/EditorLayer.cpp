@@ -26,11 +26,21 @@ namespace Soul
 			//computeShader = std::make_shared<ComputeShader>("assets/shaders/ComputeShader.glsl");
 			//computeShaderTexture = Texture2D::Create(512, 512);
 			
+			bloomShader = m_ShaderLibrary.Load("assets/shaders/BloomShader.glsl");
+			bloomShader->Bind();
+			bloomShader->UploadUniformInt("image", 0);
+			bloomShader->Unbind();
+
 			currentAttachment = Attachment::ALBEDO;
 			hdrShader = m_ShaderLibrary.Load("assets/shaders/HdrFrameBuffer.glsl");
 			hdrShader->Bind();
 			hdrShader->UploadUniformInt("hdrBuffer", 0);
-			hdrShader->UploadUniformFloat("exposure", 25.0f);
+			hdrShader->UploadUniformInt("blur", 1);
+			hdrShader->UploadUniformFloat("exposure", 1.5f);
+			hdrShader->Unbind();
+
+			
+
 			vaoFB = VertexArray::Create();
 			vaoFB->Bind();
 		
@@ -65,6 +75,16 @@ namespace Soul
 			hdrSpec.width = 1280;
 			hdrSpec.height = 720;
 			hdrFramebuffer = Framebuffer::Create(hdrSpec);
+
+			// Bloom buffers
+			FramebufferSpecification bloom;
+			bloom.attachments = { FramebufferTextureFormat::RGBA16F, FramebufferTextureFormat::Depth };
+			bloom.floatingPointFB = false;
+			bloom.width = 1280;
+			bloom.height = 720;
+			bloomBuffers.push_back(Framebuffer::Create(bloom));
+			bloomBuffers.push_back(Framebuffer::Create(bloom));
+
 
 			m_ActiveScene = std::make_shared<Scene>();
 		
@@ -149,10 +169,49 @@ namespace Soul
 				}
 			}
 
+			Renderer::ClearTextures();
 			textureFramebuffer->Unbind();
 
+			// Blur excess of lighting
+			bool horizontal = true, first_iteration = true;
+			int amount = 10;
+			bloomShader->Bind();
+
+			for (unsigned int i = 0; i < amount; i++)
+			{
+				bloomBuffers[horizontal]->Bind();
+				RenderCommand::SetClearColor({ 0.0f, 0.0f, 0.0f, 1.0f });
+				RenderCommand::Clear(true, false);
+				RenderCommand::ManageDepth(false);
+				bloomShader->UploadUniformInt("horizontal", horizontal);
+				bloomShader->UploadUniformInt("iterations", iterations);
+				if (first_iteration)
+				{
+					textureFramebuffer->BindColorAttachmentTexture(0, (Attachment)textureFramebuffer->GetColorAttachmentRendererID((uint32_t)Attachment::BRIGHTNESS));
+				}
+				else
+				{
+					bloomBuffers[!horizontal]->BindColorAttachmentTexture(0, (Attachment)bloomBuffers[!horizontal]->GetColorAttachmentRendererID(0));
+				}
+				vaoFB->Bind();
+
+				Renderer::SubmitArrays(bloomShader, vaoFB, 6);
+				Renderer::ClearTextures();
+				
+				horizontal = !horizontal;
+				if (first_iteration)
+					first_iteration = false;
+			}
+			bloomShader->Unbind();
+			for (int i = 0; i < bloomBuffers.size(); ++i)
+			{
+				bloomBuffers[i]->Unbind();
+			}
+			// Blur end
+
+
 			hdrFramebuffer->Bind();
-			RenderCommand::SetClearColor({ 1.0f, 1.0f, 1.0f, 1.0f });
+			RenderCommand::SetClearColor({ 0.0f, 0.0f, 0.0f, 1.0f });
 			RenderCommand::Clear(true, false);
 			RenderCommand::ManageDepth(false);
 
@@ -160,10 +219,12 @@ namespace Soul
 			hdrShader->Bind();
 
 			hdrFramebuffer->BindColorAttachmentTexture(0, (Attachment)textureFramebuffer->GetColorAttachmentRendererID((uint32_t)currentAttachment));			
+			hdrFramebuffer->BindColorAttachmentTexture(1, (Attachment)bloomBuffers[0]->GetColorAttachmentRendererID((uint32_t)Attachment::ALBEDO));
 			vaoFB->Bind();
 			
 			Renderer::SubmitArrays(hdrShader, vaoFB, 6);
-
+			Renderer::ClearTextures();
+			
 			hdrShader->Unbind();
 			hdrFramebuffer->Unbind();
 
@@ -295,23 +356,23 @@ namespace Soul
 
 					if (ImGui::BeginMenu("Lighting"))
 					{
-						if (ImGui::TreeNode("Exp level"))
-						{
-							static bool hdr = false;
-							ImGui::Checkbox("Hdr?", &hdr);
-							ImGui::DragFloat("Level", m_ActiveScene->GetSceneExposure(), 0.1f,0.1f, 100.0f, "%.3f");
-							hdrShader->Bind();
-							hdrShader->UploadUniformFloat("exposure", *m_ActiveScene->GetSceneExposure());
-							hdrShader->UploadUniformInt("hdr", hdr);
-							ImGui::TreePop();
-						}
+						ImGui::Text("Exposure Level");
+						ImGui::DragFloat("##Exposure Level", m_ActiveScene->GetSceneExposure(), 0.1f, 0.0f, 100.0f, "%.2f");
+
+						static bool hdr = true;
+						ImGui::Checkbox("Hdr?", &hdr);
+
+						hdrShader->Bind();
+						hdrShader->UploadUniformFloat("exposure", *m_ActiveScene->GetSceneExposure());
+						hdrShader->UploadUniformInt("hdr", hdr);
+					
 						
 						ImGui::EndMenu();
 					}
 
 					if (ImGui::BeginMenu("Render Mode"))
 					{
-						const char* items[] = { "Albedo", "Normals" ,"Position" };
+						const char* items[] = { "Albedo", "Normals" ,"Position", "Brightness"};
 						static int itemCurrent = 0;
 					
 						ImGui::Combo("##combo", &itemCurrent, items, IM_ARRAYSIZE(items));
@@ -331,6 +392,18 @@ namespace Soul
 						ImGui::EndMenu();
 					}
 					
+					ImGui::EndMenu();
+				}
+
+				if (ImGui::BeginMenu("Bloom"))
+				{
+					ImGui::Text("Iterations");
+					ImGui::DragInt("##Iterations", &iterations, 1.0f, 0, 20);
+
+					ImGui::Separator();
+					ImGui::Text("Bloom Range");
+					ImGui::DragFloat("##Bloom Range", &m_ActiveScene->threshHold, 0.1f, 0.0f, 100.0f, "%.2f");
+
 					ImGui::EndMenu();
 				}
 

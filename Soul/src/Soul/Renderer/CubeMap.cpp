@@ -70,6 +70,7 @@ namespace Soul
         glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMapTexture);
         Renderer::SubmitArrays(cubeMapShader, vao, 36);
         glDepthFunc(GL_LESS);
+        cubeMapShader->Unbind();
     }
 
     void CubeMap::SetupCubeMap(float* vertices)

@@ -33,6 +33,11 @@ namespace Soul
 			glClear(GL_DEPTH_BUFFER_BIT);
 	}
 
+	void OpenGLRendererAPI::ClearTextures()
+	{
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
 	void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray)
 	{
 		glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);

@@ -59,6 +59,11 @@ namespace Soul
 		RenderCommand::DrawWithArray(vertexArray, indices);
 	}
 
+	void Renderer::ClearTextures()
+	{
+		RenderCommand::ClearTextures();
+	}
+
 	static void ManageDepth(bool enable)
 	{
 		RenderCommand::ManageDepth(enable);

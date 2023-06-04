@@ -18,6 +18,7 @@ out vec4 color;
 in vec2 v_TexCoords;
 
 uniform sampler2D hdrBuffer;
+uniform sampler2D blur;
 uniform bool hdr;
 uniform float exposure;
 
@@ -25,17 +26,20 @@ void main()
 { 
     const float gamma = 2.2;
     vec3 hdrColor = texture(hdrBuffer, v_TexCoords).rgb;
+    vec4 blurColor = texture(blur, v_TexCoords);
    
     if (hdr)
     {
         vec3 result = vec3(1.0) - exp(-hdrColor * exposure);
         result = pow(result, vec3(1.0 / gamma));
         color = vec4(result, 1.0);
+        color += blurColor;
     }
     else
     {
         vec3 result = pow(hdrColor, vec3(1.0 / gamma));
         color = vec4(result, 1.0);
+        color += blurColor;
     }
     
 }

@@ -24,7 +24,11 @@ namespace Soul
 		virtual void ClearAttachments(uint32_t attachmentIndex, int value) override;
 
 		virtual const FramebufferSpecification& GetSpecification() const override { return m_Specification; }
-		virtual uint32_t GetColorAttachmentRendererID(uint32_t index = 0) const override { SL_CORE_ASSERT(index < m_ColorAttachments.size(), "Color attachments size is less than index");  return m_ColorAttachments[index]; }
+		virtual uint32_t GetColorAttachmentRendererID(uint32_t index = 0) const override 
+		{ 
+			SL_CORE_ASSERT(index < m_ColorAttachments.size(), "Color attachments size is less than index");  
+			return m_ColorAttachments[index]; 
+		}
 		virtual void BindColorAttachmentTexture(uint32_t index, Attachment attach) const override;
 		virtual uint32_t GetFrameBufferID() const override { return m_RendererID; }
 	private:

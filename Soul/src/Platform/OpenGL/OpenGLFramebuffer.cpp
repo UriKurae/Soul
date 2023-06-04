@@ -236,7 +236,8 @@ namespace Soul
 	}
 	void OpenGLFramebuffer::BindColorAttachmentTexture(uint32_t index, Attachment attach) const
 	{
-		glActiveTexture(index);
-		glBindTexture(GL_TEXTURE_2D, (GLuint)attach);
+		glBindTextureUnit(index, (GLuint)attach);
+		/*glActiveTexture(index);
+		glBindTexture(GL_TEXTURE_2D, (GLuint)attach);		*/
 	}
 }

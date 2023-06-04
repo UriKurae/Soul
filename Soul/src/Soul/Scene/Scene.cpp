@@ -121,6 +121,7 @@ namespace Soul
 			textureShader->Bind();
 
 			textureShader->UploadUniformFloat3("camPos", camera.GetPosition());
+			textureShader->UploadUniformFloat("threshHold", threshHold);
 			textureShader->UploadUniformFloat("material.shininess", 1.0f);
 			
 
@@ -136,6 +137,7 @@ namespace Soul
 			}
 
 			mesh.model->Draw(textureShader, transform.GetTransform());
+			textureShader->Unbind();
 		}
 
 		auto lightView = m_Registry.view<LightComponent>();
