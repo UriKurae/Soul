@@ -10,6 +10,7 @@
 
 namespace Soul
 {
+
 	class EditorLayer : public Layer
 	{
 	public:
@@ -39,12 +40,20 @@ namespace Soul
 		std::vector<float> quadVerticesFB;
 		Ref<VertexArray> vaoFB;
 		Ref<VertexBuffer> vboFB;
-		Ref<Shader> floatingFBShader;
+		Ref<Shader> hdrShader;
+		Ref<Shader> bloomShader;
 		Ref<Texture2D> fBTexture;
-	
 
-		Ref<Framebuffer> m_Framebuffer;
+		// Bloom
+		int iterations = 5;
+		float threshHold = 1.0f;
+	
+		Attachment currentAttachment;
+
+		Ref<Framebuffer> textureFramebuffer;
 		Ref<Framebuffer> hdrFramebuffer;
+
+		std::vector<Ref<Framebuffer>> bloomBuffers;
 
 		Ref<Scene> m_ActiveScene;
 		

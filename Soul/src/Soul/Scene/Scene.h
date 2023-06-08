@@ -21,8 +21,9 @@ namespace Soul
 
 	enum class PaintMode
 	{
-		PAINT = 0,
-		EDIT
+		EDIT = 0,
+		PAINT
+		
 	};
 
 	class Scene
@@ -60,6 +61,7 @@ namespace Soul
 		// Compute Shaders
 		std::shared_ptr<ComputeShader> computeShader;
 		Ref<Texture2D> computeShaderTexture;
+		float threshHold = 1.0f;
 	private:
 		template<typename T>
 		void OnComponentAdded(Entity entity, T& component);
@@ -69,7 +71,8 @@ namespace Soul
 
 		std::shared_ptr<CubeMap> skyBox;
 
-		float sceneExposure = 25.0f;
+		float sceneExposure = 1.5f;
+
 
 		Ref<Shader> lightShader;
 

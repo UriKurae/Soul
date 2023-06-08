@@ -18,6 +18,7 @@ namespace Soul
 		// Prepare textures for painting with compute shaders
 		computeShader = std::make_shared<ComputeShader>("assets/shaders/ComputeShader.glsl");
 		computeShaderTexture = Texture2D::Create(512, 512);
+		glClearTexImage(computeShaderTexture->GetRendererID(), 0, GL_RGBA, GL_FLOAT, nullptr);
 
 		// Create skybox
 		skyBox = std::make_shared<CubeMap>();
@@ -120,6 +121,7 @@ namespace Soul
 			textureShader->Bind();
 
 			textureShader->UploadUniformFloat3("camPos", camera.GetPosition());
+			textureShader->UploadUniformFloat("threshHold", threshHold);
 			textureShader->UploadUniformFloat("material.shininess", 1.0f);
 			
 
@@ -135,6 +137,7 @@ namespace Soul
 			}
 
 			mesh.model->Draw(textureShader, transform.GetTransform());
+			textureShader->Unbind();
 		}
 
 		auto lightView = m_Registry.view<LightComponent>();
@@ -224,6 +227,7 @@ namespace Soul
 				desiredShader->UploadUniformFloat3(str + "diffuse", DirLight->GetDiffuse());
 				desiredShader->UploadUniformFloat3(str + "specular", DirLight->GetSpecular());
 				desiredShader->UploadUniformFloat3(str + "lightColor", DirLight->GetColor());
+				desiredShader->UploadUniformFloat(str + "intensity", DirLight->intensity);
 			}
 		}
 	}

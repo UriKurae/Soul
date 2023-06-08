@@ -340,8 +340,8 @@ namespace Soul
 		{
 			DrawComponent<LightComponent>("Light", entity, [](auto& component)
 				{
-					static float intensity = 0.0f;
-					if (ImGui::SliderFloat("Intensity",&intensity, 0.0f, 10.0f, "%.2f"))
+					static float intensity = component.light->intensity;
+					if (ImGui::DragFloat("Intensity",&intensity, 0.5f, 0.0f, 1000.0f, "%.2f"))
 					{
 						component.light->SetIntensity(intensity);
 					}

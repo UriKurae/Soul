@@ -12,6 +12,7 @@ namespace Soul
 
 		virtual void SetClearColor(const glm::vec4& color) override;
 		virtual void Clear(bool color, bool depth) override;
+		virtual void ClearTextures() override;
 
 		virtual void DrawIndexed(const Ref<VertexArray>& vertexArray) override;
 		virtual void DrawArrays(const Ref<VertexArray>& vertexArray, unsigned int indices) override;

@@ -13,7 +13,7 @@ namespace Soul
 	class Light
 	{
 	public:
-		Light(LightType lightType) : type(lightType), ambient(0.1f), diffuse(1.0f), specular(0.5f)
+		Light(LightType lightType) : type(lightType), ambient(0.1f), diffuse(1.0f), specular(0.5f), intensity(1.0f)
 		{
 		};
 		virtual ~Light() {};
@@ -27,16 +27,13 @@ namespace Soul
 			ambient = glm::vec3(color.r, color.g, color.b) * intensity;
 			oldAmbient = ambient * intensity;
 			lightShader->Bind();
-			lightShader->UploadUniformFloat3("objectColor", ambient); 
 			lightShader->UploadUniformFloat3("lightColor", ambient);
 		}
 		virtual void SetIntensity(float level) 
 		{
-			ambient = level * oldAmbient;
-			intensity = level;
 			lightShader->Bind();
-			lightShader->UploadUniformFloat3("objectColor", ambient);
-			lightShader->UploadUniformFloat3("lightColor", ambient);
+			intensity = level;
+			lightShader->UploadUniformFloat("intensity", intensity);
 		}
 		
 
@@ -44,12 +41,12 @@ namespace Soul
 
 	public:
 		Ref<Shader> lightShader;
+		float intensity = 1.0f;
 	protected:
 		glm::vec3 ambient;
 		glm::vec3 oldAmbient = { 1.0f, 1.0f, 1.0f };
 		glm::vec3 diffuse;
 		glm::vec3 specular;
-		float intensity = 1.0f;
 
 	
 		LightType type;

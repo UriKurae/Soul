@@ -26,6 +26,11 @@ namespace Soul
 			s_RendererAPI->Clear(color, depth);
 		}
 
+		inline static void ClearTextures()
+		{
+			s_RendererAPI->ClearTextures();
+		}
+
 		inline static void DrawIndexed(const Ref<VertexArray>& vertexArray)
 		{
 			s_RendererAPI->DrawIndexed(vertexArray);

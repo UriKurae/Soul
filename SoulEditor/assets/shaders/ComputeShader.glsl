@@ -24,13 +24,20 @@ void main()
       ivec2 uvPixels = ivec2(int((uv.x * imageSize(imgOutput))),int((uv.y * imageSize(imgOutput))));
       
       float distance = (distance(uvPixels, texelCoord));
-     
+
       float percentage = smoothstep(0.0, brushSize, distance);	
       vec4 texelColor = imageLoad(imgOutput, texelCoord);
+      
+
       vec3 finalColor = mix(texelColor.rgb, brushColor.rgb, 1.0 - percentage);
+      vec4 trueFinalColor = vec4(finalColor, 1.0);
+
+      if (trueFinalColor.rgb == vec3(0.0))
+      {
+        trueFinalColor.a = 0.0;
+      }
       
-      
-	  imageStore(imgOutput, texelCoord, vec4(finalColor,1.0));
+	  imageStore(imgOutput, texelCoord, trueFinalColor);
    }
   
    
