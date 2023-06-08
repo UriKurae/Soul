@@ -7,9 +7,9 @@ namespace Soul
 	{
 		ambient = { 0.1f, 0.1f, 0.1f };
 
-		diffuse = Texture2D::Create("assets/Models/backpack/diffuse.jpg");
+		diffuse = Texture2D::Create("assets/textures/LavaCube.png");
 		specular = Texture2D::Create("assets/textures/defaultDiffuse.jpg");
-		normal = Texture2D::Create("assets/textures/defaultNormal.jpg");
+		normal = Texture2D::Create("assets/textures/LavaCubeNormal.png");
 	}
 
 	Material::~Material()
