@@ -35,7 +35,7 @@ namespace Soul
 		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
 			m_SelectionContext = {};
 
-		if (ImGui::BeginPopupContextWindow(0, 1, false))
+		/*if (ImGui::BeginPopupContextWindow(0, 1, false))
 		{
 			if (ImGui::TreeNode("Create Light"))
 			{
@@ -53,7 +53,7 @@ namespace Soul
 			}
 			
 			ImGui::EndPopup();
-		}
+		}*/
 
 
 		ImGui::End();
