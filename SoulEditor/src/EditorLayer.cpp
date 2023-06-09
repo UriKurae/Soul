@@ -395,6 +395,20 @@ namespace Soul
 					ImGui::EndMenu();
 				}
 
+				if (ImGui::BeginMenu("Skybox"))
+				{
+					const char* items[] = { "Field", "Yamakoto", "Sea", "Hotel Sea", "Basilica", "Italy"};
+					static int currentSkybox = 0;
+
+					if (ImGui::Combo("##combo", &currentSkybox, items, IM_ARRAYSIZE(items)))
+					{
+						m_ActiveScene->ChangeSkybox(currentSkybox);
+
+					}
+
+					ImGui::EndMenu();
+				}
+
 				if (ImGui::BeginMenu("Bloom"))
 				{
 					ImGui::Text("Iterations");

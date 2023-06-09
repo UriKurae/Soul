@@ -51,6 +51,11 @@ namespace Soul
 		return entity;
 	}
 
+	void Scene::ChangeSkybox(int index)
+	{
+		skyBox->ChangeCubeMap(index);
+	}
+
 	Entity Scene::CreateLight(LightType lightType)
 	{
 		Entity entity = {};

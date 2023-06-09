@@ -73,6 +73,95 @@ namespace Soul
         cubeMapShader->Unbind();
     }
 
+    void CubeMap::ChangeCubeMap(int index)
+    {
+        switch (index)
+        {
+        case 0:
+        {
+            cubeMapFaces =
+            {
+                 "assets/CubeMaps/field/right.jpg",
+                "assets/CubeMaps/field/left.jpg",
+                "assets/CubeMaps/field/top.jpg",
+                "assets/CubeMaps/field/bottom.jpg",
+                "assets/CubeMaps/field/front.jpg",
+                "assets/CubeMaps/field/back.jpg"
+
+                
+            };
+            break;
+        }
+        case 1:
+        {
+            cubeMapFaces =
+            {
+                "assets/CubeMaps/Yokohama/right.jpg",
+                "assets/CubeMaps/Yokohama/left.jpg",
+                "assets/CubeMaps/Yokohama/top.jpg",
+                "assets/CubeMaps/Yokohama/bottom.jpg",
+                "assets/CubeMaps/Yokohama/front.jpg",
+                "assets/CubeMaps/Yokohama/back.jpg"
+            };
+            break;
+        }
+        case 2:
+        {
+            cubeMapFaces =
+            {
+               "assets/CubeMaps/skybox/right.jpg",
+                "assets/CubeMaps/skybox/left.jpg",
+                "assets/CubeMaps/skybox/top.jpg",
+                "assets/CubeMaps/skybox/bottom.jpg",
+                "assets/CubeMaps/skybox/front.jpg",
+                "assets/CubeMaps/skybox/back.jpg"
+            };
+            break;
+        }
+        case 3:
+        {
+            cubeMapFaces =
+            {
+                "assets/CubeMaps/HotelSea/right.jpg",
+                "assets/CubeMaps/HotelSea/left.jpg",
+                "assets/CubeMaps/HotelSea/top.jpg",
+                "assets/CubeMaps/HotelSea/bottom.jpg",
+                "assets/CubeMaps/HotelSea/front.jpg",
+                "assets/CubeMaps/HotelSea/back.jpg"
+            };
+            break;
+        }
+        case 4:
+        {
+            cubeMapFaces =
+            {
+                "assets/CubeMaps/Basilica/right.jpg",
+                "assets/CubeMaps/Basilica/left.jpg",
+                "assets/CubeMaps/Basilica/top.jpg",
+                "assets/CubeMaps/Basilica/bottom.jpg",
+                "assets/CubeMaps/Basilica/front.jpg",
+                "assets/CubeMaps/Basilica/back.jpg"
+            };
+            break;
+        }
+        case 5:
+        {
+            cubeMapFaces =
+            {
+                "assets/CubeMaps/Italy/right.jpg",
+                "assets/CubeMaps/Italy/left.jpg",
+                "assets/CubeMaps/Italy/top.jpg",
+                "assets/CubeMaps/Italy/bottom.jpg",
+                "assets/CubeMaps/Italy/front.jpg",
+                "assets/CubeMaps/Italy/back.jpg"
+            };
+            break;
+        }
+            
+        }
+        cubeMapTexture = LoadCubeMap(cubeMapFaces);
+    }
+
     void CubeMap::SetupCubeMap(float* vertices)
     {
         vao = VertexArray::Create();
@@ -90,15 +179,17 @@ namespace Soul
 
         cubeMapFaces =
         {
-            "assets/CubeMaps/skybox/right.jpg",
-            "assets/CubeMaps/skybox/left.jpg",
-            "assets/CubeMaps/skybox/top.jpg",
-            "assets/CubeMaps/skybox/bottom.jpg",
-            "assets/CubeMaps/skybox/front.jpg",
-            "assets/CubeMaps/skybox/back.jpg"
+            "assets/CubeMaps/field/right.jpg",
+            "assets/CubeMaps/field/left.jpg",
+            "assets/CubeMaps/field/top.jpg",
+            "assets/CubeMaps/field/bottom.jpg",
+            "assets/CubeMaps/field/front.jpg",
+            "assets/CubeMaps/field/back.jpg"
         };
        cubeMapTexture = LoadCubeMap(cubeMapFaces);
     }
+
+
 
     unsigned int CubeMap::LoadCubeMap(std::vector<std::string> faces)
 	{

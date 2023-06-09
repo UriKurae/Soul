@@ -43,6 +43,8 @@ namespace Soul
 
 		void BindComputeShaders();
 
+		void ChangeSkybox(int index);
+
 		void SetMode(PaintMode editMode) { mode = editMode; }
 
 		void SetSceneExposure(float level) { sceneExposure = level; }

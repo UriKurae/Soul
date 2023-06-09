@@ -12,6 +12,7 @@ namespace Soul
 		~CubeMap();
 
 		void Draw();
+		void ChangeCubeMap(int index);
 
 	private:
 		void SetupCubeMap(float* vertices);
