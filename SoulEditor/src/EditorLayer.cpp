@@ -351,50 +351,43 @@ namespace Soul
 					ImGui::EndMenu();
 				}
 
-				if (ImGui::BeginMenu("Edit"))
+				if (ImGui::BeginMenu("Mode"))
 				{
+					const char* items[] = { "Edit Mode", "Paint Mode" };
+					static int itemCurrent = 0;
 
-					if (ImGui::BeginMenu("Lighting"))
-					{
-						ImGui::Text("Exposure Level");
-						ImGui::DragFloat("##Exposure Level", m_ActiveScene->GetSceneExposure(), 0.1f, 0.0f, 100.0f, "%.2f");
+					ImGui::Combo("##combo", &itemCurrent, items, IM_ARRAYSIZE(items));
+					m_ActiveScene->SetMode((PaintMode)itemCurrent);
 
-						static bool hdr = true;
-						ImGui::Checkbox("Hdr?", &hdr);
-
-						hdrShader->Bind();
-						hdrShader->UploadUniformFloat("exposure", *m_ActiveScene->GetSceneExposure());
-						hdrShader->UploadUniformInt("hdr", hdr);
-					
-						
-						ImGui::EndMenu();
-					}
-
-					if (ImGui::BeginMenu("Render Mode"))
-					{
-						const char* items[] = { "Albedo", "Normals" ,"Position", "Brightness"};
-						static int itemCurrent = 0;
-					
-						ImGui::Combo("##combo", &itemCurrent, items, IM_ARRAYSIZE(items));
-						currentAttachment = (Attachment)itemCurrent;
-						ImGui::EndMenu();
-					}
-
-
-					if (ImGui::BeginMenu("Mode"))
-					{
-						const char* items[] = { "Edit Mode", "Paint Mode"};
-						static int itemCurrent = 0;
-
-						ImGui::Combo("##combo", &itemCurrent, items, IM_ARRAYSIZE(items));
-						m_ActiveScene->SetMode((PaintMode)itemCurrent);
-									
-						ImGui::EndMenu();
-					}
-					
 					ImGui::EndMenu();
 				}
 
+
+				if (ImGui::BeginMenu("Lighting"))
+				{
+					ImGui::Text("Exposure Level");
+					ImGui::DragFloat("##Exposure Level", m_ActiveScene->GetSceneExposure(), 0.1f, 0.0f, 100.0f, "%.2f");
+
+					static bool hdr = true;
+					ImGui::Checkbox("Hdr?", &hdr);
+
+					hdrShader->Bind();
+					hdrShader->UploadUniformFloat("exposure", *m_ActiveScene->GetSceneExposure());
+					hdrShader->UploadUniformInt("hdr", hdr);
+
+
+					ImGui::EndMenu();
+				}
+
+				if (ImGui::BeginMenu("Render Mode"))
+				{
+					const char* items[] = { "Albedo", "Normals" ,"Position", "Brightness" };
+					static int itemCurrent = 0;
+
+					ImGui::Combo("##combo", &itemCurrent, items, IM_ARRAYSIZE(items));
+					currentAttachment = (Attachment)itemCurrent;
+					ImGui::EndMenu();
+				}
 				if (ImGui::BeginMenu("Skybox"))
 				{
 					const char* items[] = { "Field", "Yamakoto", "Sea", "Hotel Sea", "Basilica", "Italy"};
