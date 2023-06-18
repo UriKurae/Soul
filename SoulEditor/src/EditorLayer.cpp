@@ -37,6 +37,7 @@ namespace Soul
 			hdrShader->UploadUniformInt("hdrBuffer", 0);
 			hdrShader->UploadUniformInt("blur", 1);
 			hdrShader->UploadUniformFloat("exposure", 1.5f);
+			hdrShader->UploadUniformInt("hdr", true);
 			hdrShader->Unbind();
 
 			
